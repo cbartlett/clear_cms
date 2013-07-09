@@ -1,0 +1,1 @@
+HTML_ENTITIES_CODER=HTMLEntities.new #this is needed because the ipad app was hacked to support MT char types that were corrupted TODO: remove when resolved!!
