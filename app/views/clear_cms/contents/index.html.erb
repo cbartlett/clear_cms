@@ -1,0 +1,83 @@
+<% content_for :title do %>
+  Contents 
+<% end %>
+
+
+<div class="filters">
+
+<form method="get" action="<%= clear_cms_site_contents_path(current_site) %>" class="form-search">
+  <div class="input-append">
+    <input type="text" name="q">
+    <button type="submit" class="btn">Filter</button>
+  </div>
+</form>
+
+</div>
+
+<!--
+<%= button_to 'Create Content', new_clear_cms_content_path, :method=>:get, :class=>'btn' %>
+<br>
+-->
+<form method="post" action="/clear_cms/contents/import">
+<table class="table table-striped">
+  <tr>
+    <th>State</th>
+    <th>Entry</th>
+    <th>Category</th>
+    <th>Type</th>
+    <th>Assignee</th>
+    <th>Author</th>
+    <th>Publish At</th>
+    <th>Created At</th>
+    <th>Note</th>
+<!--
+    <th>Source</th>    
+    <th>Status</th>
+    <th>Import</th>
+    <th>Actions</th>
+-->
+  </tr>
+
+  <% @clear_cms_contents.each do |c| %>
+  <tr class="<%= c.published? ? 'published' : 'draft' %> <%= c.scheduled? ? 'scheduled' : '' %>">
+    <% if c.published? %>
+      <td><%= c.scheduled? ? 'Scheduled' : 'Published' %> <!-- <i class="icon-ok-circle"></i> --></td>
+    <% else %>
+      <td>Draft <!-- <i class="icon-pencil"></i> --></td>
+    <% end %>
+    <td><b><%= c.title %></b><br>
+    <% if can? :edit, c %>
+      <%= link_to 'Edit', edit_clear_cms_site_content_path(c.site,c)  %> |
+    <% end %>
+    <% if can? :review, c %> 
+      <%= link_to 'Review', clear_cms_site_content_path(c.site,c) %> |
+    <% end %>
+      <%= link_to (c.published? ? 'View' : 'Preview'), content_path(c), :domain=>c.site.domain, :target=>'_blank'  %> </td>
+    <td>
+      <% if c.categories.count <= 1 %>
+        <%= c.categories.first.try(:titleize) %>
+      <% else %>
+        <a data-toggle="tooltip" class="category_listings" title="<%= c.categories.collect {|cat| cat.titleize }.join(', ') %>"><%= c.categories.first.try(:titleize) %></a>
+      <% end %>
+    </td>
+    <td><%= c.type %></td>
+    <td><%= c.assignee[:full_name] if c.assignee %></td>
+    <td><%= c.author[:full_name] if c.author %></td>
+    <td><%= c.publish_at %></td>
+    <td><%= c.created_at %></td>
+    <td><%= c.content_notes.last ? 'NOTES' : '' %></td>
+
+<!--
+    <td><input type="checkbox" value="<%= c.id %>" name="import_content[<%= c.id %>]" /></td>
+    <td><%= link_to 'show', c %></td>
+-->
+  </tr>
+  <% end %>
+</table>
+<!--
+<%#= collection_select :site_import, :id, ClearCMS::Site.all, :id, :name %>
+<input type="submit" value="Import">
+</form>
+-->
+
+<%= paginate @clear_cms_contents %>

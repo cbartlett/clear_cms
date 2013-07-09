@@ -1,0 +1,101 @@
+<div class="article">
+	<div class="header">
+  	<h1><%= link_to content.title, content.friendly_url %></h1>
+	  <h3><%= content.subtitle %></h3>
+	  <h2>by <%= link_to content.author[:full_name], content.author.friendly_url %> in <%= link_to content.display_category, category_path(content.default_category) %> on <%= content.publish_at.strftime("%d %B %Y") %></h2>
+
+	  <% if !content_page? %>
+							  
+	  <h4 class="keywords">
+      <% content.tags.each_with_index do |tag,index| %><%= index > 0 ? ', ' : '' -%><%= link_to tag, tag_path(tag) -%><% end %>		 
+	  </h4>
+	  <% end %>
+	</div>
+			
+	<div class="body <%= article_body_class %>" id="<%= content.id %>">
+	  <%= content.default_content_block.body %>
+	  
+	  <%= content.render_campaign_tracking_pixel %>
+
+	  <a name="readmore" id="readmore"> </a>	  
+	  <% if params[:action]=='content' %>
+	   <% if content.extended_content_block %>
+	     <%= content.extended_content_block.body %>
+	   <% end %>
+	   <% if content.default_content_block.has_gallery? %>
+	     <%= render :partial=>'contents/content_slideshow', :locals=>{:gallery_images=>content.content_blocks.first.content_assets.gallery_assets.collect} %>
+	   <% end  %>
+	  <% end %>
+	</div>
+			
+
+
+  <% if content_page? %>
+		<h2>Related</h2>
+
+		<ul class="related-entries">
+			<% content.related(12).each do |related_content| %>
+			<li>
+				<a href="<%= related_content.friendly_url %>">
+				<h3><%= related_content.title %></h3>
+				<img src="<%= related_content.default_image_url(:thumb) %>" alt="<%= related_content.title %>" title="<%= related_content.title %>" width="150" height="150"></a>
+			</li>
+			<% end %>								
+		</ul>
+		
+		
+		  <!-- Begin MailChimp Signup Form -->
+      <link href="http://cdn-images.mailchimp.com/embedcode/classic-081711.css" rel="stylesheet" type="text/css">
+      <style type="text/css">
+      	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+      	/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+      	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+      </style>
+      <div id="mc_embed_signup">
+      <form action="http://coolhunting.us1.list-manage.com/subscribe/post?u=a67bc93611e977b6b71071b9c&amp;id=b9befc1b1a" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      	<h2>Get Cool Hunting delivered to your inbox every weekday morning</h2>
+      <div class="mc-field-group">
+      	<label for="mce-EMAIL">Email Address </label>
+      	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+      </div>
+      <p><a href="http://us1.campaign-archive1.com/home/?u=a67bc93611e977b6b71071b9c&id=b9befc1b1a" title="View previous campaigns">View previous campaigns.</a></p>
+      	<div id="mce-responses" class="clear">
+      		<div class="response" id="mce-error-response" style="display:none"></div>
+      		<div class="response" id="mce-success-response" style="display:none"></div>
+      	</div>	<div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+      </form>
+      </div>
+      <!--End mc_embed_signup-->
+
+		</div> <!-- end article -->
+  <% else %>
+    </div> <!-- end article -->
+    <div class="article-tools">
+      <ul class="tools">
+        <% if content.default_content_block.has_gallery? %>
+          <li><%= link_to "View Gallery", "#{content.friendly_url}#more" %></li>
+        <% end %>      
+        <li><%= link_to "View Related", related_content_path(content), { 'data-tool-name'=>'related', 'data-entry-id'=>content.id } %></li>	
+        <% if content.type == 'Video' %>
+          <li><a href="/video">Watch More Videos</a></li>
+        <% end %>
+        <!-- AddThis Button BEGIN -->
+        <script type='text/javascript'> 
+        var addthis_product = 'mtp-2.0';
+        var addthis_config ={ pubid: 'ra-5102bfbe292fa46e' 
+        , services_compact: 'pinterest,google_plusone,stumbleupon,reddit' 
+        , ui_click: true 
+        , ui_hover_direction: 0 
+        , ui_language: 'auto' 
+        , data_ga_tracker: 'UA-889923-1' 
+         };
+        </script>
+        <div class="addthis_toolbox addthis_default_style" addthis:url="http://www.coolhunting.com<%= content.friendly_url %>" addthis:title="<%= content.title %>"><a class="addthis_button_facebook_like" fb:like:layout="button_count"></a><%= link_to '', '', :class=>'addthis_button_tweet', 'tw:text'=>"#{(content.tweet.present? ? content.tweet : content.subtitle)}" %><a class="addthis_button_google_plusone" g:plusone:size="medium"></a><a class="addthis_counter addthis_pill_style"></a></div>
+        <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js"></script>
+        <!-- AddThis Button END -->
+        
+      </ul>
+      <div class="tool-content loading">
+      </div>
+    </div>
+  <% end %>

@@ -1,0 +1,11 @@
+<%= semantic_form_for @clear_cms_site, :html=>{:class=>'form-horizontal well clearfix'} do |f| %>
+    <%= f.inputs do %>
+      <%= f.input :name %>      
+      <%= f.input :slug %>
+      <%= f.input :domain %>
+      <%= f.input :language, :as=>:select, :collection=>{'English'=>'en','French'=>'fr','German'=>'de','Spanish'=>'es'} %>
+      <%= f.input :description, :as=>:text, :input_html=>{:rows=>5, :class=>'inputs-xxlarge'} %>
+      <%= f.input :keywords, :as=>:text, :input_html=>{:rows=>5}  %>
+    <% end %>
+    <%= f.submit :class=>'btn pull-right' %>
+<% end %>

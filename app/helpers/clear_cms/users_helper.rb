@@ -1,0 +1,2 @@
+module ClearCMS::UsersHelper
+end

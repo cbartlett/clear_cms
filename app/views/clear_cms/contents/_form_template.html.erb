@@ -1,0 +1,46 @@
+<div id="form_parts" style="display:none;">
+
+<!--   <a class="btn btn-large" href="#" onclick="ClearCMS.Forms.insert_template('#content_notes_form_wrapper','#content_notes_form_template'); return false;"><i class="icon-comment"></i> Comment</a> -->
+
+<!--     <input name="clear_cms_content[content_blocks][unique-blah][body]"> -->
+<!--     <input name="clear_cms_content[content_notes][unique-blah][entry]"> -->
+
+  <% @clear_cms_content.content_blocks.build; @clear_cms_content.content_notes.build %>
+  
+  <%= semantic_form_for @clear_cms_content, :html=>{:class=>'form-horizontal well'} do |f| %>
+
+    <!-- BEGIN content_blocks template -->
+    <%= f.semantic_fields_for :content_blocks do |cbf| %>
+      <%= cbf.inputs do %>
+        <%= cbf.input :type %>
+        <%= cbf.input :body, :as=>:text, :input_html=>{:class=>'span12'} %>
+      <% end %>
+    <% end %>
+    <!-- END content_blocks template -->
+    
+        
+    <!-- BEGIN content_notes template -->
+    <div id="content_notes_form_template">
+    <%= f.semantic_fields_for :content_notes do |cnf| %>
+      <%= cnf.inputs do %>
+        <%= cnf.input :entry, :as=>:text, :input_html=>{:class=>'span12', :rows=>5 } %>
+      <% end %>
+    <% end %>
+    </div>
+    <!-- END content_notes template -->  
+  <% end %>
+
+</div>
+
+
+<script>
+var ClearCMS = window.ClearCMS || {};
+
+ClearCMS.Forms = function() {
+	return {
+    insert_template: function(destination,source) {
+      $(destination).append($(source));
+    }
+  }  
+}();
+</script>

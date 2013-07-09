@@ -1,0 +1,19 @@
+<h2>Sign in</h2>
+
+<%= semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name), :html=>{:class=>'form-horizontal well'}) do |f| %>
+
+    <%= f.inputs do %>
+    <%= f.input :email %>
+    <%= f.input :password %>
+  
+    <% if devise_mapping.rememberable? -%>
+      <%= f.input :remember_me, :as=>:boolean %>
+    <% end -%>
+  <% end %>
+
+  <%= f.submit "Sign in", :class=>'btn' %>
+<% end %>
+
+<div><%= render "links" %></div>
+
+

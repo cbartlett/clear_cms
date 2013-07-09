@@ -1,0 +1,28 @@
+<% content_for :title do %>
+  Sites
+<% end %>
+
+<table class="table table-striped">
+  <tr>
+    <th>Name</th>
+    <th>Slug</th>
+    <th>Domain</th>
+    <th></th>
+  </tr>
+
+<% @clear_cms_sites.each do |clear_cms_site| %>
+  <tr>
+    <td><%= clear_cms_site.name %></td>
+    <td><%= clear_cms_site.slug %></td>
+    <td><%= clear_cms_site.domain %></td>   
+    <td>
+      <%= link_to 'Contents', clear_cms_site_contents_path(clear_cms_site) %> | 
+      <%= link_to 'Edit', edit_clear_cms_site_path(clear_cms_site) %> |
+      <%= link_to 'Destroy', clear_cms_site, :method=>:delete, :confirm=>"Are you sure?" %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+
+

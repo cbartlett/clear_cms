@@ -1,0 +1,19 @@
+<table class="table table-striped">
+  <tr>
+    <th>Title</th>
+    <th>Assignee</th>
+    <th>Source</th>    
+    <th>Status</th>
+    <th>Actions</th>
+  </tr>
+
+  <% clear_cms_contents.each do |c| %>
+  <tr>
+    <td><%= link_to c.title, edit_clear_cms_content_path(c)  %></td>
+    <td><%= c.assignee[:full_name] if c.assignee %></td>
+    <td><%= c.source %></td>
+    <td><%= c.status %></td>
+    <td><%= link_to 'show', c %></td>
+  </tr>
+  <% end %>
+</table>

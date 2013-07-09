@@ -1,0 +1,26 @@
+<% content_for :title do %>
+  Users
+<% end %>
+
+<button onclick="$('.inactive_user').toggle();" class="btn">Show/Hide Inactive Users</button>
+
+<table class="table table-striped">
+  <tr>
+    <th>Full Name</th>
+    <th>Email</th>
+    <th>Default Site</th>
+    <th>Authored #</th>
+    <th></th>
+  </tr>
+
+<% @clear_cms_users.each do |clear_cms_user| %>
+  <tr class="<%= clear_cms_user.active? ? 'active_user' : 'inactive_user' %>">
+    <td><%= clear_cms_user[:full_name] %></td>
+    <td><%= clear_cms_user[:email] %></td>
+    <td><%#= clear_cms_user.default_site ? clear_cms_user.default_site.name : "Not Set" %></td>
+    <td><%= clear_cms_user.authored_contents.count %></td>
+    <td><%= link_to 'Edit', edit_clear_cms_user_path(clear_cms_user) if can? :edit, clear_cms_user %> <%#= link_to 'Contents', author_content_path(clear_cms_user) %></td>
+  </tr>
+<% end %>
+</table>
+

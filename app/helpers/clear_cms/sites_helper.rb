@@ -1,0 +1,2 @@
+module ClearCMS::SitesHelper
+end
