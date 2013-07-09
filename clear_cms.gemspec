@@ -17,7 +17,40 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 3.2.13"
-  # s.add_dependency "jquery-rails"
+  s.add_dependency "devise"
+  s.add_dependency "htmlentities"
+  s.add_dependency "delayed_job_mongoid"
+  s.add_dependency 'jquery-ui-rails'
+  s.add_dependency 'jquery-fileupload-rails'
+  s.add_dependency 'twitter-bootstrap-rails'
 
-  s.add_development_dependency "sqlite3"
+  #Mongo DB ORM and support
+  s.add_dependency "mongoid", "~> 3.1.0"
+
+  #Authentication and Roles
+  s.add_dependency 'devise'
+  s.add_dependency 'devise-encryptable'
+  s.add_dependency 'cancan'
+
+  #File upload and storage on S3
+  s.add_dependency 'carrierwave'
+  s.add_dependency 'carrierwave-mongoid' #, :git=>'git://github.com/jnicklas/carrierwave-mongoid.git', :branch => 'mongoid-3.0', :require => 'carrierwave/mongoid'
+  s.add_dependency 'fog', '~>1.12.0'
+  s.add_dependency 'net-scp' #, '1.0.4'
+  s.add_dependency 'mini_magick'
+
+  #Form Builder
+  s.add_dependency 'formtastic' #, "~> 2.1.0"
+  s.add_dependency 'formtastic-plus-bootstrap' #, :git => 'https://github.com/niedfelj/formtastic-bootstrap.git', :branch => 'bootstrap2-rails3-2-formtastic-2-2' #, :require=>'formtastic-bootstrap'
+  s.add_dependency 'nested_form' #, :git => 'git://github.com/niedfelj/nested_form.git', :branch=> 'formtastic_bootstrap'
+
+  #Result pagination
+  s.add_dependency 'kaminari', '~> 0.14.0'
+  s.add_dependency 'kaminari-bootstrap'
+
+  s.add_dependency 'sunspot_rails'
+  s.add_dependency 'jquery-rails'
+
+  s.add_development_dependency 'sunspot_solr'
+
 end
