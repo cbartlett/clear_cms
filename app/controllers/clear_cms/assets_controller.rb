@@ -20,10 +20,10 @@ module ClearCMS
       respond_to do |format|
         if @clear_cms_asset.save
           if params[:asset][:image_url]
-            format.json {render json: @clear_cms_asset, status: :created, location: clear_cms_site_asset_url(@clear_cms_site,@clear_cms_asset) }
+            format.json {render json: @clear_cms_asset, status: :created, location: clear_cms.site_asset_url(@clear_cms_site,@clear_cms_asset) }
           else
           #format.html { redirect_to([:edit, @clear_cms_content], notice: 'Content was successfully created.')}
-            format.json { render json: "{\"files\": [#{@clear_cms_asset.uploader_json}]}", status: :created, location: clear_cms_site_asset_url(@clear_cms_site,@clear_cms_asset)}
+            format.json { render json: "{\"files\": [#{@clear_cms_asset.uploader_json}]}", status: :created, location: clear_cms.site_asset_url(@clear_cms_site,@clear_cms_asset)}
           end
         else
           #format.html { render action: "new" }

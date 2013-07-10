@@ -54,7 +54,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'sunspot_rails'
   s.add_dependency 'jquery-rails'
+  #s.add_dependency 'sunspot_solr'
 
-  s.add_development_dependency 'sunspot_solr'
+  #s.add_development_dependency 'sunspot_solr'
 
 end
