@@ -1,0 +1,23 @@
+Setup Instructions
+
+add gem to gemfile
+bundle
+mount in routes
+mongoid.yml
+Procfile.dev
+foreman
+sunspot.yml
+sunspot_solr gem -- bug with dev port needing to be 8983
+
+rake clear_cms:create_user
+rake clear_cms:create_site
+
+aws_secret_access_key
+bucket
+
+dev gems
+better_errors
+pry
+binding_of_caller
+
+

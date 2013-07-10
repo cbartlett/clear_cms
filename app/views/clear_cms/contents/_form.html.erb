@@ -44,7 +44,7 @@
       <%= f.input :fancy_item, :as=>:boolean, :html=>{:class=>'checkbox'} %>
       <%= f.input :ios_app_exclusive, :as=>:boolean, :html=>{:class=>'checkbox'}, :label=>'iOS APP Exclusive' %>
       
-      <%= f.input :site_id, :as=>:hidden, :value=>current_user.default_site.id %>
+      <%= f.input :site_id, :as=>:hidden, :value=>current_site.id %>
     <% end %>
     
     

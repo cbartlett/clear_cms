@@ -57,7 +57,7 @@ module ClearCMS
       
       @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"edited")
       
-      if @clear_cms_content.update_attributes(params[:clear_cms_content])
+      if @clear_cms_content.update_attributes(params[:content])
         redirect_to({:action=>:edit}, notice: 'Content was successfully updated.')
       else
         flash.now[:notice]='Error saving content!'
@@ -67,7 +67,7 @@ module ClearCMS
 
 
     def create
-      @clear_cms_content = ClearCMS::Content.new(params[:clear_cms_content])
+      @clear_cms_content = ClearCMS::Content.new(params[:content])
       @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"created")
   
       respond_to do |format|

@@ -57,7 +57,7 @@ module ClearCMS
         }
       }
 
-      contents.map_reduce(map,reduce).out(inline:true)  
+      contents.count > 1 ? contents.map_reduce(map,reduce).out(inline:true) : []
     end
 
 private 
