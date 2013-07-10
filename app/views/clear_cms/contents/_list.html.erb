@@ -9,7 +9,7 @@
 
   <% clear_cms_contents.each do |c| %>
   <tr>
-    <td><%= link_to c.title, edit_clear_cms_content_path(c)  %></td>
+    <td><%= link_to c.title, clear_cms.edit_content_path(c)  %></td>
     <td><%= c.assignee[:full_name] if c.assignee %></td>
     <td><%= c.source %></td>
     <td><%= c.status %></td>

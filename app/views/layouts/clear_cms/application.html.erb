@@ -10,7 +10,7 @@
     <%= csrf_meta_tags %>
 
     <!-- Le styles -->
-    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= stylesheet_link_tag "clear_cms/application", :media => "all" %>
     
 
     <!-- markitup styles -->
@@ -85,13 +85,13 @@
                   </a>
                   <ul class="dropdown-menu">
                     <% if can? :create, ClearCMS::Content %>
-                      <li><%= link_to t('clear_cms.entry'), new_clear_cms_site_content_path(current_site) %></li>
+                      <li><%= link_to t('clear_cms.entry'), clear_cms.new_site_content_path(current_site) %></li>
                     <% end %>
                     <% if can? :create, ClearCMS::User %>
-                      <li><%= link_to t('clear_cms.user'), new_clear_cms_user_path %></li>
+                      <li><%= link_to t('clear_cms.user'), clear_cms.new_user_path %></li>
                     <% end %>
                     <% if can? :create, ClearCMS::Site %>  
-                      <li><%= link_to t('clear_cms.site'), new_clear_cms_site_path %></li>
+                      <li><%= link_to t('clear_cms.site'), clear_cms.new_site_path %></li>
                     <% end %>
                   </ul>
                 </div>
@@ -103,16 +103,16 @@
                   </a>
                   <ul class="dropdown-menu">
                     <% if can? :read, ClearCMS::Content %>
-                      <li><%= link_to t('clear_cms.entries'), clear_cms_site_contents_path(current_site) %></li>
+                      <li><%= link_to t('clear_cms.entries'), clear_cms.site_contents_path(current_site) %></li>
                     <% end %>
                      <% if can? :manage, ClearCMS::Site %>
-                      <li><%= link_to t('clear_cms.pages'), clear_cms_site_contents_path(current_site, {'filter[types]'=>'Page'}) %></li>
+                      <li><%= link_to t('clear_cms.pages'), clear_cms.site_contents_path(current_site, {'filter[types]'=>'Page'}) %></li>
                     <% end %>                   
                     <% if can? :manage, ClearCMS::User %>
-                      <li><%= link_to t('clear_cms.users'), clear_cms_users_path %></li>
+                      <li><%= link_to t('clear_cms.users'), clear_cms.users_path %></li>
                     <% end %>
                     <% if can? :manage, ClearCMS::Site %>
-                      <li><%= link_to t('clear_cms.sites'), clear_cms_sites_path %></li>
+                      <li><%= link_to t('clear_cms.sites'), clear_cms.sites_path %></li>
                     <% end %>
                   </ul>
                 </div>
@@ -154,9 +154,9 @@
                   <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                  <li><%= link_to 'Profile', edit_clear_cms_user_path(current_user) %></li>
+                  <li><%= link_to 'Profile', clear_cms.edit_user_path(current_user) %></li>
                   <li class="divider"></li>
-                  <li><%= link_to "Sign Out", destroy_user_session_path, :method=>:delete %></li>
+                  <li><%= link_to "Sign Out", '#', :method=>:delete %></li>
                 </ul>
               </div>
             </div>
@@ -205,15 +205,15 @@
               <ul class="nav nav-list">            
                 <li class="nav-header">Assigned to Me</li>
                   <% current_user.assigned_contents.limit(5).each do |content| %>
-                    <li><%= link_to content.title, clear_cms_content_path(content) %></li>
+                    <li><%= link_to content.title, clear_cms.content_path(content) %></li>
                   <% end %>
                 <li class="nav-header">Recently Published</li>
                   <% ClearCMS::Content.recently_published(5).each do |content| %>
-                    <li><%= link_to content.title, clear_cms_content_path(content) %></li>
+                    <li><%= link_to content.title, clear_cms.content_path(content) %></li>
                   <% end %>                
                 <li class="nav-header">For Consideration</li>
                   <% ClearCMS::Content.for_consideration.limit(5).each do |content| %>
-                    <li><%= link_to content.title, clear_cms_content_path(content) %></li>
+                    <li><%= link_to content.title, clear_cms.content_path(content) %></li>
                   <% end %>
               </ul>
             </div>
@@ -233,7 +233,7 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-      <%= javascript_include_tag "application" %>
+      <%= javascript_include_tag "clear_cms/application" %>
 
 
     <!-- markitup scripts and settings -->    

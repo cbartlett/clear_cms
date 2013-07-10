@@ -19,7 +19,7 @@
     <td><%= clear_cms_user[:email] %></td>
     <td><%#= clear_cms_user.default_site ? clear_cms_user.default_site.name : "Not Set" %></td>
     <td><%= clear_cms_user.authored_contents.count %></td>
-    <td><%= link_to 'Edit', edit_clear_cms_user_path(clear_cms_user) if can? :edit, clear_cms_user %> <%#= link_to 'Contents', author_content_path(clear_cms_user) %></td>
+    <td><%= link_to 'Edit', clear_cms.edit_user_path(clear_cms_user) if can? :edit, clear_cms_user %> <%#= link_to 'Contents', author_content_path(clear_cms_user) %></td>
   </tr>
 <% end %>
 </table>

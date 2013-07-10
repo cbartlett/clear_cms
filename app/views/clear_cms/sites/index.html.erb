@@ -16,8 +16,8 @@
     <td><%= clear_cms_site.slug %></td>
     <td><%= clear_cms_site.domain %></td>   
     <td>
-      <%= link_to 'Contents', clear_cms_site_contents_path(clear_cms_site) %> | 
-      <%= link_to 'Edit', edit_clear_cms_site_path(clear_cms_site) %> |
+      <%= link_to 'Contents', clear_cms.site_contents_path(clear_cms_site) %> | 
+      <%= link_to 'Edit', clear_cms.edit_site_path(clear_cms_site) %> |
       <%= link_to 'Destroy', clear_cms_site, :method=>:delete, :confirm=>"Are you sure?" %>
     </td>
   </tr>
