@@ -60,7 +60,7 @@
                   </a>
                   <ul class="dropdown-menu">
                     <% ClearCMS::Site.each do |site| %>
-                      <li><%= link_to site.name, clear_cms_site_contents_path(site) %></li>
+                      <li><%= link_to site.name, clear_cms.site_contents_path(site) %></li>
                     <% end %>
                   </ul>
                 </div>                           
@@ -72,7 +72,7 @@
                   </a>
                   <ul class="dropdown-menu">
                     <% current_user.permissions.each do |permission| %>
-                      <li><%= link_to permission.site.name, clear_cms_site_contents_path(permission.site) %></li>
+                      <li><%= link_to permission.site.name, clear_cms.site_contents_path(permission.site) %></li>
                     <% end %>
                   </ul>
                 </div> 

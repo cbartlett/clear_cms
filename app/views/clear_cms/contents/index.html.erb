@@ -5,7 +5,7 @@
 
 <div class="filters">
 
-<form method="get" action="<%= clear_cms_site_contents_path(current_site) %>" class="form-search">
+<form method="get" action="<%= clear_cms.site_contents_path(current_site) %>" class="form-search">
   <div class="input-append">
     <input type="text" name="q">
     <button type="submit" class="btn">Filter</button>
@@ -15,7 +15,7 @@
 </div>
 
 <!--
-<%= button_to 'Create Content', new_clear_cms_content_path, :method=>:get, :class=>'btn' %>
+<%= button_to 'Create Content', clear_cms.new_content_path, :method=>:get, :class=>'btn' %>
 <br>
 -->
 <form method="post" action="/clear_cms/contents/import">
@@ -47,12 +47,12 @@
     <% end %>
     <td><b><%= c.title %></b><br>
     <% if can? :edit, c %>
-      <%= link_to 'Edit', edit_clear_cms_site_content_path(c.site,c)  %> |
+      <%= link_to 'Edit', clear_cms.edit_site_content_path(c.site,c)  %> |
     <% end %>
     <% if can? :review, c %> 
-      <%= link_to 'Review', clear_cms_site_content_path(c.site,c) %> |
+      <%= link_to 'Review', clear_cms.site_content_path(c.site,c) %> |
     <% end %>
-      <%= link_to (c.published? ? 'View' : 'Preview'), content_path(c), :domain=>c.site.domain, :target=>'_blank'  %> </td>
+      <%= link_to (c.published? ? 'View' : 'Preview'), clear_cms.content_path(c), :domain=>c.site.domain, :target=>'_blank'  %> </td>
     <td>
       <% if c.categories.count <= 1 %>
         <%= c.categories.first.try(:titleize) %>
