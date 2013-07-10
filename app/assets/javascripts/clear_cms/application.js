@@ -14,8 +14,8 @@
 //= #require bootstrap-wysihtml5
 //= #require_tree .
 //= require jquery-fileupload
-//= require contents
-//= require s3_direct
+//= require ./contents
+//= require ./s3_direct
 //= require_self
 
 

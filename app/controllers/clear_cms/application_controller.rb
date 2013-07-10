@@ -30,7 +30,7 @@ private
     when 'frontend'
       'frontend'
     else
-      'application'
+      'clear_cms/application'
     end
   end
   
