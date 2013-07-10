@@ -10,7 +10,7 @@
  *= require formtastic-plus-bootstrap/responsive
  *= #require bootstrap-wysihtml5
  *= require jquery.fileupload-ui
- *= require clear_cms/markitup
+ *= #require clear_cms/markitup
  *= require_self
  *= #require_tree .
 */
