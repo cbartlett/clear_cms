@@ -1,6 +1,6 @@
 <h2>Sign in</h2>
 
-<%= semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name), :html=>{:class=>'form-horizontal well'}) do |f| %>
+<%= semantic_form_for(resource, :as => resource_name, :url => clear_cms.user_session_path, :html=>{:class=>'form-horizontal well'}) do |f| %>
 
     <%= f.inputs do %>
     <%= f.input :email %>

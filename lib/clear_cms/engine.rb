@@ -20,6 +20,7 @@ require 'formtastic-plus-bootstrap'
 require 'jquery-fileupload-rails'
 require 'nested_form'
 require 'kaminari-bootstrap'
+require 'htmlentities'
 
 module ClearCMS
   class Engine < ::Rails::Engine

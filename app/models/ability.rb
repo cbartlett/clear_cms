@@ -2,7 +2,8 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    
+    can :manage, :all 
+
     can :manage, :all if user.system_permission == 'administrator'
     
     can :update, ClearCMS::User, :id => user.id
