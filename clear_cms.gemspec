@@ -17,20 +17,17 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 3.2.13"
-  s.add_dependency "devise"
-  s.add_dependency "htmlentities"
+
+  #Redis caches/needed for sidekiq
+  s.add_dependency "redis-rails"
+
+  #Delayed jobs/workers
   s.add_dependency "delayed_job_mongoid"
-  s.add_dependency 'jquery-ui-rails'
-  s.add_dependency 'jquery-fileupload-rails'
-  s.add_dependency 'twitter-bootstrap-rails'
-  s.add_dependency 'sass-rails', '~> 3.2.3'
-  s.add_dependency 'coffee-rails', '~> 3.2.1'
-  s.add_dependency 'therubyracer', '0.10.2'
-  s.add_dependency 'less-rails'
-  s.add_dependency 'markitup-rails'
+  s.add_dependency "sidekiq"
 
   #Mongo DB ORM and support
   s.add_dependency "mongoid", "~> 3.1.0"
+  s.add_dependency "kiqstand" #handles connections for sidekiq
 
   #Authentication and Roles
   s.add_dependency 'devise'
@@ -53,10 +50,22 @@ Gem::Specification.new do |s|
   s.add_dependency 'kaminari', '~> 0.14.0'
   s.add_dependency 'kaminari-bootstrap'
 
+  #Websolr search
   s.add_dependency 'sunspot_rails'
-  s.add_dependency 'jquery-rails'
-  #s.add_dependency 'sunspot_solr'
+  #s.add_dependency 'sunspot_solr' #had to add this to the main app
 
-  #s.add_development_dependency 'sunspot_solr'
+  #Asset related gems
+  s.add_dependency 'jquery-rails'
+  s.add_dependency 'jquery-ui-rails'
+  s.add_dependency 'jquery-fileupload-rails'
+  s.add_dependency 'twitter-bootstrap-rails'
+  s.add_dependency 'sass-rails', '~> 3.2.3'
+  s.add_dependency 'coffee-rails', '~> 3.2.1'
+  s.add_dependency 'therubyracer', '0.10.2'
+  s.add_dependency 'less-rails'
+  s.add_dependency 'markitup-rails'
+
+  #Utilities
+  s.add_dependency "htmlentities" 
 
 end

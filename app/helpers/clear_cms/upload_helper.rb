@@ -1,3 +1,4 @@
+module ClearCMS
 module UploadHelper
   def s3_uploader_form(options = {}, &block)
     uploader = S3Uploader.new(options)
@@ -79,4 +80,5 @@ module UploadHelper
       ).gsub("\n", "")
     end
   end
+end
 end

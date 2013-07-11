@@ -65,10 +65,10 @@ class ClearCMS::Asset
     }
   end
 
-
-  class ImageWorker < Struct.new(:id)
+  class ImageWorker
+    include Sidekiq::Worker 
     
-    def perform
+    def perform(id)
       asset = ::ClearCMS::Asset.find(id)
       asset.remote_file_url = asset.original_file_url
       asset.save!
@@ -77,13 +77,12 @@ class ClearCMS::Asset
   end
   
 
-
 private 
 
 
   def enqueue_processing
     if original_file_url_changed?
-      Delayed::Job.enqueue ImageWorker.new(id)    
+      ImageWorker.perform_async(id.to_s)    
     end
   end
 

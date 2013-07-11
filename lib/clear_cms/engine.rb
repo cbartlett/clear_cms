@@ -22,6 +22,8 @@ require 'nested_form'
 require 'kaminari-bootstrap'
 require 'htmlentities'
 require 'markitup-rails'
+require 'sidekiq'
+require 'kiqstand'
 
 module ClearCMS
   class Engine < ::Rails::Engine

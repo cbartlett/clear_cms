@@ -6,6 +6,7 @@ module ClearCMS
     layout 'clear_cms/application'
     
     helper_method :current_site
+    #helper 'clear_cms/upload'
     
     #before_filter :check_permissions
 
