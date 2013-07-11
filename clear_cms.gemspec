@@ -67,5 +67,6 @@ Gem::Specification.new do |s|
 
   #Utilities
   s.add_dependency "htmlentities" 
+  s.add_dependency "highline"
 
 end
