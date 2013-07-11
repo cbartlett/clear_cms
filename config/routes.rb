@@ -7,7 +7,7 @@ ClearCMS::Engine.routes.draw do
   	:path => '',
   	:path_prefix => nil,
 		failure_app:  'ClearCMS::Devise::FailureApp',
-    controllers:  { sessions: 'clear_cms/sessions', passwords: 'clear_cms/passwords' }
+    controllers:  { sessions: 'clear_cms/sessions', passwords: 'clear_cms/passwords', unlocks: 'clear_cms/unlocks' }
 
   devise_scope :users do
     match '/'         => 'sessions#new'
