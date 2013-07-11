@@ -80,7 +80,7 @@ module ClearCMS
       @clear_cms_site.destroy
 
       respond_to do |format|
-        format.html { redirect_to clear_cms_sites_url }
+        format.html { redirect_to clear_cms.sites_url }
         format.json { head :ok }
       end
     end

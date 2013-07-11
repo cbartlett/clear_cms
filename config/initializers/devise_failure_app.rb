@@ -3,10 +3,10 @@ module ClearCMS
 
     class FailureApp < ::Devise::FailureApp
 
-      #include ::ClearCMS::Engine.routes.url_helpers
+      include ClearCMS::Engine.routes.url_helpers
 
       def redirect_url
-        '/'
+        new_user_session_path
       end
 
     end

@@ -5,11 +5,11 @@ module ClearCMS
     protected
 
     def after_sign_in_path_for(resource)
-      users_url
+      users_path
     end
 
     def after_sign_out_path_for(resource)
-      request.protocol + request.host_with_port
+      new_user_session_path
     end
 
     # def set_locale

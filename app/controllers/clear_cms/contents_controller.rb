@@ -104,7 +104,7 @@ module ClearCMS
       @clear_cms_content.destroy
   
       respond_to do |format|
-        format.html { redirect_to clear_cms_site_contents_path(@clear_cms_site), notice: "Successfully deleted content." }
+        format.html { redirect_to clear_cms.site_contents_path(@clear_cms_site), notice: "Successfully deleted content." }
         format.json { head :ok }
       end
     end

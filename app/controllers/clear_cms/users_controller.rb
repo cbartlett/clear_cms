@@ -1,5 +1,7 @@
 module ClearCMS
   class UsersController < ApplicationController
+    layout 'clear_cms/application'
+
     before_filter :authenticate_user!
     
     load_and_authorize_resource :class=>'ClearCMS::User'
@@ -62,7 +64,7 @@ module ClearCMS
 
       respond_to do |format|
         if @clear_cms_user.save
-          format.html { redirect_to edit_clear_cms_user_path(@clear_cms_user), notice: 'User was successfully created.' }
+          format.html { redirect_to clear_cms.edit_user_path(@clear_cms_user), notice: 'User was successfully created.' }
           format.json { render json: @clear_cms_user, status: :created, location: @clear_cms_user }
         else
           format.html { render action: "new" }
@@ -94,7 +96,7 @@ module ClearCMS
       @clear_cms_user.destroy
 
       respond_to do |format|
-        format.html { redirect_to clear_cms_users_url }
+        format.html { redirect_to clear_cms.users_url }
         format.json { head :ok }
       end
     end

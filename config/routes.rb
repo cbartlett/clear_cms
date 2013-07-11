@@ -1,5 +1,7 @@
 ClearCMS::Engine.routes.draw do
 
+  root :to=>"users#dashboard"
+
   devise_for :users, 
   	:class_name => "ClearCMS::User",
   	:path => '',
@@ -9,12 +11,10 @@ ClearCMS::Engine.routes.draw do
 
   devise_scope :users do
     match '/'         => 'sessions#new'
-    delete 'signout'  => 'sessions#destroy', as: :destroy_user_session
+    #delete 'signout'  => 'sessions#destroy', as: :destroy_user_session
   end 	
 
 	match "email" => "contents#email"
-
-	root :to=>"users#dashboard"
 
 	resources :sites do 
 	  resources :contents
