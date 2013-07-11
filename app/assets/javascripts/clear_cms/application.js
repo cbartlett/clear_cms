@@ -16,6 +16,9 @@
 //= require jquery-fileupload
 //= require ./contents
 //= require ./s3_direct
+//= require markitup
+//= #require markitup/sets/xbbcode/set
+//= require ./markitup_html_settings
 //= require_self
 
 
@@ -38,6 +41,13 @@ $(document).ready(function() {
   });
 
 });
+
+  
+
+$(document).ready(function()  { 
+  $('textarea.markitup').markItUp(mySettings);
+});
+
 
 
 

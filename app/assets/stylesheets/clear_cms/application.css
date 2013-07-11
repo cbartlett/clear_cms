@@ -11,6 +11,8 @@
  *= #require bootstrap-wysihtml5
  *= require jquery.fileupload-ui
  *= #require clear_cms/markitup
+ *= require markitup/skins/simple/style
+ *= require markitup/sets/html/style
  *= require_self
  *= #require_tree .
 */

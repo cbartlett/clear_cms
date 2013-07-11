@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'coffee-rails', '~> 3.2.1'
   s.add_dependency 'therubyracer', '0.10.2'
   s.add_dependency 'less-rails'
+  s.add_dependency 'markitup-rails'
 
   #Mongo DB ORM and support
   s.add_dependency "mongoid", "~> 3.1.0"

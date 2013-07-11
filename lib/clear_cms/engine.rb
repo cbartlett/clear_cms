@@ -21,6 +21,7 @@ require 'jquery-fileupload-rails'
 require 'nested_form'
 require 'kaminari-bootstrap'
 require 'htmlentities'
+require 'markitup-rails'
 
 module ClearCMS
   class Engine < ::Rails::Engine

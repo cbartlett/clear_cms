@@ -236,17 +236,9 @@
       <%= javascript_include_tag "clear_cms/application" %>
 
 
-    <!-- markitup scripts and settings -->    
-      <script type="text/javascript" src="/markitup/jquery.markitup.js"></script>
-      <script type="text/javascript" src="/markitup/sets/html/set.js"></script>
-  
-      <script language="javascript">
-        $(document).ready(function()  { 
-          $('textarea.markitup').markItUp(mySettings);
-        });
-      </script>
 
-   <%= content_for :final_js %>
+
+      <%= content_for :final_js %>
 
 
   </body>
