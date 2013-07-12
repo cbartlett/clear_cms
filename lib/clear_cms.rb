@@ -2,7 +2,7 @@ require 'clear_cms/engine'
 require 'clear_cms/configuration'
 
 module ClearCMS
-  extend ActiveSupport::Autoload
+  #extend ActiveSupport::Autoload
 
   class << self
     attr_accessor :config
