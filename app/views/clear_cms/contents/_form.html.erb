@@ -221,7 +221,7 @@
   <div class="span9 well">  
 
     <!-- The file upload form used as target for the file upload widget -->
-    <%= s3_uploader_form post: "/clear_cms/sites/#{params[:site_id] || @clear_cms_content.site_id }/assets/", as: "asset[image_url]", bucket: 'captainlucas-tmp' do %>
+    <%= s3_uploader_form post: "#{clear_cms.site_assets_path(params[:site_id] || @clear_cms_content.site_id )}", as: "asset[image_url]", bucket: ClearCMS.config.s3_upload_bucket do %>
       <%= file_field_tag :file, multiple: true %>
     <% end %>
     
