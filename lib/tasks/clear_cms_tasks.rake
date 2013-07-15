@@ -12,7 +12,7 @@ namespace :clear_cms do
     password = ask('Password: ') { |q| q.echo = '*' }
     password_confirm = ask('Confirm password: ') { |q| q.echo = '*' }
 
-    account = ClearCMS::User.create email: email, password: password, password_confirmation: password_confirm, name: name, base_name: base_name, short_name: short_name, system_permission: 'administrator'
+    account = ClearCMS::User.create email: email, password: password, password_confirmation: password_confirm, full_name: name, base_name: base_name, short_name: short_name, system_permission: 'administrator'
     
     if account.persisted?
       puts "Successfully created admin account."
@@ -45,6 +45,6 @@ namespace :clear_cms do
   end
 
   desc 'Full setup of required environment, with admin user and dummy site.'
-  task setup: [:environment, :add_admin]
+  task setup: [:environment, :add_admin, :add_site]
 
 end
