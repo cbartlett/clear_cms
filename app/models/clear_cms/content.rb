@@ -22,7 +22,7 @@ module ClearCMS
     embeds_many :content_notes, class_name: 'ClearCMS::ContentNote', cascade_callbacks: true
     embeds_many :content_logs, class_name: 'ClearCMS::ContentLog', cascade_callbacks: true
     
-    accepts_nested_attributes_for :content_blocks, :content_notes
+    accepts_nested_attributes_for :content_blocks, :content_notes, :content_logs
   
     belongs_to :site, class_name: 'ClearCMS::Site', :inverse_of => :contents
     belongs_to :creator, class_name: 'ClearCMS::User', :inverse_of => :created_contents

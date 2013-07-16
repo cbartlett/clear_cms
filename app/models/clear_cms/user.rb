@@ -22,7 +22,7 @@ module ClearCMS
     embeds_many :permissions, class_name: 'ClearCMS::Permission'
     embeds_many :preferences, class_name: 'ClearCMS::Preference'
     
-    accepts_nested_attributes_for :permissions, :allow_destroy => true
+    accepts_nested_attributes_for :permissions, :preferences, :allow_destroy => true
     
     field :full_name
     validates_presence_of :full_name
