@@ -219,7 +219,10 @@
 
 <div class="row-fluid">
   <div class="span9 well">  
-
+    <!-- site_id <%= params[:site_id] %> -->
+    <!-- site_id <%= params['site_id'] %> -->
+    <!-- clear_cms_content <%= @clear_cms_content.site_id %> -->
+    <!-- s3_uploader_bucket config <%= ClearCMS.config.s3_upload_bucket %> -->
     <!-- The file upload form used as target for the file upload widget -->
     <%= s3_uploader_form post: "#{clear_cms.site_assets_path(params[:site_id] || @clear_cms_content.site_id )}", as: "asset[image_url]", bucket: ClearCMS.config.s3_upload_bucket do %>
       <%= file_field_tag :file, multiple: true %>
