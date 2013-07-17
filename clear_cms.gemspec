@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "redis-rails"
 
   #Delayed jobs/workers
-  s.add_dependency "delayed_job_mongoid"
+  #s.add_dependency "delayed_job_mongoid"
   s.add_dependency "sidekiq"
 
   #Mongo DB ORM and support
