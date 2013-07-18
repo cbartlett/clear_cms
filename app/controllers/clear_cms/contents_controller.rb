@@ -1,5 +1,5 @@
 module ClearCMS
-  class ContentsController < ApplicationController
+  class ContentsController < ClearCMS::ApplicationController
     require 'mail'
     #require 'mongoid'
     before_filter :authenticate_user!, :except=>[:email] 

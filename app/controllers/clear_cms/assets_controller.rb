@@ -1,5 +1,5 @@
 module ClearCMS
-  class AssetsController < ApplicationController
+  class AssetsController < ClearCMS::ApplicationController
 
     before_filter :authenticate_user!
     skip_before_filter :verify_authenticity_token, :only=>[:email]

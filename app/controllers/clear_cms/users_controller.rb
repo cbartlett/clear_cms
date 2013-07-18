@@ -1,5 +1,5 @@
 module ClearCMS
-  class UsersController < ApplicationController
+  class UsersController < ClearCMS::ApplicationController
     layout 'clear_cms/application'
 
     before_filter :authenticate_user!

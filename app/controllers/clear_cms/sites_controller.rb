@@ -1,5 +1,5 @@
 module ClearCMS
-  class SitesController < ApplicationController
+  class SitesController < ClearCMS::ApplicationController
     before_filter :authenticate_user!
     load_and_authorize_resource :class=>'ClearCMS::Site'
 
