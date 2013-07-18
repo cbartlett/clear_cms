@@ -2,6 +2,10 @@ module ClearCMS
   class ApplicationController < ActionController::Base
 
     protect_from_forgery
+
+    def default_url_options
+      {host: ClearCMS.config.default_host }
+    end
     
     layout 'clear_cms/application'
     
