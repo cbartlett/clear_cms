@@ -19,6 +19,7 @@
 //= require markitup
 //= #require markitup/sets/xbbcode/set
 //= require ./markitup_html_settings
+//= require ./jquery.textcount
 //= require_self
 
 
@@ -35,16 +36,16 @@ $(document).ready(function (){
 
 
 $(document).ready(function() {
-  
+
   $('#site_selector_id').change(function() {
     window.location.search='site_selector[id]='+$('#site_selector_id').val();
   });
 
 });
 
-  
 
-$(document).ready(function()  { 
+
+$(document).ready(function()  {
   $('textarea.markitup').markItUp(mySettings);
 });
 
@@ -54,11 +55,17 @@ $(document).ready(function()  {
 /* optional triggers
 
 $(window).load(function() {
-  
+
 });
 
 $(window).resize(function() {
-  
+
 });
 
 */
+
+
+/* start */
+$(document).ready(function()  {
+  $('textarea').textcount();
+});

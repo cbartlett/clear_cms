@@ -25,3 +25,13 @@
 .published.scheduled {
   border-left: 4px solid #fcfc46;
 }
+
+
+/* textcount styling for hints */
+.tc-hint {
+  display: block;
+  padding-left: 125px;
+  font-style: italic;
+  font-size: 0.8em;
+  color: #999;
+}
