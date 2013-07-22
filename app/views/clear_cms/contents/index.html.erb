@@ -52,7 +52,7 @@
     <% if can? :review, c %> 
       <%= link_to 'Review', clear_cms.site_content_path(c.site,c) %> |
     <% end %>
-      <%= link_to (c.published? ? 'View' : 'Preview'), clear_cms.content_path(c), :domain=>c.site.domain, :target=>'_blank'  %> </td>
+      <%= link_to (c.published? ? 'View' : 'Preview'), main_app.content_path(c), :domain=>c.site.domain, :target=>'_blank'  %> </td>
     <td>
       <% if c.categories.count <= 1 %>
         <%= c.categories.first.try(:titleize) %>

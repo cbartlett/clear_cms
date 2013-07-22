@@ -12,7 +12,7 @@
 <div class="row-fluid">
   <div class="span9">
   <% if @clear_cms_content.persisted? %>
-    <%= link_to (@clear_cms_content.published? ? 'View >>' : "Preview >>"), content_path(@clear_cms_content), :class=>'pull-right btn', :target=>'_blank' %>
+    <%= link_to (@clear_cms_content.published? ? 'View >>' : "Preview >>"), main_app.content_path(@clear_cms_content), :class=>'pull-right btn', :target=>'_blank' %>
   <% end %>
   <%= semantic_nested_form_for @clear_cms_content, :html=>{:multipart=>true, :class=>'form-horizontal well'} do |f| %>
 <!--     <h3>Content Details</h3> -->
