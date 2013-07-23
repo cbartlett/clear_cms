@@ -19,7 +19,6 @@ module ClearCMS
     before_save :set_publish_at
     after_save :schedule_cache_clear
 
-    after_save :schedule_cache_clear
     embeds_many :content_blocks, class_name: 'ClearCMS::ContentBlock', cascade_callbacks: true
     embeds_many :content_notes, class_name: 'ClearCMS::ContentNote', cascade_callbacks: true
     embeds_many :content_logs, class_name: 'ClearCMS::ContentLog', cascade_callbacks: true
@@ -79,10 +78,10 @@ module ClearCMS
     field :publish_at, type: DateTime
     field :deadline_at, type: DateTime
     
-    index({updated_at: 1})
-    index({created_at: 1})
-    index({publish_at: 1, '_id'=>1})
-    #index({publish_at: 1})
+    index({updated_at: -1})
+    index({created_at: -1})
+    index({publish_at: -1, '_id'=>-1})
+    #index({publish_at: -1})
     
     validates_presence_of :title,:subtitle,:author,:basename,:tags,:categories,:site
     validates_uniqueness_of :basename, :scope=>:site_id
@@ -92,10 +91,10 @@ module ClearCMS
     scope :published, lambda{ all.or({:state.in => ['Finished']},{:status.in => [2,4]}).and({:publish_at.lte => Time.now}, {:type.ne=>'Page'}, {:type.ne=>'GiftGuide'}).desc(:publish_at) }
     scope :published_with_pages, lambda{ all.or({:state.in => ['Finished']},{:status.in => [2,4]}).and({:publish_at.lte => Time.now}).desc(:publish_at) }
     scope :giftguide, lambda{ all.or({:state.in => ['Finished']},{:status.in => [2,4]}).and({:publish_at.lte => Time.now}, {:type=>'GiftGuide'}).desc(:publish_at) }
-    scope :recently_published, >(limit){ published.limit(limit) }
-    scope :featured, >(limit){ published.and(promote: true).limit(limit) }
-    scope :recent_videos, >(limit) { published.and(type: 'Video').limit(limit) }
-    scope :tagged, >(tag){ tag_regex=Regexp.new("^(#{tag})$",Regexp::IGNORECASE); where(tags: tag_regex) }  
+    scope :recently_published, ->(limit){ published.limit(limit) }
+    scope :featured, ->(limit){ published.and(promote: true).limit(limit) }
+    scope :recent_videos, ->(limit) { published.and(type: 'Video').limit(limit) }
+    scope :tagged, ->(tag){ tag_regex=Regexp.new("^(#{tag})$",Regexp::IGNORECASE); where(tags: tag_regex) }  
         
     
     include Sunspot::Mongoid
@@ -182,11 +181,11 @@ module ClearCMS
     end
     
     def tags=(tag_list)
-      self[:tags] = (tag_list.kind_of?(String) ? tag_list.gsub(/[^azAZ,\_\ ]/,'').split(',').collect {|s| s.strip} : tag_list)     
+      self[:tags] = (tag_list.kind_of?(String) ? tag_list.gsub(/[^a-zA-Z,\-_\ ]/,'').split(',').collect {|s| s.strip} : tag_list)     
     end
     
     def categories=(category_list)
-      self[:categories] = (category_list.kind_of?(String) ? category_list.gsub(/[^azAZ,\_\ ]/,'').split(',').collect {|s| s.strip; s.downcase} : category_list)
+      self[:categories] = (category_list.kind_of?(String) ? category_list.gsub(/[^a-zA-Z,\-_\ ]/,'').split(',').collect {|s| s.strip; s.downcase} : category_list)
     end
     
     def render_campaign_tracking_pixel
@@ -218,10 +217,10 @@ module ClearCMS
     
     def display_category
       case default_category
-      when 'fooddrink'
-        default_category.gsub('',' + ').titlecase 
+      when 'food-drink'
+        default_category.gsub('-',' + ').titlecase 
       else
-        default_category.gsub(/[_]/,' ').titlecase
+        default_category.gsub(/[-_]/,' ').titlecase
       end
     end
     
@@ -272,7 +271,7 @@ module ClearCMS
       while objects.any?
         yield objects
         start += batch_size
-        # Rails.logger.debug("processed #{start} records in #{Time.new  t} seconds") if Rails.logger.debug?
+        # Rails.logger.debug("processed #{start} records in #{Time.new - t} seconds") if Rails.logger.debug?
         break if objects.size < batch_size
         objects = self.limit(batch_size).skip(start)
       end
@@ -294,19 +293,15 @@ private
 #       if self[:state]=='Finished' && self[:publish_at].blank?
       self[:publish_at] ||= Time.now
     end
-
+   
     def schedule_cache_clear
       if scheduled?
-        ClearCMS::ContentCache.delay_until(publish_at+1.minute).clear      
+        ClearCMS::ContentCache.delay(run_at: publish_at+1.minute).clear      
       end
     end
-  
-
+         
   end
-
-
-
-
+  
   class ContentCache
     def self.clear
       puts "Clearing cache due to scheduled posting."
