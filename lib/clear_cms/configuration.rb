@@ -36,7 +36,8 @@ module ClearCMS
       aws_secret_access_key: 'secret_access_key',
       fog_directory: 'fog-uploads-directory',
       asset_host: 'http://assets.example.com',
-      mailer_sender: 'no-reply@captainlucas.com'
+      mailer_sender: 'no-reply@captainlucas.com',
+      sidekiq_redis_url: 'redis://localhost:6379'
 
     }
 

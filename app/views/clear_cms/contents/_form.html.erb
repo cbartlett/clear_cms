@@ -38,7 +38,7 @@
       <%= f.input :buy_url, :label=>'Buy URL' %>
       <%= f.input :store_name, :label=>'Store Name' %>
       <%= f.input :price %>
-      <%= f.input :scale %>
+      <%= f.input :scale, :collection=>[1,2,3] %>
       <%= f.input :product_image, :label=>'Product Image' %>
       <%= f.input :product_description, :as=>:text, :label=>'Product Description', :input_html=>{:class=>'input-xxlarge', rows: 3}  %>
       <%= f.input :fancy_item, :as=>:boolean, :html=>{:class=>'checkbox'} %>
