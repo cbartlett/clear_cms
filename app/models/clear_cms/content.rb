@@ -296,7 +296,8 @@ private
    
     def schedule_cache_clear
       if scheduled?
-        ClearCMS::ContentCache.delay(run_at: publish_at+1.minute).clear      
+        puts "Scheduling a cache clear for #{title} at #{publish_at}"
+        ClearCMS::ContentCache.delay_until(publish_at+1.minute).clear      
       end
     end
          

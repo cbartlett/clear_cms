@@ -19,6 +19,8 @@ rake clear_cms:create_site
 aws_secret_access_key
 bucket
 
+sidekiq_redis_url
+
 dev gems
 better_errors
 pry
