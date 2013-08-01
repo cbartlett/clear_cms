@@ -16,6 +16,9 @@
   <% end %>
   <%= semantic_nested_form_for @clear_cms_content, :html=>{:multipart=>true, :class=>'form-horizontal well'} do |f| %>
 <!--     <h3>Content Details</h3> -->
+      <div id="modal-note-form" class="modal hide fade">
+      </div>
+
     <%= f.inputs do %>
       <%= f.input :type, :as=>:select, :collection=>ClearCMS::Content::TYPES %> 
       <%= f.input :promote, :as=>:boolean, :html=>{:class=>'checkbox'} %>
@@ -148,6 +151,9 @@
   <div class="span3 content-form-sidebar">
 
     <div class="well">
+
+
+
       <!-- <%= f.input :status, :as=>:select, :collection=>ClearCMS::Content::STATUSES %>  -->  
       <%= f.submit 'Save', :class=>'btn btn-primary' %>
       <%= f.submit (@clear_cms_content.published? ? 'View >>' : "Preview >>"), :class=>'btn' %>
@@ -172,7 +178,9 @@
     
     <div class="well">
       <h4>Content Notes</h4>
-      <p><%= f.link_to_add "Add a Note", :content_notes, :class=>'btn btn-xlarge' %></p>
+      <p><a class='btn btn-xlarge' onclick="$('#modal-note-form').append(tmpl('template-note-form'));
+      $('#modal-note-form').modal(); return false;">Add Note</a></p>
+      <!-- modal-note-form is at the top of the semantic form because of the way formtastic is closing the form before this block, this all needs a major refactoring...CHRIS! -->
 
 <!--
       <% @clear_cms_content.content_notes.each do |note| %>
@@ -191,9 +199,12 @@
         <% end %>
       <% end %>
 -->
-
+      <% @clear_cms_content.content_notes.each do |content_note| %>
+        <p><%= content_note.entry %></p>
+      <% end %>
       
       <a>ALL NOTES...</a>
+
     </div> 
     
     <div class="well">
@@ -230,6 +241,9 @@
 
 
 <%# render form_template %>
+
+
+
 
 <!-- modal-gallery is the modal dialog used for the image gallery -->
 <div id="modal-image-insert" class="modal modal-image-insert hide fade" data-filter=":odd" tabindex="-1">
@@ -298,6 +312,15 @@
 -->
     </div>
 </div>
+
+
+<!-- The template to insert a note -->
+<script id="template-note-form" type="text/x-tmpl">
+  {% var random_id=Math.floor(Math.random() * 10000000); %}
+  <li class="text input optional" id="content_content_notes_attributes_{%=random_id%}_entry_input"><label class=" label" for="content_content_notes_attributes_{%=random_id%}_entry">Description</label><textarea id="content_content_notes_attributes_{%=random_id%}_entry" name="content[content_notes][{%=random_id%}][entry]" rows="10"></textarea>
+  </li>
+</script>
+
 
 
 <!-- The template to insert asset forms -->
