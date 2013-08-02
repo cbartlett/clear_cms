@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency "sidekiq"
 
   #Mongo DB ORM and support
-  s.add_dependency "mongoid"  #, "~> 3.1.3"
+  s.add_dependency "mongoid" #, "~> 3.1.3"
   s.add_dependency "kiqstand" #handles connections for sidekiq
 
   #Authentication and Roles
