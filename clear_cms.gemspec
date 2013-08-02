@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
 
   #Mongo DB ORM and support
   s.add_dependency "mongoid", "~> 4.0.0"
-  s.add_dependency "kiqstand" #handles connections for sidekiq
+  s.add_dependency "kiqstand", "~> 1.2.0" #handles connections for sidekiq
 
   #Authentication and Roles
   s.add_dependency 'devise'

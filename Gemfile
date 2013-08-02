@@ -5,8 +5,15 @@ source "http://rubygems.org"
 # development dependencies will be added by default to the :development group.
 gemspec
 
+#for development while mongoid is behind rails4
+
+gem 'mongoid', github: 'mongoid/mongoid'
+gem 'kiqstand', github: 'mongoid/kiqstand'
+
 # jquery-rails is used by the dummy application
 gem "jquery-rails"
+
+
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
