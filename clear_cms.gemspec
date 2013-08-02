@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~> 3.2.13"
+  s.add_dependency "rails", "~> 4.0.0"
 
   #Redis caches/needed for sidekiq
   s.add_dependency "redis-rails"
@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency "sidekiq"
 
   #Mongo DB ORM and support
-  s.add_dependency "mongoid", "~> 3.1.3"
+  s.add_dependency "mongoid"  #, "~> 3.1.3"
   s.add_dependency "kiqstand" #handles connections for sidekiq
 
   #Authentication and Roles
@@ -37,7 +37,7 @@ Gem::Specification.new do |s|
   #File upload and storage on S3
   s.add_dependency 'carrierwave'
   s.add_dependency 'carrierwave-mongoid' #, :git=>'git://github.com/jnicklas/carrierwave-mongoid.git', :branch => 'mongoid-3.0', :require => 'carrierwave/mongoid'
-  s.add_dependency 'fog', '~>1.12.0'
+  s.add_dependency 'fog'   #, '~>1.12.0'
   s.add_dependency 'net-scp' #, '1.0.4'
   s.add_dependency 'mini_magick'
 
@@ -47,7 +47,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'nested_form' #, :git => 'git://github.com/niedfelj/nested_form.git', :branch=> 'formtastic_bootstrap'
 
   #Result pagination
-  s.add_dependency 'kaminari', '~> 0.14.0'
+  s.add_dependency 'kaminari' #, '~> 0.14.0'
   s.add_dependency 'kaminari-bootstrap'
 
   #Websolr search
@@ -59,9 +59,9 @@ Gem::Specification.new do |s|
   s.add_dependency 'jquery-ui-rails'
   s.add_dependency 'jquery-fileupload-rails'
   s.add_dependency 'twitter-bootstrap-rails'
-  s.add_dependency 'sass-rails', '~> 3.2.3'
-  s.add_dependency 'coffee-rails', '~> 3.2.1'
-  s.add_dependency 'therubyracer', '0.10.2'
+  s.add_dependency 'sass-rails', '~> 4.0.0'
+  s.add_dependency 'coffee-rails', '~> 4.0.0'
+  s.add_dependency 'therubyracer' #, '0.10.2'
   s.add_dependency 'less-rails'
   s.add_dependency 'markitup-rails'
 
