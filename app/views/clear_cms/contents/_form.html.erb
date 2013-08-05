@@ -24,7 +24,7 @@
       <%= f.input :promote, :as=>:boolean, :html=>{:class=>'checkbox'} %>
       <%= f.input :title, :input_html=>{:class=>'input-xxlarge'} %>
       <%= f.input :subtitle, :input_html=>{:class=>'input-xxlarge'} %>
-      <%= f.input :basename %>
+      <%= f.input :basename, :hint=>'Must not contain spaces or special chars' %>
       <%= f.input :author, :collection=>(ClearCMS::User.active + [@clear_cms_content.author]).compact.uniq %> 
       <%= f.input :tags, :input_html=>{:class=>'input-xxlarge'}%>
       <%= f.input :categories, :input_html=>{:class=>'input-xxlarge', 'autocomplete'=>'off', 'data-provide'=>"typeahead", 'data-source'=>@clear_cms_content.site.categories.collect {|c| c['_id'] }.to_json} %>
