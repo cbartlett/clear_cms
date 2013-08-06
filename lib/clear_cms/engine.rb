@@ -24,6 +24,7 @@ require 'htmlentities'
 require 'markitup-rails'
 require 'sidekiq'
 require 'kiqstand'
+require 'compass-rails'
 
 module ClearCMS
   class Engine < ::Rails::Engine

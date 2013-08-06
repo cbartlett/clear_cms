@@ -18,6 +18,8 @@
 */
 
 
+/*@import "compass/typography/lists/bullets"*/
+
 .published {
   border-left: 4px solid #6fdf65;
 }

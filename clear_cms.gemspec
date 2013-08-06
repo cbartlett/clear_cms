@@ -25,6 +25,8 @@ Gem::Specification.new do |s|
   #s.add_dependency "delayed_job_mongoid"
   s.add_dependency "sidekiq"
 
+  s.add_dependency 'compass-rails'
+
   #Mongo DB ORM and support
   s.add_dependency "mongoid", "~> 3.1.3"
   s.add_dependency "kiqstand" #handles connections for sidekiq
