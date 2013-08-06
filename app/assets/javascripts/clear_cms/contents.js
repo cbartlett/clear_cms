@@ -1,104 +1,135 @@
-var _checkFormState=function(){
-  if(window.warnBeforeUnload){
-    return "There are unsaved changes.";
+'use strict';
+
+var ClearCMS = Window.ClearCMS || {};
+
+ClearCMS.e = function() {
+  return {
+    FORM_FIELDS_MODIFIED: "form fields modified"
   }
 }
 
+ClearCMS.Form = function() {
+  var warnBeforeUnload = false,
+      markItUpSettings = {
+        onShiftEnter: {keepDefault:false, replaceWith:'<br />\n'},
+        onCtrlEnter:  {keepDefault:false, openWith:'\n<p>', closeWith:'</p>\n'},
+        onTab:      {keepDefault:false, openWith:'   '},
+        markupSet: [
+          {name:'Heading 1', key:'1', openWith:'<h1(!( class="[![Class]!]")!)>', closeWith:'</h1>', placeHolder:'Your title here...' },
+          {name:'Heading 2', key:'2', openWith:'<h2(!( class="[![Class]!]")!)>', closeWith:'</h2>', placeHolder:'Your title here...' },
+          {name:'Heading 3', key:'3', openWith:'<h3(!( class="[![Class]!]")!)>', closeWith:'</h3>', placeHolder:'Your title here...' },
+          {name:'Heading 4', key:'4', openWith:'<h4(!( class="[![Class]!]")!)>', closeWith:'</h4>', placeHolder:'Your title here...' },
+          {name:'Heading 5', key:'5', openWith:'<h5(!( class="[![Class]!]")!)>', closeWith:'</h5>', placeHolder:'Your title here...' },
+          {name:'Heading 6', key:'6', openWith:'<h6(!( class="[![Class]!]")!)>', closeWith:'</h6>', placeHolder:'Your title here...' },
+          {name:'Paragraph', openWith:'<p(!( class="[![Class]!]")!)>', closeWith:'</p>' },
+          {separator:'---------------' },
+          {name:'Bold', key:'B', openWith:'(!(<strong>|!|<b>)!)', closeWith:'(!(</strong>|!|</b>)!)' },
+          {name:'Italic', key:'I', openWith:'(!(<em>|!|<i>)!)', closeWith:'(!(</em>|!|</i>)!)' },
+          {name:'Stroke through', key:'S', openWith:'<del>', closeWith:'</del>' },
+          {separator:'---------------' },
+          {name:'Ul', openWith:'<ul>\n', closeWith:'</ul>\n' },
+          {name:'Ol', openWith:'<ol>\n', closeWith:'</ol>\n' },
+          {name:'Li', openWith:'<li>', closeWith:'</li>' },
+          {separator:'---------------' },
+          {name:'Picture', key:'P', replaceWith:'<img src="[![Source:!:http://]!]" alt="[![Alternative text]!]" />' },
+          {name:'Link', key:'L', openWith:'<a href="[![Link:!:http://]!]"(!( title="[![Title]!]")!)>', closeWith:'</a>', placeHolder:'Your text to link...' },
+          {separator:'---------------' }
+        ]
+      };
 
-$(document).ready(function() {
-  window.onbeforeunload=_checkFormState;
+  function warn() {
+    if (warnBeforeUnload) {
+      return 'There are unsaved changes.';
+    }
+  };
 
-  $('form.clear_cms_content').submit(function(){
-    window.warnBeforeUnload=false;
-  });
+  function activateMarkItUp() {
+    $('textarea.markitup').markItUp(markItUpSettings);
+  };
 
-  $('form.clear_cms_content').change(function(){
-    window.warnBeforeUnload=true;
-  });
+  return {
 
+    initialize: function() {
+      // watch window events for unload / unsaved changes
+      $('input,select,textarea').on('change keyup',function(e) {
+        warnBeforeUnload = true;
+      });
+      // watch for (SUCCESSFUL?) submit to clear warning
+      $('form').on('submit',function(e) {
+        warnBeforeUnload = false;
+      });
 
-  $(document).on('nested:fieldAdded', function(event){
-    // this field was just inserted into your form
-    //var field = event.field;
-    // it's a jQuery object already! Now you can find date input
-    //var dateField = field.find('.date');
-    // and activate datepicker on it
-    //dateField.datepicker();
-    $('textarea.markitup').markItUp(mySettings);
-  })
+      window.onbeforeunload = warn;
 
+      // initialize sortable widgets
+      $( "#asset-sortable" ).sortable({
+        revert: true,
+        update: function() {
 
-  //tooltips for index page category listing
-  $('.category_listings').tooltip({trigger: 'hover'});
+          // loop thorugh items and update order field
+          $('#asset-sortable .draggable').each(function(i) {
+            $(this).find('[id$=_order]').val(i); //content[content_blocks_attributes][0][content_assets_attributes][0][order])
+          });
 
-/* Sortable image assets */
-  $( "#asset-sortable" ).sortable({
-      revert: true,
-      update: function() {
+        }
+      });
+      $( ".draggable" ).draggable({
+        connectToSortable: "#asset-sortable",
+        helper: "original",
+        axis: "x",
+        revert: "invalid",
+        stop: function() {
+          //alert('done');
+        }
+      });
 
-        // loop thorugh items and update order field
-        $('#asset-sortable .draggable').each(function(i) {
-          $(this).find('[id$=_order]').val(i); //content[content_blocks_attributes][0][content_assets_attributes][0][order])
-        });
+      // "Disabling text selection is bad. Don't use this." http://api.jqueryui.com/disableSelection/
+      $( ".draggabke ul" ).disableSelection();
 
-      }
-  });
+      // activate markitup widgets
+      activateMarkItUp();
+      //$(document).on(ClearCMS.e.FORM_FIELDS_MODIFIED,activateMarkItUp);
+      $(document).on('nested:fieldAdded',activateMarkItUp);
 
-  $( ".draggable" ).draggable({
-      connectToSortable: "#asset-sortable",
-      helper: "original",
-      axis: "x",
-      revert: "invalid",
-      stop: function() {
-        //alert('done');
-      }
-  });
-
-  $( "ul, li" ).disableSelection();
-/**/
-
-  //$('#fileupload').bind('fileuploadadd', function (e, data) { data.submit()});
-  //$('form.clear_cms_content').append('<input name="clear_cms_content[content_blocks_attributes][0][content_assets_attributes][99][remote_file_url]" value="https://www.google.com/images/srpr/logo3w.png" />');
-
-
-/*
-  $('#fileupload').fileupload({
-      headers: {
-          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-      },
-      destroy: function (e, data) {
-          data.headers = $(this).data('fileupload')
-              .options.headers;
-          $.blueimpUI.fileupload.prototype.options.destroy
-              .call(this, e, data);
-      }
-  });
+      // activate field counters
+      $('textarea').textcount();
 
 
+      // activate "save as next state" button (TODO: refactor)
+      $(".form-action.next-state").bind('click', function(e) {
+        //alert($(this).attr('data-next-state'));
+        // console.log('save as next state');
+        $('#clear_cms_content_state').val($(this).attr('data-next-state'));
+        $('form.clear_cms_content').submit();
+      });
+    }
+  }
+}(); // ClearCMS.Form
 
-  $('#fileupload').bind('fileuploaddone', function(e,data) {
-    console.log(data.result);
-    //$('form.clear_cms_content').append('<input name="clear_cms_content[content_blocks_attributes][0][content_assets_attributes]['+Math.random(5)+'][remote_file_url]" type="hidden" value="'+data.result.files[0].url+'" />');
-    $('#modal-gallery > .modal-body').append('<img src="'+data.result.files[0].thumbnail_url+'" class="img-polaroid" />');
-    $('#asset-sortable').append(tmpl('template-asset-form',data.result.files[0]));
-  });
-*/
+
+ClearCMS.Interface = function() {
+  function drawStatus() {
+
+  };
+
+  function updateStatus(which, val) {
+
+  };
+
+  return {
+
+    initialize: function() {
+      // activate tooltips
+      $('.category_listings').tooltip({trigger: 'hover'});
 
 
-  $(".form-action.next-state").bind('click',
-    function(event) {
-      //alert($(this).attr('data-next-state'));
-      $('#clear_cms_content_state').val($(this).attr('data-next-state'));
-      $('form.clear_cms_content').submit();
+      // initialize status bar
+
 
     }
-  );
+  }
+}(); // ClearCMS.UI
 
-
-});
-
-
-var ClearCMS = Window.ClearCMS || {};
 
 
 ClearCMS.Image = function() {
@@ -106,7 +137,7 @@ ClearCMS.Image = function() {
   function internal_sample() {
 
 
-  }
+  };
 
 
   return {
@@ -158,7 +189,7 @@ ClearCMS.Image = function() {
     }
   }
 
-}();
+}(); // ClearCMS.Image
 
 
 ClearCMS.ImageQueue = function() {
@@ -193,8 +224,107 @@ ClearCMS.ImageQueue = function() {
 
   }
 
+}(); // ClearCMS.ImageQueue
 
 
-}();
+
+
+
+
+
+
+// On Load, Initilize sites
+(function($){
+  ClearCMS.Form.initialize();
+  ClearCMS.Interface.initialize();
+
+})(jQuery);
+
+
+
+
+
+// window.warnBeforeUnload = false;
+
+
+
+
+// var _checkFormState=function(){
+//   alert(window.warnBeforeUnload);
+//   if(window.warnBeforeUnload){
+//     return "There are unsaved changes.";
+//   }
+// }
+
+
+// $(document).ready(function() {
+  // window.onbeforeunload=_checkFormState;
+
+  // $('form.clear_cms_content').submit(function(){
+  //   window.warnBeforeUnload=false;
+  // });
+
+  // $('form.clear_cms_content').change(function(){
+  //   window.warnBeforeUnload=true;
+  // });
+
+
+  // $(document).on('nested:fieldAdded', function(event){
+  //   // this field was just inserted into your form
+  //   //var field = event.field;
+  //   // it's a jQuery object already! Now you can find date input
+  //   //var dateField = field.find('.date');
+  //   // and activate datepicker on it
+  //   //dateField.datepicker();
+  //   $('textarea.markitup').markItUp(mySettings);
+  // })
+
+
+  //tooltips for index page category listing
+  // $('.category_listings').tooltip({trigger: 'hover'});
+
+/* Sortable image assets */
+
+
+
+
+
+/**/
+
+  //$('#fileupload').bind('fileuploadadd', function (e, data) { data.submit()});
+  //$('form.clear_cms_content').append('<input name="clear_cms_content[content_blocks_attributes][0][content_assets_attributes][99][remote_file_url]" value="https://www.google.com/images/srpr/logo3w.png" />');
+
+
+/*
+  $('#fileupload').fileupload({
+      headers: {
+          'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+      },
+      destroy: function (e, data) {
+          data.headers = $(this).data('fileupload')
+              .options.headers;
+          $.blueimpUI.fileupload.prototype.options.destroy
+              .call(this, e, data);
+      }
+  });
+
+
+
+  $('#fileupload').bind('fileuploaddone', function(e,data) {
+    console.log(data.result);
+    //$('form.clear_cms_content').append('<input name="clear_cms_content[content_blocks_attributes][0][content_assets_attributes]['+Math.random(5)+'][remote_file_url]" type="hidden" value="'+data.result.files[0].url+'" />');
+    $('#modal-gallery > .modal-body').append('<img src="'+data.result.files[0].thumbnail_url+'" class="img-polaroid" />');
+    $('#asset-sortable').append(tmpl('template-asset-form',data.result.files[0]));
+  });
+*/
+
+
+
+
+
+// });
+
+
+
 
 //      helper: $(this).find('img'),
