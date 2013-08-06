@@ -38,3 +38,12 @@
   font-size: 0.8em;
   color: #999;
 }
+
+
+/* Sortable Media Styling
+------------------------------------------- */
+#asset-sortable {
+  position: relative;
+  height: 700px;
+  overflow: auto;
+}
