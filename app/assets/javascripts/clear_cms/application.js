@@ -14,12 +14,12 @@
 //= #require bootstrap-wysihtml5
 //= #require_tree .
 //= require jquery-fileupload
-//= require ./contents
 //= require ./s3_direct
 //= require markitup
 //= #require markitup/sets/xbbcode/set
-//= require ./markitup_html_settings
+//= #require ./markitup_html_settings
 //= require jquery.textcount
+//= require ./contents
 //= require_self
 
 
@@ -27,45 +27,3 @@
 (function($){})(window.jQuery);
 
 
-/* trigger when page is ready */
-$(document).ready(function (){
-
-  // your functions go here
-
-});
-
-
-$(document).ready(function() {
-
-  $('#site_selector_id').change(function() {
-    window.location.search='site_selector[id]='+$('#site_selector_id').val();
-  });
-
-});
-
-
-
-$(document).ready(function()  {
-  $('textarea.markitup').markItUp(mySettings);
-});
-
-
-
-
-/* optional triggers
-
-$(window).load(function() {
-
-});
-
-$(window).resize(function() {
-
-});
-
-*/
-
-
-/* start */
-$(document).ready(function()  {
-  $('textarea').textcount();
-});

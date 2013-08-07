@@ -47,3 +47,23 @@
   height: 700px;
   overflow: auto;
 }
+
+
+/* Status Bar
+------------------------------------------- */
+
+#status-bar {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  height: 2em;
+  line-height: 2em;
+  background: #fff;
+  border-top: 1px #000 solid;
+}
+
+#status-bar * {
+  display: inline;
+  padding: 0 0.5em;
+}
