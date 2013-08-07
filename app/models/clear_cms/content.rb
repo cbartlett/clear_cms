@@ -25,7 +25,7 @@ module ClearCMS
     
     accepts_nested_attributes_for :content_blocks, :content_notes, :content_logs
 
-    attr_accessible :_type
+    #attr_accessible :_type
   
     belongs_to :site, class_name: 'ClearCMS::Site', :inverse_of => :contents
     belongs_to :creator, class_name: 'ClearCMS::User', :inverse_of => :created_contents
