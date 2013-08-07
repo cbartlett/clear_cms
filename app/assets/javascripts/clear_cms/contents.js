@@ -231,6 +231,8 @@ ClearCMS.ImageQueue = function() {
             }
             $('#asset-sortable').append(tmpl('template-asset-form',data));
             delete assetList[data._id];
+            window.uploadsCount--;
+            ClearCMS.Interface.setStatus('uploads',window.uploadsCount);
           } else {
             window.setTimeout(function(){ ClearCMS.ImageQueue.checkProcessing(data._id); },2000);
           }

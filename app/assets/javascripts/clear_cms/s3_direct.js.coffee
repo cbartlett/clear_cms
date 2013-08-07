@@ -34,8 +34,6 @@ jQuery ->
           upload_data.context.find('.bar').html('processing...')
       )
       #data.context.remove() if data.context # remove progress bar
-      window.uploadsCount--
-      ClearCMS.Interface.setStatus('uploads',window.uploadsCount)
 
     fail: (e, data) ->
       alert("#{data.files[0].name} failed to upload.")
