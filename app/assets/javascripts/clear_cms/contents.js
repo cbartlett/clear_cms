@@ -48,14 +48,20 @@ ClearCMS.Form = function() {
   };
 
   return {
+    setUnsavedWarning: function() {
+      ClearCMS.Interface.setStatus('unsaved','true');
+      warnBeforeUnload = true;
+    },
 
     initialize: function() {
       // watch window events for unload / unsaved changes
       $('input,select,textarea').on('change keyup',function(e) {
+        ClearCMS.Interface.setStatus('unsaved','true');
         warnBeforeUnload = true;
       });
       // watch for (SUCCESSFUL?) submit to clear warning
       $('form').on('submit',function(e) {
+        ClearCMS.Interface.setStatus('unsaved','false');
         warnBeforeUnload = false;
       });
 
@@ -108,15 +114,23 @@ ClearCMS.Form = function() {
 
 
 ClearCMS.Interface = function() {
-  function drawStatus() {
+  function drawStatus(uploads,unsaved) {
+    var uploads = uploads ? uploads : "0",
+        unsaved = unsaved ? "yes" : "no";
 
+    if ($('#template-status-bar').length) {
+      $('body').append(tmpl('template-status-bar',{"uploads": uploads,"unsaved": unsaved}));
+    }
   };
 
   function updateStatus(which, val) {
-
+    $('#status-bar .val-'+which).html(val);
   };
 
   return {
+    setStatus: function(which, val) {
+      updateStatus(which, val);
+    },
 
     initialize: function() {
       // activate tooltips
@@ -124,7 +138,7 @@ ClearCMS.Interface = function() {
 
 
       // initialize status bar
-
+      drawStatus();
 
     }
   }
@@ -200,7 +214,9 @@ ClearCMS.ImageQueue = function() {
     addAsset: function(asset,upload_data){
       assetList[asset._id]={asset: asset, upload_data: upload_data};
       window.setTimeout(function(){ ClearCMS.ImageQueue.checkProcessing(asset._id); },2000);
-      window.warnBeforeUnload=true;
+      // TDDO: update this:
+      ClearCMS.Form.setUnsavedWarning();
+      //window.warnBeforeUnload=true;
       return assetList;
     },
     getAssets: function() {
