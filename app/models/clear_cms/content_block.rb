@@ -5,7 +5,7 @@ class ClearCMS::ContentBlock
   TYPES=%w(raw more sidebar)
   
   embedded_in :content, class_name: 'ClearCMS::Content'
-  embeds_many :content_assets, class_name: 'ClearCMS::ContentAsset', cascade_callbacks: true   
+  embeds_many :content_assets, class_name: 'ClearCMS::ContentAsset' #, cascade_callbacks: true   
   
   accepts_nested_attributes_for :content_assets, :allow_destroy=>true
   # git test

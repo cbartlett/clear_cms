@@ -46,7 +46,7 @@ module ClearCMS
     end    
        
     def edit
-      @clear_cms_content=Content.find(params[:id]).becomes(Content)
+      @clear_cms_content=Content.find(params[:id]) #.becomes(Content)
       # @clear_cms_content.content_notes.build
 #       @clear_cms_content.content_notes.build
 #       @clear_cms_content.content_blocks.build
@@ -55,8 +55,10 @@ module ClearCMS
     def update 
       @clear_cms_content=Content.find(params[:id])
 
-      #@clear_cms_content=@clear_cms_content.becomes(params[:content]['_type'].constantize)
+      @clear_cms_content=@clear_cms_content.becomes(params[:content]['_type'].constantize)
+      @clear_cms_content.flag_children_persisted #TODO: this is due to a bug in mongoid where it is duplicating > 2nd tier children
 
+      #@clear_cms_content._type=params[:content].delete '_type' 
 
       @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"edited")
       
