@@ -46,7 +46,7 @@ module ClearCMS
     end    
        
     def edit
-      @clear_cms_content=Content.find(params[:id])
+      @clear_cms_content=Content.find(params[:id]).becomes(Content)
       # @clear_cms_content.content_notes.build
 #       @clear_cms_content.content_notes.build
 #       @clear_cms_content.content_blocks.build
@@ -54,7 +54,10 @@ module ClearCMS
     
     def update 
       @clear_cms_content=Content.find(params[:id])
-      
+
+      #@clear_cms_content=@clear_cms_content.becomes(params[:content]['_type'].constantize)
+
+
       @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"edited")
       
       if @clear_cms_content.update_attributes(params[:content])
@@ -67,7 +70,7 @@ module ClearCMS
 
 
     def create
-      @clear_cms_content = ClearCMS::Content.new(params[:content])
+      @clear_cms_content = params[:content]['_type'].constantize.new(params[:content])
       @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"created")
   
       respond_to do |format|

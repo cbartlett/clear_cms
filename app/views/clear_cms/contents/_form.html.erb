@@ -14,13 +14,13 @@
   <% if @clear_cms_content.persisted? %>
     <%= link_to (@clear_cms_content.published? ? 'View >>' : "Preview >>"), main_app.content_path(@clear_cms_content), :class=>'pull-right btn', :target=>'_blank' %>
   <% end %>
-  <%= semantic_nested_form_for @clear_cms_content, :html=>{:multipart=>true, :class=>'form-horizontal well'} do |f| %>
+  <%= semantic_nested_form_for @clear_cms_content, :url=>clear_cms.content_path(@clear_cms_content), :html=>{:multipart=>true, :class=>'form-horizontal well'} do |f| %>
 <!--     <h3>Content Details</h3> -->
       <div id="modal-note-form" class="modal hide fade">
       </div>
 
     <%= f.inputs do %>
-      <%= f.input :type, :as=>:select, :collection=>ClearCMS::Content::TYPES %>
+      <%= f.input :_type, :as=>:select, :collection=>ClearCMS::Content::TYPES, :include_blank=>false %>
       <%= f.input :promote, :as=>:boolean, :html=>{:class=>'checkbox'} %>
       <%= f.input :title, :input_html=>{:class=>'input-xxlarge'} %>
       <%= f.input :subtitle, :input_html=>{:class=>'input-xxlarge'} %>
@@ -166,7 +166,7 @@
 
       </div>
       <% if @clear_cms_content.persisted? %>
-        <%= link_to 'Delete', @clear_cms_content,:confirm=>'Are you sure you want to delete this entry?',:method=>:delete,:class=>'btn' %>
+        <%= link_to 'Delete', clear_cms.content_path(@clear_cms_content),:confirm=>'Are you sure you want to delete this entry?',:method=>:delete,:class=>'btn' %>
       <% end %>
     </div>
 
