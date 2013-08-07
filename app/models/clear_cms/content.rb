@@ -7,7 +7,7 @@ module ClearCMS
     include Mongoid::Timestamps
     #include SitemapNotifier::ActiveRecord #TODO: submit a PR for a better way to do this for mongoid
     
-    TYPES=%w(Story Feature Video Link Gift Place Event Page GiftGuide)
+
     STATUSES={'Draft'=>'1','Scheduled'=>'2', 'Review'=>'3', 'Published'=>'4'}
     #MT Has States of 1=Draft, 2=Scheduled, 3=Review, 4=Published
     
@@ -24,6 +24,8 @@ module ClearCMS
     embeds_many :content_logs, class_name: 'ClearCMS::ContentLog', cascade_callbacks: true
     
     accepts_nested_attributes_for :content_blocks, :content_notes, :content_logs
+
+    attr_accessible :_type
   
     belongs_to :site, class_name: 'ClearCMS::Site', :inverse_of => :contents
     belongs_to :creator, class_name: 'ClearCMS::User', :inverse_of => :created_contents
@@ -37,44 +39,18 @@ module ClearCMS
     belongs_to :original_translation, :class_name => 'ClearCMS::Content', :inverse_of => :translations
     
   
-    field :type  
+    #field :type  
     field :title
     field :subtitle
-    field :tweet
     field :basename
-    field :promote, type: Boolean
-    field :language
-    field :address
-    field :latitude
-    field :longitude
+    field :language   
     
-    field :video_url
-    field :campaign_tracking_pixel
-    
-    field :brand_name
-    field :brand_url
-    field :buy_url
-    field :store_name
-    field :product_description
-    field :price
-    field :scale
-    field :fancy_item, type: Boolean
-    field :ios_app_exclusive, type: Boolean
-    field :product_image
-         
     field :status
     field :state
-    
-    field :keywords
+
     field :tags, type: Array
     field :categories, type: Array
-    
-    field :source
-    field :source_id
-    field :source_attributes, type: Hash
-    field :source_meta_attributes, type: Hash
-    
-  
+
     field :publish_at, type: DateTime
     field :deadline_at, type: DateTime
     
@@ -85,17 +61,10 @@ module ClearCMS
     
     validates_presence_of :title,:subtitle,:author,:basename,:tags,:categories,:site
     validates_uniqueness_of :basename, :scope=>:site_id
-
-    
-    scope :for_consideration, not_in(source: ['mt_import','web']).desc(:created_at).limit(20)
-    scope :published, lambda{ all.or({:state.in => ['Finished']},{:status.in => [2,4]}).and({:publish_at.lte => Time.now}, {:type.ne=>'Page'}, {:type.ne=>'GiftGuide'}).desc(:publish_at) }
-    scope :published_with_pages, lambda{ all.or({:state.in => ['Finished']},{:status.in => [2,4]}).and({:publish_at.lte => Time.now}).desc(:publish_at) }
-    scope :giftguide, lambda{ all.or({:state.in => ['Finished']},{:status.in => [2,4]}).and({:publish_at.lte => Time.now}, {:type=>'GiftGuide'}).desc(:publish_at) }
+ 
+    scope :published, lambda{ all.or({:state.in => ['Finished']},{:status.in => [2,4]}).desc(:publish_at) }
     scope :recently_published, ->(limit){ published.limit(limit) }
-    scope :featured, ->(limit){ published.and(promote: true).limit(limit) }
-    scope :recent_videos, ->(limit) { published.and(type: 'Video').limit(limit) }
-    scope :tagged, ->(tag){ tag_regex=Regexp.new("^(#{tag})$",Regexp::IGNORECASE); where(tags: tag_regex) }  
-        
+    scope :tagged, ->(tag){ tag_regex=Regexp.new("^(#{tag})$",Regexp::IGNORECASE); where(tags: tag_regex) }       
     
     include Sunspot::Mongoid
     
@@ -107,7 +76,7 @@ module ClearCMS
       text :content, :more_like_this => true do 
         content_blocks.map &:body
       end
-      text :address
+
       
       string :site_id
       string :status do 
@@ -160,10 +129,6 @@ module ClearCMS
       self[:title].html_safe unless self[:title].blank?
     end
     
-    def tweet
-      self[:tweet].html_safe unless self[:tweet].blank?
-    end 
-    
     def subtitle
       self[:subtitle].html_safe unless self[:subtitle].blank?
     end
@@ -188,9 +153,6 @@ module ClearCMS
       self[:categories] = (category_list.kind_of?(String) ? category_list.gsub(/[^a-zA-Z,\-_\ ]/,'').split(',').collect {|s| s.strip; s.downcase} : category_list)
     end
     
-    def render_campaign_tracking_pixel
-      self[:campaign_tracking_pixel].blank? ? nil : self[:campaign_tracking_pixel].gsub(/\[timestamp\]/,Time.now.to_i.to_s).html_safe
-    end
     
     def next_state
       if self[:state].blank?
@@ -202,54 +164,7 @@ module ClearCMS
       #self[:state].blank? ? STATES[1] : STATES.last 
     end
 
-    def default_category
-      categories.any? ? categories.first : 'none'
-    end
-    
-    def default_image
-      image=nil
-      if content_blocks.any? && default_content_block
-        if default_content_block.content_assets.any?
-          image=default_content_block.content_assets.asc(:order).first
-        end
-      end        
-    end
-    
-    def display_category
-      case default_category
-      when 'food-drink'
-        default_category.gsub('-',' + ').titlecase 
-      else
-        default_category.gsub(/[-_]/,' ').titlecase
-      end
-    end
-    
-    def default_image_url(version)
-      default_image.nil? ? '/images/fallback/default.png' : default_image.mounted_file.send(version).url 
-    end
-    
-#     def video_url
-#       source_meta_attributes['field_video_url']  
-#     end
-  
-    def friendly_url
-      case type 
-        when 'Page'
-          "/#{basename.dasherize}#{source=='mt_import' ? '.php' : ''}"
-        when 'GiftGuide'
-          "/giftguide/gifts/#{basename.dasherize}#{source=='mt_import' ? '.php' : ''}"
-        else 
-          "/#{default_category}/#{basename.dasherize}#{source=='mt_import' ? '.php' : ''}"
-      end
-    end
-    
-    def default_content_block
-      @default_content_block ||= content_blocks.where(type: 'raw').first #|| content_blocks.build
-    end
-    
-    def extended_content_block
-      @extended_content_block ||= content_blocks.where(type: 'more').first 
-    end
+
     
     def next_content 
       #self

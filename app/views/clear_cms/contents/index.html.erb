@@ -60,7 +60,7 @@
         <a data-toggle="tooltip" class="category_listings" title="<%= c.categories.collect {|cat| cat.titleize }.join(', ') %>"><%= c.categories.first.try(:titleize) %></a>
       <% end %>
     </td>
-    <td><%= c.type %></td>
+    <td><%= c._type %></td>
     <td><%= c.assignee[:full_name] if c.assignee %></td>
     <td><%= c.author[:full_name] if c.author %></td>
     <td><%= c.publish_at %></td>
@@ -69,7 +69,7 @@
 
 <!--
     <td><input type="checkbox" value="<%= c.id %>" name="import_content[<%= c.id %>]" /></td>
-    <td><%= link_to 'show', c %></td>
+    <td><%#= link_to 'show', c %></td>
 -->
   </tr>
   <% end %>
