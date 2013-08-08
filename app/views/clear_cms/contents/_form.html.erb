@@ -157,7 +157,7 @@
       <!-- <%= f.input :status, :as=>:select, :collection=>ClearCMS::Content::STATUSES %>  -->
       <%= f.submit 'Save', :class=>'btn btn-primary' %>
       <%= f.submit (@clear_cms_content.published? ? 'View >>' : "Preview >>"), :class=>'btn' %>
-      <%= f.input :publish_at %>
+      <%= f.input :publish_at, :input_html => { :class => 'datetime_picker' } %>
       <%= f.input :state, :as=>:select, :collection=>Hash[ClearCMS::Content::STATES.map {|state| [state.humanize, state]}] %>
       <br>
       <div class="well well-small clearfix">

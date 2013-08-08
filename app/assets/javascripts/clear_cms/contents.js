@@ -100,6 +100,35 @@ ClearCMS.Form = function() {
       // activate field counters
       $('textarea').textcount();
 
+      // activate special datetimepickers
+      // hack to make date field format so datepicker sees it
+      $('.datetime_picker').each(function(i){
+        var datetime = moment($(this).val()),
+            datetime_reformatted = datetime.format('YYYY-MM-DDTHH:mm:ss');
+        $(this).val(datetime_reformatted);
+      })
+
+      $('.datetime_picker').datetimepicker({
+        format: 'yyyy-mm-ddThh:mm:ssZ',
+        autoclose: true,
+        showMeridian: true,
+        todayBtn: true,
+        pickerPosition: "bottom-left"
+      });
+
+
+      // hack to convert date to utc before submission
+      $('form').on('submit',function(e) {
+        $('.datetime_picker').each(function(i){
+          var datetime = moment($(this).val()),
+            datetime_unformatted = datetime.format('YYYY-MM-DDTHH:mm:ssZ');
+
+          $(this).val(datetime_unformatted);
+        });
+
+      })
+      //$('.datetime_picker').
+
 
       // activate "save as next state" button (TODO: refactor)
       $(".form-action.next-state").bind('click', function(e) {

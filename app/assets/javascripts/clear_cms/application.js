@@ -19,6 +19,8 @@
 //= #require markitup/sets/xbbcode/set
 //= #require ./markitup_html_settings
 //= require jquery.textcount
+//= require moment
+//= require bootstrap-datetimepicker
 //= require ./contents
 //= require_self
 
