@@ -190,26 +190,7 @@
         </div><!--/span-->
 <!--
         
-        <% if current_user %>
-          <div class="span3">
-            <div class="well sidebar-nav">
-              <ul class="nav nav-list">            
-                <li class="nav-header">Assigned to Me</li>
-                  <% current_user.assigned_contents.limit(5).each do |content| %>
-                    <li><%= link_to content.title, clear_cms.content_path(content) %></li>
-                  <% end %>
-                <li class="nav-header">Recently Published</li>
-                  <% ClearCMS::Content.recently_published(5).each do |content| %>
-                    <li><%= link_to content.title, clear_cms.content_path(content) %></li>
-                  <% end %>                
-                <li class="nav-header">For Consideration</li>
-                  <% ClearCMS::Content.for_consideration.limit(5).each do |content| %>
-                    <li><%= link_to content.title, clear_cms.content_path(content) %></li>
-                  <% end %>
-              </ul>
-            </div>
-          </div>
-        <% end %>
+
 -->
       </div><!--/row-->
 
