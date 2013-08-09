@@ -4,15 +4,15 @@
 
 <div class="panel">
   <h3>My Assigned Content</h3>
-  <%= render :partial=>'clear_cms/contents/list', :locals=>{:clear_cms_contents=>current_user.assigned_contents} %>
+  <%#= render :partial=>'clear_cms/contents/list', :locals=>{:clear_cms_contents=>current_user.assigned_contents} %>
 </div>
 
 <div class="panel">
   <h3>Recently Published</h3>
-  <%= render :partial=>'clear_cms/contents/list', :locals=>{:clear_cms_contents=>ClearCMS::Content.recently_published(10)} %>  
+  <%#= render :partial=>'clear_cms/contents/list', :locals=>{:clear_cms_contents=>ClearCMS::Content.recently_published(10)} %>  
 </div>
 
 <div class="panel">
   <h3>For Consideration</h3>
-  <%= render :partial=>'clear_cms/contents/list', :locals=>{:clear_cms_contents=>ClearCMS::Content.for_consideration} %>  
+  <%#= render :partial=>'clear_cms/contents/list', :locals=>{:clear_cms_contents=>ClearCMS::Content.for_consideration} %>  
 </div>
