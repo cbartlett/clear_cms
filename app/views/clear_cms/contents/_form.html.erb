@@ -35,7 +35,7 @@
       
       <% ClearCMS::Content.form_fields.each do |field,models| %>
         <%# if models.include?(@clear_cms_content.class.to_s) %>
-          <%= f.input field, :wrapper_html=>{'data-types'=>models.join(' ')} %> 
+          <%= f.input field, :wrapper_html=>{'data-types'=>models.to_json} %> 
         <%# end %>
       <% end %>
 
