@@ -6,7 +6,49 @@ ClearCMS.e = function() {
   return {
     FORM_FIELDS_MODIFIED: "form fields modified"
   }
-}
+}();
+
+// Manages the content type metadata / form switching for edit pages
+ClearCMS.ContentTypes = function() {
+  var $typeSelect,
+      currentType,
+      allType = 'ClearCMS::Content';
+
+  function displayMetaFields(thing) {
+    var type = (typeof thing == 'string') ? thing : $(this).val();
+
+    // loop though fieldset.general li and inspect the data('types') array
+    // TBD: this may not be the final method of identifying these fields/areas
+    $('.general li[data-types]').each(function(i) {
+
+      if ((-1 != $.inArray(type, $(this).data('types'))) || (-1 != $.inArray(allType, $(this).data('types')))) {
+        $(this).show();
+      } else {
+        $(this).hide();
+      }
+
+    });
+  };
+
+  return {
+    initialize: function() {
+      $typeSelect = $('#content__type');
+
+      // STEP 0: Decide we're on a content edit page
+      if ($typeSelect.length) {
+        // STEP 1: Grab Types field and current value
+        currentType = $typeSelect.val();
+
+        // STEP 2: Set initial
+        displayMetaFields(currentType);
+        // STEP 3: Watch Chage of type field
+        $typeSelect.on('change',displayMetaFields)
+
+        }
+      // TBD: what do we do with content in dropped fields - are those hidden and not submitted? zerod out?
+    }
+  }
+}(); // ClearCMS.Types
 
 ClearCMS.Form = function() {
   var warnBeforeUnload = false,
@@ -284,6 +326,7 @@ ClearCMS.ImageQueue = function() {
 (function($){
   ClearCMS.Form.initialize();
   ClearCMS.Interface.initialize();
+  ClearCMS.ContentTypes.initialize();
 
 })(jQuery);
 
