@@ -19,35 +19,27 @@
       <div id="modal-note-form" class="modal hide fade">
       </div>
 
-    <%= f.inputs do %>
-      <%= f.input :_type, :as=>:select, :collection=>ClearCMS::Content.subclasses.collect(&:to_s), :include_blank=>false %>
-      <%= f.input :promote, :as=>:boolean, :html=>{:class=>'checkbox'} %>
-      <%= f.input :title, :input_html=>{:class=>'input-xxlarge'} %>
-      <%= f.input :subtitle, :input_html=>{:class=>'input-xxlarge'} %>
-      <%= f.input :basename, :hint=>'Must not contain spaces or special chars' %>
-      <%= f.input :author, :collection=>(ClearCMS::User.active + [@clear_cms_content.author]).compact.uniq %>
-      <%= f.input :tags, :input_html=>{:class=>'input-xxlarge'}%>
-      <%= f.input :categories, :input_html=>{:class=>'input-xxlarge', 'autocomplete'=>'off', 'data-provide'=>"typeahead", 'data-source'=>@clear_cms_content.site.categories.collect {|c| c['_id'] }.to_json} %>
-      <%= f.input :tweet, :as=>:text, :input_html=>{:class=>'input-xxlarge', rows: 3} %>
-      <%= f.input :address, :as=>:text, :input_html=>{:rows=>5 }%>
-      <%= f.input :latitude %>
-      <%= f.input :longitude %>
-      <%= f.input :video_url, :label=>'Video URL', :input_html=>{:class=>'input-xxlarge'} %>
-      <%= f.input :campaign_tracking_pixel, :label=>'Campaign Tracking Pixel', :input_html=>{:class=>'input-xxlarge'} %>
+<!--     <div class="well well-small"> -->
+    <%= f.inputs "General" do %>
 
 
-      <%= f.input :brand_name, :label=>'Brand Name' %>
-      <%= f.input :brand_url, :label=>'Brand URL' %>
-      <%= f.input :buy_url, :label=>'Buy URL' %>
-      <%= f.input :store_name, :label=>'Store Name' %>
-      <%= f.input :price %>
-      <%= f.input :scale, :collection=>[1,2,3] %>
-      <%= f.input :product_image, :label=>'Product Image' %>
-      <%= f.input :product_description, :as=>:text, :label=>'Product Description', :input_html=>{:class=>'input-xxlarge', rows: 3}  %>
-      <%= f.input :fancy_item, :as=>:boolean, :html=>{:class=>'checkbox'} %>
-      <%= f.input :ios_app_exclusive, :as=>:boolean, :html=>{:class=>'checkbox'}, :label=>'iOS APP Exclusive' %>
+        <%= f.input :site_id, :as=>:hidden, :value=>current_site.id %>
+        <%= f.input :_type, :as=>:select, :collection=>ClearCMS::Content.subclasses.collect(&:to_s), :include_blank=>false %>
+        <%= f.input :title, :input_html=>{:class=>'input-xxlarge'} %>
+        <%= f.input :subtitle, :input_html=>{:class=>'input-xxlarge'} %>
+        <%= f.input :basename, :hint=>'Must not contain spaces or special chars' %>
+        <%= f.input :author, :collection=>(ClearCMS::User.active + [@clear_cms_content.author]).compact.uniq %>
+        <%= f.input :tags, :input_html=>{:class=>'input-xxlarge'}%>
+        <%= f.input :categories, :input_html=>{:class=>'input-xxlarge', 'autocomplete'=>'off', 'data-provide'=>"typeahead", 'data-source'=>@clear_cms_content.site.categories.collect {|c| c['_id'] }.to_json} %>
+<!--     </div> -->
+      
+      <% ClearCMS::Content.form_fields.each do |field,models| %>
+        <%# if models.include?(@clear_cms_content.class.to_s) %>
+          <%= f.input field, :wrapper_html=>{'data-types'=>models.join(' ')} %> 
+        <%# end %>
+      <% end %>
 
-      <%= f.input :site_id, :as=>:hidden, :value=>current_site.id %>
+
     <% end %>
 
 
@@ -211,7 +203,7 @@
       <h4>History</h4>
       <p><b>CREATED AT</b><br><small><i><%= @clear_cms_content.created_at %></i></small></p>
       <p><b>UPDATED AT</b><br><small><i><%= @clear_cms_content.updated_at %></i></small></p>
-      <p><b>SOURCE</b><br><small><i><%= @clear_cms_content.source %></i></small></p>
+      <p><b>SOURCE</b><br><small><i><%#= @clear_cms_content.source %></i></small></p>
       <p><b>ACTIVITY</b>
       <% @clear_cms_content.content_logs.each do |log| %>
         <br><small><i><%= log.entry.capitalize %> by <%= log.user.full_name %> at <%= log.created_at %></i></small>

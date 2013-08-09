@@ -5,8 +5,25 @@ module ClearCMS
     # keep at most 5 versions of a record
     max_versions 20
     include Mongoid::Timestamps
+
+    cattr_accessor :form_fields
     #include SitemapNotifier::ActiveRecord #TODO: submit a PR for a better way to do this for mongoid
     
+    def self.form_field(*field_passthru)
+      self.form_fields ||= {}  
+      self.form_fields[field_passthru[0]] ||= []
+
+      case self.name 
+      when 'ClearCMS::Content'
+        field *field_passthru  
+      else
+        self.superclass.field *field_passthru
+      end
+      
+      self.form_fields[field_passthru[0]] << self.name
+    end
+
+
 
     STATUSES={'Draft'=>'1','Scheduled'=>'2', 'Review'=>'3', 'Published'=>'4'}
     #MT Has States of 1=Draft, 2=Scheduled, 3=Review, 4=Published
