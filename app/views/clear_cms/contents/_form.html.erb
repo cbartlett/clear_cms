@@ -17,6 +17,17 @@
   <%= semantic_nested_form_for @clear_cms_content, :as=>:content, :url=>(@clear_cms_content.persisted? ? clear_cms.content_path(@clear_cms_content) : clear_cms.contents_path), :html=>{:multipart=>true, :class=>'form-horizontal well'} do |f| %>
 <!--     <h3>Content Details</h3> -->
       <div id="modal-note-form" class="modal hide fade">
+        <h2>Notes</h2>
+        <h3>New Note</h3>
+        <button onclick="$(this).after(tmpl('template-note-form')); $(this).remove(); return false;">add new note</button>
+        <div id="newNoteWrap">
+        </div>
+        <h3>Existing Notes</h3>
+        <ul>
+          <% @clear_cms_content.content_notes.each do |content_note| %>
+          <li><%= content_note.entry %></li>
+          <% end %>
+        </ul>
       </div>
 
 <!--     <div class="well well-small"> -->
@@ -32,10 +43,10 @@
         <%= f.input :tags, :input_html=>{:class=>'input-xxlarge'}%>
         <%= f.input :categories, :input_html=>{:class=>'input-xxlarge', 'autocomplete'=>'off', 'data-provide'=>"typeahead", 'data-source'=>@clear_cms_content.site.categories.collect {|c| c['_id'] }.to_json} %>
 <!--     </div> -->
-      
+
       <% ClearCMS::Content.form_fields.each do |field,models| %>
         <%# if models.include?(@clear_cms_content.class.to_s) %>
-          <%= f.input field, :wrapper_html=>{'data-types'=>models.to_json} %> 
+          <%= f.input field, :wrapper_html=>{'data-types'=>models.to_json} %>
         <%# end %>
       <% end %>
 
@@ -170,8 +181,7 @@
 
     <div class="well">
       <h4>Content Notes</h4>
-      <p><a class='btn btn-xlarge' onclick="$('#modal-note-form').append(tmpl('template-note-form'));
-      $('#modal-note-form').modal(); return false;">Add Note</a></p>
+      <p><a class='btn btn-xlarge' onclick="$('#modal-note-form').modal(); return false;">View/Add Notes</a></p>
       <!-- modal-note-form is at the top of the semantic form because of the way formtastic is closing the form before this block, this all needs a major refactoring...CHRIS! -->
 
 <!--
@@ -192,10 +202,10 @@
       <% end %>
 -->
       <% @clear_cms_content.content_notes.each do |content_note| %>
-        <p><%= content_note.entry %></p>
+        <p><%= truncate(content_note.entry, length: 40) %></p>
       <% end %>
 
-      <a>ALL NOTES...</a>
+      <!-- <a>ALL NOTES...</a> -->
 
     </div>
 
