@@ -21,7 +21,7 @@ module ClearCMS
       if params[:q]
         @clear_cms_contents=current_site.contents.includes(:site).search {fulltext params[:q]; paginate page: params[:page]; with :site_id, current_site.id}.results
       elsif types.any?
-        @clear_cms_contents=current_site.contents.includes(:site).where(:type.in=>types).desc(:created_at).page(params[:page])
+        @clear_cms_contents=current_site.contents.includes(:site).where(:_type.in=>types).desc(:created_at).page(params[:page])
       else
         #@clear_cms_contents=current_site.contents.where("content_blocks.body"=>/#{Regexp.escape(params[:search]||'')}/i).desc(:updated_at).page(params[:page])
         @clear_cms_contents=current_site.contents.includes(:site).desc(:publish_at).page(params[:page])
