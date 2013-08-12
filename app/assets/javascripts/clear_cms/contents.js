@@ -146,7 +146,11 @@ ClearCMS.Form = function() {
       // hack to make date field format so datepicker sees it
       $('.datetime_picker').each(function(i){
         var datetime = moment($(this).val()),
-            datetime_reformatted = datetime.format('YYYY-MM-DDTHH:mm:00');
+            datetime_reformatted = "";
+
+        if (datetime) {
+          datetime_reformatted = datetime.format('YYYY-MM-DDTHH:mm:00');
+        }
         $(this).val(datetime_reformatted);
       })
 
@@ -163,8 +167,11 @@ ClearCMS.Form = function() {
       $('form').on('submit',function(e) {
         $('.datetime_picker').each(function(i){
           var datetime = moment($(this).val()),
-            datetime_unformatted = datetime.format('YYYY-MM-DDTHH::00Z');
+            datetime_unformatted = "";
 
+          if (datetime) {
+            datetime_unformatted = datetime.format('YYYY-MM-DDTHH::00Z');
+          }
           $(this).val(datetime_unformatted);
         });
 

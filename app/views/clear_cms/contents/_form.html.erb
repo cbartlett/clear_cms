@@ -17,17 +17,22 @@
   <%= semantic_nested_form_for @clear_cms_content, :as=>:content, :url=>(@clear_cms_content.persisted? ? clear_cms.content_path(@clear_cms_content) : clear_cms.contents_path), :html=>{:multipart=>true, :class=>'form-horizontal well'} do |f| %>
 <!--     <h3>Content Details</h3> -->
       <div id="modal-note-form" class="modal hide fade">
-        <h2>Notes</h2>
-        <h3>New Note</h3>
-        <button onclick="$(this).after(tmpl('template-note-form')); $(this).remove(); return false;">add new note</button>
-        <div id="newNoteWrap">
+        <div class="modal-header">
+          <a class="close" data-dismiss="modal">&times;</a>
+          <h3 class="modal-title">Notes</h3>
         </div>
-        <h3>Existing Notes</h3>
-        <ul>
-          <% @clear_cms_content.content_notes.each do |content_note| %>
-          <li><%= content_note.entry %></li>
-          <% end %>
-        </ul>
+        <div class="modal-body">
+          <h4>New Note</h4>
+          <button onclick="$(this).after(tmpl('template-note-form')); $(this).remove(); return false;">add new note</button>
+          <div id="newNoteWrap">
+          </div>
+          <h4>Other Notes</h4>
+          <ul>
+            <% @clear_cms_content.content_notes.each do |content_note| %>
+            <li><%= content_note.entry %></li>
+            <% end %>
+          </ul>
+        </div>
       </div>
 
 <!--     <div class="well well-small"> -->
@@ -96,12 +101,12 @@
           <%= cbf.semantic_fields_for :content_assets do |caf| %>
             <div class="media well well-small content-form-asset draggable">
 
-              <a class="pull-left" onclick="console.log('image clicked'); ClearCMS.Image.insertWizard(this); return false;">
+              <a class="pull-left" onclick="ClearCMS.Image.insertWizard(this); return false;">
                 <%= image_tag caf.object.mounted_file.url, class: 'img-polaroid', width: '100px' %>
 
               </a>
               <% if caf.object.persisted? %>
-                  <a class="btn btn-small pull-left" onclick="console.log('insert clicked'); CClearCMS.Image.insertWizard(this); return false;">Insert</a>
+                  <a class="btn btn-small pull-left" onclick="ClearCMS.Image.insertWizard(this); return false;">Insert</a>
               <% end %>
               <div class="media-body">
 
@@ -319,8 +324,8 @@
 <!-- The template to insert a note -->
 <script id="template-note-form" type="text/x-tmpl">
   {% var random_id=Math.floor(Math.random() * 10000000); %}
-  <li class="text input optional" id="content_content_notes_attributes_{%=random_id%}_entry_input"><label class=" label" for="content_content_notes_attributes_{%=random_id%}_entry">Description</label><textarea id="content_content_notes_attributes_{%=random_id%}_entry" name="content[content_notes][{%=random_id%}][entry]" rows="10"></textarea>
-  </li>
+  <div class="text input optional" id="content_content_notes_attributes_{%=random_id%}_entry_input"><label class=" label" for="content_content_notes_attributes_{%=random_id%}_entry">Description</label><textarea id="content_content_notes_attributes_{%=random_id%}_entry" name="content[content_notes][{%=random_id%}][entry]" rows="8" cols="40" style="width:100%"></textarea>
+  </div>
 </script>
 
 
