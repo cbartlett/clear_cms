@@ -170,7 +170,7 @@ ClearCMS.Form = function() {
             datetime_unformatted = "";
 
           if (datetime) {
-            datetime_unformatted = datetime.format('YYYY-MM-DDTHH::00Z');
+            datetime_unformatted = datetime.format('YYYY-MM-DDTHH:mm:00Z');
           }
           $(this).val(datetime_unformatted);
         });
