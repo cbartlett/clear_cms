@@ -9,18 +9,22 @@ module ClearCMS
     cattr_accessor :form_fields
     #include SitemapNotifier::ActiveRecord #TODO: submit a PR for a better way to do this for mongoid
     
-    def self.form_field(*field_passthru)
+    def self.form_field(field_name, options={})
       self.form_fields ||= {}  
-      self.form_fields[field_passthru[0]] ||= []
+      self.form_fields[field_name] ||= {:models=>[],:formtastic_options=>{}}
+      
+      formtastic_options=options.delete(:formtastic_options)||{}
+      #options={}
 
       case self.name 
       when 'ClearCMS::Content'
-        field *field_passthru  
+        field field_name, options
       else
-        self.superclass.field *field_passthru
+        self.superclass.field field_name
       end
       
-      self.form_fields[field_passthru[0]] << self.name
+      self.form_fields[field_name][:models] << self.name
+      self.form_fields[field_name][:formtastic_options].merge!(formtastic_options)
     end
 
 

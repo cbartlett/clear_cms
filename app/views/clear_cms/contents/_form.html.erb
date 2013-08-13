@@ -49,9 +49,9 @@
         <%= f.input :categories, :input_html=>{:class=>'input-xxlarge', 'autocomplete'=>'off', 'data-provide'=>"typeahead", 'data-source'=>@clear_cms_content.site.categories.collect {|c| c['_id'] }.to_json} %>
 <!--     </div> -->
 
-      <% ClearCMS::Content.form_fields.each do |field,models| %>
+      <% ClearCMS::Content.form_fields.each do |field,options| %>
         <%# if models.include?(@clear_cms_content.class.to_s) %>
-          <%= f.input field, :wrapper_html=>{'data-types'=>models.to_json} %>
+          <%= f.input field, options[:formtastic_options].merge(:wrapper_html=>{'data-types'=>options[:models].to_json}) %>
         <%# end %>
       <% end %>
 
