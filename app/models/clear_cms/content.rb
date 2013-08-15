@@ -116,7 +116,7 @@ module ClearCMS
     def self.boosted_search(params)
       search do 
         fulltext params[:search] do 
-          boost_fields :title => 500.0
+          boost_fields :title => 500.0, :subtitle => 500.0
           #fields(:title,:subtitle,:tags)
         end        
         paginate page: params[:page]
@@ -124,7 +124,12 @@ module ClearCMS
         with :status, 'PUBLISHED'
         with(:publish_at).less_than Time.now
         
-        order_by :publish_at, :desc      
+        if params[:sort_by] == "2"
+          order_by :publish_at, :desc
+        else
+          order_by :score, :desc
+          order_by :publish_at, :desc
+        end
       end
     end
     
