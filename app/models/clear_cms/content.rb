@@ -108,6 +108,7 @@ module ClearCMS
           'DRAFT'
         end
       end
+      string :categories, :multiple=>true 
       time :publish_at
       time :created_at
       time :updated_at
