@@ -67,6 +67,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'less-rails'
   s.add_dependency 'markitup-rails'
 
+
   #Utilities
   s.add_dependency "htmlentities" 
   s.add_dependency "highline"

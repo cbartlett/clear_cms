@@ -146,13 +146,13 @@ module ClearCMS
       #id.generation_time.to_i
     end
     
-    def title
-      self[:title].html_safe unless self[:title].blank?
-    end
+    # def safe_title
+    #   self[:title].html_safe unless self[:title].blank?
+    # end
     
-    def subtitle
-      self[:subtitle].html_safe unless self[:subtitle].blank?
-    end
+    # def safe_subtitle
+    #   self[:subtitle].html_safe unless self[:subtitle].blank?
+    # end
     
     def related(limit=25)
       result = Sunspot.more_like_this(self) do
