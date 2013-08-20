@@ -109,6 +109,7 @@ module ClearCMS
         end
       end
       string :categories, :multiple=>true 
+      string :_type
       time :publish_at
       time :created_at
       time :updated_at
@@ -123,13 +124,14 @@ module ClearCMS
         paginate page: params[:page]
         with :site_id, params[:site_id]
         with :status, 'PUBLISHED'
+        with :categories, params[:category] if (params[:category] && params[:category] != 'any')
+        with :_type, params[:type] if (params[:type] && params[:type] != 'any')
         with(:publish_at).less_than Time.now
         
-        if params[:sort_by] == "2"
-          order_by :publish_at, :desc
-        else
+        if params[:sort_by] == "date" 
+          order_by :publish_at, :desc 
+        else 
           order_by :score, :desc
-          order_by :publish_at, :desc
         end
       end
     end
