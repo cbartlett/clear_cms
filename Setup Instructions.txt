@@ -14,7 +14,7 @@ sidekiq/redis setup...background image processing on upload
 brew install imagemagick
 rvm pkg install openssl issue
 
-
+decorators
 
 main_app.content_path
 
