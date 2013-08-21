@@ -136,6 +136,9 @@ module ClearCMS
       end
     end
     
+    def frank
+
+    end
     
     def published?
       if state=='Finished' || status==2 || status==4
@@ -255,3 +258,7 @@ private
   end
 
 end
+
+require_dependency File.join([Rails.application.root,'app/models/city'])
+
+
