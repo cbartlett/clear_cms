@@ -32,9 +32,14 @@ module ClearCMS
   
  	def self.activate
 	    Dir.glob(File.join(Rails.application.root, "app/**/*_decorator*.rb")) do |c|
-	      Rails.logger.debug "Loading #{c}"
+	      
 	      Rails.configuration.cache_classes ? require(c) : load(c)
 	    end
+
+	    Dir.glob(File.join(Rails.application.root, "app/models/*.rb")) do |c|
+
+	      Rails.configuration.cache_classes ? require(c) : load(c)	    
+	  	end
   	end
     
     config.to_prepare &method(:activate).to_proc
