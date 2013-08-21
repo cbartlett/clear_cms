@@ -35,11 +35,6 @@ module ClearCMS
 	      
 	      Rails.configuration.cache_classes ? require(c) : load(c)
 	    end
-
-	    Dir.glob(File.join(Rails.application.root, "app/models/*.rb")) do |c|
-
-	      Rails.configuration.cache_classes ? require(c) : load(c)	    
-	  	end
   	end
     
     config.to_prepare &method(:activate).to_proc
