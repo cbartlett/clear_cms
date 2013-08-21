@@ -6,9 +6,13 @@ module ClearCMS
     max_versions 20
     include Mongoid::Timestamps
 
-    cattr_accessor :form_fields
+    #@@form_fields = {}
+    cattr_accessor :form_fields do 
+      {}
+    end
     #include SitemapNotifier::ActiveRecord #TODO: submit a PR for a better way to do this for mongoid
     
+
     def self.form_field(field_name, options={})
       self.form_fields ||= {}  
       self.form_fields[field_name] ||= {:models=>[],:formtastic_options=>{}}
@@ -26,7 +30,6 @@ module ClearCMS
       self.form_fields[field_name][:models] << self.name
       self.form_fields[field_name][:formtastic_options].merge!(formtastic_options)
     end
-
 
 
     STATUSES={'Draft'=>'1','Scheduled'=>'2', 'Review'=>'3', 'Published'=>'4'}
@@ -136,9 +139,6 @@ module ClearCMS
       end
     end
     
-    def frank
-
-    end
     
     def published?
       if state=='Finished' || status==2 || status==4
@@ -259,6 +259,7 @@ private
 
 end
 
-require_dependency File.join([Rails.application.root,'app/models/city'])
+#Testing this to see if we need to do it to get the classes to register for building forms in development where they are not eager loaded/and or while making changes to CMS code
+#require_dependency File.join([Rails.application.root,'app/models/city'])
 
 
