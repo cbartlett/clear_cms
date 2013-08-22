@@ -25,53 +25,18 @@ class ClearCMS::Uploaders::ContentAssetUploader < CarrierWave::Uploader::Base
   end
 
   version :large do
-    #process :only_first_frame
     process :convert => 'jpg'
     process :resize_to_fit => [1600,1600]
-    # Imagemagick command:
-    # convert file.ext -resize '1600x1600>' -quality 85 -strip large.ext
-#     process :change_geometry => '1600x1600>'
-#     process :quality => 80
-#     process :strip
-  end
-
-  version :half_width, :from_version => :large do
-    process :resize_to_fit => [307,nil]
-  end
-
-  version :full_width, :from_version => :large do
-    process :resize_to_fit => [620,nil]
-  end
-
-  version :slideshow, :from_version => :large do
-    process :resize_to_fit => [nil,450]
-  end
-
-  version :feature, :from_version => :large do
-    process :resize_to_fill => [300,300]
   end
 
   version :thumb, :from_version => :large do
     process :resize_to_fill => [200,200]
   end
 
-  version :tinythumb, :from_version => :large do
-    process :resize_to_fill => [75,75]
-  end
-
   def thumbnail #alias for thumb
     thumb
   end
 
-
-
-  version :listview, :from_version => :large do
-    process :resize_to_fill => [150,150]
-  end
-
-  version :pager, :from_version => :large do
-    process :resize_to_fill => [140,140]
-  end
 
   #half w307 full w620
   #slideshow 930x690 or 620x460
@@ -105,6 +70,20 @@ class ClearCMS::Uploaders::ContentAssetUploader < CarrierWave::Uploader::Base
         end
         cmd.gravity gravity
         cmd.extent "#{width}x#{height}" if cols != width || rows != height
+
+        # Added by CC
+        cmd.strip
+        cmd.quality quality
+      end
+      img = yield(img) if block_given?
+      img
+    end
+  end
+
+  def resize_to_fit_with_quality(width, height, quality)
+    manipulate! do |img|
+      img.combine_options do |cmd|
+        cmd.resize "#{width}x#{height}"
 
         # Added by CC
         cmd.strip
