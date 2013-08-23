@@ -72,86 +72,86 @@
     <p><%= f.link_to_add "Add a Content Block", :content_blocks, :class=>'btn btn-xlarge' %></p>
 
 
-    <ul class="nav nav-tabs" id="myTab">
-      <% @clear_cms_content.content_blocks.each_with_index do |cb,i| %>
-        <li<%= i==0 ? ' class=active' : '' %>><a href="#content_block_<%= cb.type.present? ? cb.type : cb.object_id %>" data-toggle="tab"><%= cb.type.present? ? cb.type : cb.object_id %></a></li>
-      <% end %>
-    </ul>
-
-
-    <div class="tab-content">
-      <% @clear_cms_content.content_blocks.each_with_index do |cb,i| %>
-
-      <div class="tab-pane <%= i==0 ? 'active' : '' %>" id="content_block_<%= cb.type.present? ? cb.type : cb.object_id %>">
-      <%= f.semantic_fields_for :content_blocks, cb do |cbf| %>
-
-
-      <div class="well">
-
-        <%= cbf.inputs do %>
-          <%= cbf.input :type, :as=>:select, :collection=>ClearCMS::ContentBlock::TYPES %>
-          <%= cbf.input :body, :as=>:text, :input_html=>{:class=>'input-xxlarge markitup'} %>
-          <%= cbf.input :has_gallery, :as=>:boolean, :html=>{:class=>'checkbox'} %>
-
-<!--           <a href="#modal-gallery" role="button" class="btn" data-toggle="modal">Insert Images</a> -->
-          <hr>
-
-          <div id="asset-sortable">
-          <h4>Images</h4>
-          <%= cbf.semantic_fields_for :content_assets do |caf| %>
-            <div class="media well well-small content-form-asset draggable">
-
-              <a class="pull-left" onclick="ClearCMS.Image.insertWizard(this); return false;">
-                <%= image_tag caf.object.mounted_file.url, class: 'img-polaroid', width: '100px' %>
-
-              </a>
-              <% if caf.object.persisted? %>
-                  <a class="btn btn-small pull-left" onclick="ClearCMS.Image.insertWizard(this); return false;">Insert</a>
-              <% end %>
-              <div class="media-body">
-
-                <% unless caf.object.persisted? %>
-<!--
-                  <%= caf.input :mounted_file %>
-                  <%= caf.input :remote_mounted_file_url, :as=>:hidden %>
--->
-                <% end %>
-
-                <%= caf.input :path, :as=>:hidden, :input_html=>{:class=>'path'} %>
-                <%= caf.input :file, :as=>:hidden, :input_html=>{:class=>'file'} %>
-
-                <div class="span5">
-                <%= caf.input :title %>
-                <%= caf.input :description, :as=>:text, :input_html=>{:rows=>1} %>
-                <%= caf.input :credit %>
-                </div>
-                <div class="span5">
-                <%= caf.input :tags %>
-                <%#= caf.input :tags, :input_html=>{:class=>'input-xxlarge'}%>
-                <%= caf.input :order %>
-                <%= caf.check_box '_destroy' %> Delete
-                </div>
-<!--
-                <%= caf.input :caption %>
-                <%= caf.input :order %>
--->
-
-
-              </div>
-            </div>
-          <% end %>
-          </div>
-
-         <!--  <p><%= cbf.link_to_add "Add an Asset", :content_assets, :class=>'btn btn-xlarge' %></p> -->
-
-
+    <div class="tabbable">
+      <ul class="nav nav-tabs" id="myTab">
+        <% @clear_cms_content.content_blocks.each_with_index do |cb,i| %>
+          <li<%= i==0 ? ' class=active' : '' %>><a href="#content_block_<%= cb.type.present? ? cb.type : cb.object_id %>_<%= i %>" data-toggle="tab"><%= cb.type.present? ? cb.type : cb.object_id %></a></li>
         <% end %>
-      </div>
-      <% end %>
-      </div>
-    <% end %>
-    </div>
+      </ul>
+      <div class="tab-content">
 
+        <% @clear_cms_content.content_blocks.each_with_index do |cb,i| %>
+
+        <div class="tab-pane <%= i==0 ? 'active' : '' %>" id="content_block_<%= cb.type.present? ? cb.type : cb.object_id %>_<%= i %>">
+        <%= f.semantic_fields_for :content_blocks, cb do |cbf| %>
+
+
+        <div class="well">
+
+          <%= cbf.inputs do %>
+            <%= cbf.input :type, :as=>:select, :collection=>ClearCMS::ContentBlock::TYPES %>
+            <%= cbf.input :body, :as=>:text, :input_html=>{:class=>'input-xxlarge markitup'} %>
+            <%= cbf.input :has_gallery, :as=>:boolean, :html=>{:class=>'checkbox'} %>
+
+  <!--           <a href="#modal-gallery" role="button" class="btn" data-toggle="modal">Insert Images</a> -->
+            <hr>
+
+            <div id="asset-sortable">
+            <h4>Images</h4>
+            <%= cbf.semantic_fields_for :content_assets do |caf| %>
+              <div class="media well well-small content-form-asset draggable">
+
+                <a class="pull-left" onclick="ClearCMS.Image.insertWizard(this); return false;">
+                  <%= image_tag caf.object.mounted_file.url, class: 'img-polaroid', width: '100px' %>
+
+                </a>
+                <% if caf.object.persisted? %>
+                    <a class="btn btn-small pull-left" onclick="ClearCMS.Image.insertWizard(this); return false;">Insert</a>
+                <% end %>
+                <div class="media-body">
+
+                  <% unless caf.object.persisted? %>
+  <!--
+                    <%= caf.input :mounted_file %>
+                    <%= caf.input :remote_mounted_file_url, :as=>:hidden %>
+  -->
+                  <% end %>
+
+                  <%= caf.input :path, :as=>:hidden, :input_html=>{:class=>'path'} %>
+                  <%= caf.input :file, :as=>:hidden, :input_html=>{:class=>'file'} %>
+
+                  <div class="span5">
+                  <%= caf.input :title %>
+                  <%= caf.input :description, :as=>:text, :input_html=>{:rows=>1} %>
+                  <%= caf.input :credit %>
+                  </div>
+                  <div class="span5">
+                  <%= caf.input :tags %>
+                  <%#= caf.input :tags, :input_html=>{:class=>'input-xxlarge'}%>
+                  <%= caf.input :order %>
+                  <%= caf.check_box '_destroy' %> Delete
+                  </div>
+  <!--
+                  <%= caf.input :caption %>
+                  <%= caf.input :order %>
+  -->
+
+
+                </div>
+              </div>
+            <% end %>
+            </div>
+
+           <!--  <p><%= cbf.link_to_add "Add an Asset", :content_assets, :class=>'btn btn-xlarge' %></p> -->
+
+
+          <% end %>
+        </div>
+        <% end %>
+        </div><!-- /.tab-pane -->
+      <% end %>
+      </div><!-- /.tab-content -->
+    </div> <!--/.tabbable -->
   </div>
 
 
