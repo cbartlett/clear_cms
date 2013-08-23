@@ -17,7 +17,7 @@
 //= require ./s3_direct
 //= require markitup
 //= #require markitup/sets/xbbcode/set
-//= #require ./markitup_html_settings
+//= require ./markitup_html_settings
 //= require jquery.textcount
 //= require moment
 //= require bootstrap-datetimepicker
