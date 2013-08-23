@@ -1,3 +1,5 @@
+require 'devise/orm/mongoid'
+
 module ClearCMS
   class User
     include Mongoid::Document
@@ -11,7 +13,10 @@ module ClearCMS
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable 
     
     #TODO: :registerable
-    devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :encryptable, :lockable
+    devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :encryptable, :lockable, 
+            :encryptor=>:sha512, :reset_password_within=>6.hours,
+            :stretches=>Rails.env.test? ? 1 : 10,
+            :strip_whitespace_keys =>[ :email ], :case_insensitive_keys => [ :email ]
 
     
     has_many :authored_contents, class_name: 'ClearCMS::Content', :inverse_of=>:author
@@ -112,6 +117,10 @@ module ClearCMS
 
     def friendly_url
       "/author/#{base_name.dasherize}"
+    end
+
+    def devise_mailer
+        ::Devise::Mailer 
     end
         
   end
