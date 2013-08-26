@@ -37,6 +37,7 @@ module ClearCMS
 #       @clear_cms_content.content_notes.build
 #       @clear_cms_content.content_blocks.build
       @clear_cms_content.source='web'
+      #@clear_cms_content.linked_contents.build
       @clear_cms_content.content_blocks.build(:type=>'raw')
   
       respond_to do |format|

@@ -13,6 +13,7 @@ class ClearCMS::ContentBlock
   field :body
   field :type
   field :has_gallery, type: Boolean
+  field :order
   
   def body
     self[:body].html_safe unless self[:body].blank?
