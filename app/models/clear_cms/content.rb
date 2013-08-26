@@ -135,6 +135,7 @@ module ClearCMS
           order_by :publish_at, :desc 
         else 
           order_by :score, :desc
+          order_by :publish_at, :desc
         end
       end
     end
