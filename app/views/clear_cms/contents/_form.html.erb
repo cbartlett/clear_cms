@@ -69,6 +69,7 @@
 
     <h3>Linked Contents</h3>
     <button onclick="$(this).after(tmpl('template-linked-content-form')); $(this).remove(); return false;">add linked content</button>
+    <!-- CHRIS: you can get json results of content like this: http://localhost:5003/clear_cms/sites/51e59961b50f1e24db000002/contents.json?q=dolor -->
     <% @clear_cms_content.linked_contents.each do |lc| %>
       <% if lc.persisted? %>
         <%= lc.linked_content.title %> <%= image_tag lc.linked_content.default_image_url(:thumb) %>
@@ -77,6 +78,7 @@
         <%= lcf.inputs do %>
           <%= lcf.input :linked_content_id %>
           <%= lcf.input :order %>
+          <%= lcf.check_box '_destroy' %> Delete
         <% end %>
       <% end %>
     <% end %>
@@ -107,6 +109,7 @@
             <%= cbf.input :type, :as=>:select, :collection=>ClearCMS::ContentBlock::TYPES %>
             <%= cbf.input :body, :as=>:text, :input_html=>{:class=>'input-xxlarge markitup'} %>
             <%= cbf.input :order %>
+            <%= cbf.check_box '_destroy' %> Delete
             <%= cbf.input :has_gallery, :as=>:boolean, :html=>{:class=>'checkbox'} %>
 
   <!--           <a href="#modal-gallery" role="button" class="btn" data-toggle="modal">Insert Images</a> -->

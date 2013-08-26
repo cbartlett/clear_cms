@@ -26,6 +26,11 @@ module ClearCMS
         #@clear_cms_contents=current_site.contents.where("content_blocks.body"=>/#{Regexp.escape(params[:search]||'')}/i).desc(:updated_at).page(params[:page])
         @clear_cms_contents=current_site.contents.includes(:site).desc(:publish_at).page(params[:page])
       end
+
+      respond_to do |format|
+        format.html
+        format.json { render json: @clear_cms_contents }
+      end
     end
     
     def show
