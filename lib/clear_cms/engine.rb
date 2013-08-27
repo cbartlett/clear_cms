@@ -25,6 +25,7 @@ require 'markitup-rails'
 require 'sidekiq'
 require 'kiqstand'
 require 'compass-rails'
+#require 'highline'
 
 module ClearCMS
   class Engine < ::Rails::Engine

@@ -1,4 +1,4 @@
-require 'highline/import'
+#require 'highline/import'
 
 namespace :clear_cms do
 
