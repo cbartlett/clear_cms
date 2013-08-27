@@ -68,20 +68,29 @@
 -->
 
     <h3>Linked Contents</h3>
-    <button onclick="$(this).after(tmpl('template-linked-content-form')); return false;">add linked content</button>
-    <!-- CHRIS: you can get json results of content like this: http://localhost:5003/clear_cms/sites/51e59961b50f1e24db000002/contents.json?q=dolor -->
-    <% @clear_cms_content.linked_contents.each do |lc| %>
-      <% if lc.persisted? %>
-        <%= lc.linked_content.title %> <%= image_tag lc.linked_content.default_image_url(:thumb) %>
-      <% end %>
-      <%= f.semantic_fields_for :linked_contents, lc do |lcf| %>
-        <%= lcf.inputs do %>
-          <%= lcf.input :linked_content_id %>
-          <%= lcf.input :order %>
-          <%= lcf.check_box '_destroy' %> Delete
+    <div class="lookupWrap" id="linkedLookupWrap" data-lookup-url="/clear_cms/sites/<%=current_site.id%>/contents.json?q=dolor" data-lookup-filter-type="Product" data-lookup-success-tmpl="template-linked-content-form">
+      <!-- CHRIS: you can get json results of content like this:  -->
+      <input type="text" class="lookupField" placeholder="being typing content title...">
+      <button class="lookupTrigger">add linked content</button>
+    </div> <!-- /.lookupWrap -->
+
+
+    <ul class="linked-content-items lookupSuccessTarget">
+      <% @clear_cms_content.linked_contents.each do |lc| %>
+      <li class="linked-content-item">
+        <% if lc.persisted? %>
+          <%= lc.linked_content.title %> <%= image_tag lc.linked_content.default_image_url(:thumb) %>
         <% end %>
+        <%= f.semantic_fields_for :linked_contents, lc do |lcf| %>
+          <%= lcf.inputs do %>
+            <%= lcf.input :linked_content_id %>
+            <%= lcf.input :order %>
+            <%= lcf.check_box '_destroy' %> Delete
+          <% end %>
+        <% end %>
+      </li>
       <% end %>
-    <% end %>
+    </ul>
 
 
     <h3>Content Block(s)</h3>
@@ -342,11 +351,23 @@
 
 <!-- The template to insert linked content -->
 <script id="template-linked-content-form" type="text/x-tmpl">
-  {% var random_id=Math.floor(Math.random() * 10000000); %}
-  <label>Linked Content ID</label>
-  <input name="content[linked_contents][{%=random_id%}][linked_content_id]">
-  <label>Order</label>
-  <input name="content[linked_contents][{%=random_id%}][order]">
+  <li class="linked-content-item">
+    <div class="fields">
+      <fieldset class="inputs">
+        <ol>
+          <li class="input">
+            {% var random_id=Math.floor(Math.random() * 10000000); %}
+            <label class="label">Linked Content</label>
+            <input name="content[linked_contents][{%=random_id%}][linked_content_id]" value="{%=o.content_id%}">
+          </li>
+          <li class="input">
+            <label class="label">Order</label>
+            <input name="content[linked_contents][{%=random_id%}][order]">
+          </li>
+        </ol>
+      </fielset>
+    </div>
+  </li>
 </script>
 
 
