@@ -48,7 +48,7 @@ module ClearCMS
     embeds_many :content_logs, class_name: 'ClearCMS::ContentLog', cascade_callbacks: true
     embeds_many :linked_contents, class_name: 'ClearCMS::LinkedContent', cascade_callbacks: true, inverse_of: :content
 
-    accepts_nested_attributes_for :content_blocks, :content_notes, :content_logs, :linked_contents
+    accepts_nested_attributes_for :content_blocks, :content_notes, :content_logs, :linked_contents, :allow_destroy=>true
 
     #attr_accessible :_type
   
