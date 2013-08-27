@@ -72,8 +72,10 @@ ClearCMS.Form = function() {
     initialize: function() {
       // watch window events for unload / unsaved changes
       $('input,select,textarea').on('change keyup',function(e) {
-        ClearCMS.Interface.setStatus('unsaved','true');
-        warnBeforeUnload = true;
+        if (!$(this).is('.hidefromstatus')) {
+          ClearCMS.Interface.setStatus('unsaved','true');
+          warnBeforeUnload = true;
+        }
       });
       // watch for (SUCCESSFUL?) submit to clear warning
       $('form').on('submit',function(e) {
@@ -192,11 +194,115 @@ ClearCMS.Interface = function() {
       // initialize status bar
       drawStatus();
 
+      // initialize type ahead find dialogs
+      // $('#linkedLookup').typeahead({
+      //   source: function(query, process) {
+      //     return $.ajax({
+      //       //url: $(this)[0].$element[0].data.link,
+      //       url: '/clear_cms/sites/51e59961b50f1e24db000002/contents.json',
+      //       type: 'get',
+      //       data: {
+      //         'filters[type]': 'Product',
+      //         query: query
+      //       },
+      //       dataType: 'json',
+      //       success: function(json) {
+      //         return typeof json.options == 'undefined' ? false : process(json.options);
+      //       }
+      //     });
+      //   }
+      // });
+
+      // re-route lookup field form submission to adding content item
+      // $('#linkedLookup').on('keyup',function(e) {
+      //   if (e.keyCode == 13) {
+      //     e.stopPropagation();
+      //     e.preventDefault();
+      //   }
+      // });
+
+      // $('#linkedLookup')
     }
   }
 }(); // ClearCMS.UI
 
+ClearCMS.Linking = function() {
+  var _dataCache;
 
+  function _addTemplate($block) {
+    var which,
+        val,
+        data;
+
+    val = $block.find('input').val();
+    $block.find('input').val('');
+    which = $block.data('lookup-success-tmpl');
+    data = {
+      //'fiters[type]': $block.data('lookup-filter-type'),
+      content_id: val
+    }
+    $block.next('.lookupSuccessTarget').prepend(tmpl(which,data));
+  };
+
+  return {
+    initialize: function() {
+      var $blocks,
+          $field,
+          $button;
+
+      // look up linkage blocks and attach needed event handlers
+      $blocks = $('.lookupWrap');
+
+      // prevent some edge cases / form submits
+      $('input',$blocks).addClass('hidefromstatus').on('keyup',function(e) {
+        if (e.keyCode == 13) {
+          //_addTemplate($(this).parents('.lookupWrap'));
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
+
+      // manage button events
+      $('button',$blocks).on('click',function(e) {
+        e.preventDefault();
+        if ($(this).siblings('input').val()) {
+          _addTemplate($(this).parents('.lookupWrap'));
+        }
+      })
+
+      $('input',$blocks).each(function(i) {
+        var $input = $(this),
+            $block = $input.parents('.lookupWrap');
+
+        $input.autocomplete({
+          source: function(request, response) {
+            $.ajax({
+              url: $block.data('lookup-url'),
+              data: {
+                'fiters[type]': $block.data('lookup-filter-type'),
+                q: request.term
+              }
+            }).success(function(data){
+              var results = $.map(data, function(content) {
+                return {
+                  label: content.title,
+                  value: content._id
+                }
+              });
+              _dataCache = data;
+              response(results);
+            });
+          },
+          minLength: 2,
+          select: function( event, ui ) {
+            console.log(ui);
+            // TBD: auto _addTemplate on selection?
+          }
+        });
+      });
+    }
+  }
+}(); // ClearCMS.Linking
 
 ClearCMS.Image = function() {
 
@@ -308,6 +414,7 @@ ClearCMS.ImageQueue = function() {
   ClearCMS.Form.initialize();
   ClearCMS.Interface.initialize();
   ClearCMS.ContentTypes.initialize();
+  ClearCMS.Linking.initialize()
 
 })(jQuery);
 
