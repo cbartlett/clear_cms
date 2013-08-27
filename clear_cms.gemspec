@@ -57,7 +57,7 @@ Gem::Specification.new do |s|
   #s.add_dependency 'sunspot_solr' #had to add this to the main app
 
   #Asset related gems
-  s.add_dependency 'jquery-rails'
+  s.add_dependency 'jquery-rails', '~> 3.0.4'
   s.add_dependency 'jquery-ui-rails'
   s.add_dependency 'jquery-fileupload-rails'
   s.add_dependency 'twitter-bootstrap-rails'
