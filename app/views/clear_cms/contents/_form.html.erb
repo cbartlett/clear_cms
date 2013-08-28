@@ -365,7 +365,7 @@ var linkedFiltersType = {
 <!-- The template to insert linked content -->
 <script id="template-linked-content-form" type="text/x-tmpl">
   {% var random_id=Math.floor(Math.random() * 10000000); %}
-  <li class="linked-content-item media well">
+  <li class="linked-content-item media well draggable draggable-ui">
     <button class="close" onclick="$(this).parent().remove(); return false;">&times;</button>
     <span class="pull-left"><img class="media-object" src="{%=o.media_src%}"></span>
     <div class="media-body">
