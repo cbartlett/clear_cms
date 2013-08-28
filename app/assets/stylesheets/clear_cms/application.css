@@ -56,12 +56,21 @@
 
 /* Sortable Media Styling
 ------------------------------------------- */
+
+#linkedContentSortable {
+  .ui-draggable {
+    height: 160px;
+  }
+}
 #asset-sortable {
-  position: relative;
-  height: 700px;
-  overflow: auto;
+  .ui-draggable {
+    height: 170px;
+  }
 }
 
+.draggable {
+  cursor: move;
+}
 
 /* Status Bar
 ------------------------------------------- */

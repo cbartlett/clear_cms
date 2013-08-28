@@ -77,9 +77,9 @@ var linkedFiltersType = {
 
     <h3>Linked Contents</h3>
 
-    <ul class="linked-content-items lookupSuccessTarget">
+    <ul id="linkedContentSortable" class="linked-content-items lookupSuccessTarget well">
       <% @clear_cms_content.linked_contents.each do |lc| %>
-      <li class="linked-content-item media well">
+      <li class="linked-content-item media well draggable">
         <% if lc.persisted? %>
           <span class="pull-left media-oject"><%= image_tag lc.linked_content.default_image_url(:thumb) %></span>
           <div class="media-body">
@@ -169,7 +169,7 @@ var linkedFiltersType = {
                   <div class="span5">
                   <%= caf.input :tags %>
                   <%#= caf.input :tags, :input_html=>{:class=>'input-xxlarge'}%>
-                  <%= caf.input :order %>
+                  <%= caf.input :order, :as=>:hidden %>
                   <%= caf.check_box '_destroy' %> Delete
                   </div>
   <!--
@@ -370,8 +370,8 @@ var linkedFiltersType = {
     <span class="pull-left"><img class="media-object" src="{%=o.media_src%}"></span>
     <div class="media-body">
       <h5 class="media-heading">{%=o.title%}</h5>
-      <input type="hidden" name="content[linked_contents][{%=random_id%}][linked_content_id]" value="{%=o.content_id%}">
-      <input type="hidden" name="content[linked_contents][{%=random_id%}][order]" value="{%=o.order%}">
+      <input type="hidden" id="content_linked_contents_attributes_{%=random_id%}_linked_content_id" name="content[linked_contents][{%=random_id%}][linked_content_id]" value="{%=o.content_id%}">
+      <input type="hidden" id="content_linked_contents_attributes_{%=random_id%}_order" name="content[linked_contents][{%=random_id%}][order]" value="{%=o.order%}">
     </div> <!-- /.media-body -->
   </li>
 </script>
@@ -413,7 +413,7 @@ var linkedFiltersType = {
                 <li class="string input optional stringish" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_tags_input"><label class=" label" for="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_tags">Tags</label><input class="input-xxlarge" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_tags" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][tags]" type="text" value="[]">
 
 </li>
-                <li class="string input optional stringish" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_order_input"><label class=" label" for="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_order">Order</label><input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_order" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][order]" type="text" value="99">
+                <li class="hidden input optional stringish" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_order_input"><input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_order" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][order]" type="hidden" value="99">
 
 </li>
       </div>

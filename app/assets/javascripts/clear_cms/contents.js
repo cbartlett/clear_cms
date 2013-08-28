@@ -85,7 +85,29 @@ ClearCMS.Form = function() {
 
       window.onbeforeunload = warn;
 
-      // initialize sortable widgets
+
+      // TODO: abstract this all
+      // initialize sortable widgets - linked content
+      $('#linkedContentSortable').sortable({
+        revert: true,
+        update: function() {
+          // loop thorugh items and update order field
+          $('#linkedContentSortable .draggable').each(function(i) {
+            $(this).find('[id$=_order]').val(i);
+          });
+        }
+      });
+      $( ".draggable","#linkedContentSortable").draggable({
+        connectToSortable: "#linkedContentSortable",
+        helper: "original",
+        axis: "x",
+        revert: "invalid",
+        stop: function() {
+          //alert('done');
+        }
+      });
+
+      // initialize sortable widgets - media items
       $( "#asset-sortable" ).sortable({
         revert: true,
         update: function() {
@@ -97,7 +119,7 @@ ClearCMS.Form = function() {
 
         }
       });
-      $( ".draggable" ).draggable({
+      $( ".draggable","#asset-sortable").draggable({
         connectToSortable: "#asset-sortable",
         helper: "original",
         axis: "x",
