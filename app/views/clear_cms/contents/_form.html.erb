@@ -8,6 +8,14 @@
 -->
 <% end %>
 
+<%#TBD: based on site config, set this object up %>
+<script>
+var linkedFiltersType = {
+  // 'Product': {'Product'},
+  // 'Brand': {'Product'},
+  // 'Editorial': {'Product'}
+};
+</script>
 
 <div class="row-fluid">
   <div class="span9">
@@ -68,29 +76,34 @@
 -->
 
     <h3>Linked Contents</h3>
-    <div class="lookupWrap" id="linkedLookupWrap" data-lookup-url="/clear_cms/sites/<%=current_site.id%>/contents.json?q=dolor" data-lookup-filter-type="Product" data-lookup-success-tmpl="template-linked-content-form">
-      <!-- CHRIS: you can get json results of content like this:  -->
-      <input type="text" class="lookupField" placeholder="being typing content title...">
-      <button class="lookupTrigger">add linked content</button>
-    </div> <!-- /.lookupWrap -->
-
 
     <ul class="linked-content-items lookupSuccessTarget">
       <% @clear_cms_content.linked_contents.each do |lc| %>
-      <li class="linked-content-item">
+      <li class="linked-content-item media well">
         <% if lc.persisted? %>
-          <%= lc.linked_content.title %> <%= image_tag lc.linked_content.default_image_url(:thumb) %>
+          <span class="pull-left media-oject"><%= image_tag lc.linked_content.default_image_url(:thumb) %></span>
+          <div class="media-body">
+            <h5 class="media-heading"><%= lc.linked_content.title %></h5>
+        <% else %>
+          <div class="media-body">
         <% end %>
+
         <%= f.semantic_fields_for :linked_contents, lc do |lcf| %>
           <%= lcf.inputs do %>
-            <%= lcf.input :linked_content_id %>
-            <%= lcf.input :order %>
+            <%= lcf.input :linked_content_id, :as => :hidden %>
+            <%= lcf.input :order, :as => :hidden %>
             <%= lcf.check_box '_destroy' %> Delete
           <% end %>
         <% end %>
+          </div> <!-- /.media-body -->
       </li>
       <% end %>
     </ul>
+    <div class="lookupWrap well" id="linkedLookupWrap" data-lookup-url="/clear_cms/sites/<%=current_site.id%>/contents.json" data-lookup-filter-type="Product" data-lookup-success-tmpl="template-linked-content-form">
+      <!-- CHRIS: you can get json results of content like this:  -->
+      <input type="text" class="lookupField" placeholder="begin typing then select content title...">
+      <!-- <button class="lookupTrigger">add linked content</button> -->
+    </div> <!-- /.lookupWrap -->
 
 
     <h3>Content Block(s)</h3>
@@ -351,25 +364,17 @@
 
 <!-- The template to insert linked content -->
 <script id="template-linked-content-form" type="text/x-tmpl">
-  <li class="linked-content-item">
-    <div class="fields">
-      <fieldset class="inputs">
-        <ol>
-          <li class="input">
-            {% var random_id=Math.floor(Math.random() * 10000000); %}
-            <label class="label">Linked Content</label>
-            <input name="content[linked_contents][{%=random_id%}][linked_content_id]" value="{%=o.content_id%}">
-          </li>
-          <li class="input">
-            <label class="label">Order</label>
-            <input name="content[linked_contents][{%=random_id%}][order]">
-          </li>
-        </ol>
-      </fielset>
-    </div>
+  {% var random_id=Math.floor(Math.random() * 10000000); %}
+  <li class="linked-content-item media well">
+    <button class="close" onclick="$(this).parent().remove(); return false;">&times;</button>
+    <span class="pull-left"><img class="media-object" src="{%=o.media_src%}"></span>
+    <div class="media-body">
+      <h5 class="media-heading">{%=o.title%}</h5>
+      <input type="hidden" name="content[linked_contents][{%=random_id%}][linked_content_id]" value="{%=o.content_id%}">
+      <input type="hidden" name="content[linked_contents][{%=random_id%}][order]" value="{%=o.order%}">
+    </div> <!-- /.media-body -->
   </li>
 </script>
-
 
 
 <!-- The template to insert a note -->

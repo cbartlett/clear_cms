@@ -229,19 +229,22 @@ ClearCMS.Interface = function() {
 ClearCMS.Linking = function() {
   var _dataCache;
 
-  function _addTemplate($block) {
+  function _addTemplate($block,ui) {
     var which,
-        val,
         data;
 
-    val = $block.find('input').val();
-    $block.find('input').val('');
+    //val = $block.find('input').val();
     which = $block.data('lookup-success-tmpl');
     data = {
       //'fiters[type]': $block.data('lookup-filter-type'),
-      content_id: val
+      content_id: ui.item.all._id,
+      title: ui.item.all.title,
+      media_src: ui.item.all.content_blocks[0].content_assets[0].mounted_file.thumb.url,
+      order: 99
     }
-    $block.next('.lookupSuccessTarget').prepend(tmpl(which,data));
+    $block.prev('.lookupSuccessTarget').append(tmpl(which,data));
+    // TODO: why does this get delated? or overwritten by autocomplete plugin race conditions
+    $block.find('.lookupField').val('');
   };
 
   return {
@@ -266,7 +269,7 @@ ClearCMS.Linking = function() {
       $('button',$blocks).on('click',function(e) {
         e.preventDefault();
         if ($(this).siblings('input').val()) {
-          _addTemplate($(this).parents('.lookupWrap'));
+          //_addTemplate($(this).parents('.lookupWrap'));
         }
       })
 
@@ -286,17 +289,20 @@ ClearCMS.Linking = function() {
               var results = $.map(data, function(content) {
                 return {
                   label: content.title,
-                  value: content._id
+                  value: content._id,
+                  all: content
                 }
               });
               _dataCache = data;
               response(results);
             });
           },
-          minLength: 2,
+          minLength: 4,
           select: function( event, ui ) {
+            event.preventDefault();
             console.log(ui);
             // TBD: auto _addTemplate on selection?
+            _addTemplate($(this).parents('.lookupWrap'),ui);
           }
         });
       });
