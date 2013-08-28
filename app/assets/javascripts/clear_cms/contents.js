@@ -229,6 +229,9 @@ ClearCMS.Interface = function() {
 ClearCMS.Linking = function() {
   var _dataCache;
 
+  // adds a new record to the collection of linked items
+  // $block = .lookupWrap block
+  // ui == jQuery UI autocomplete output
   function _addTemplate($block,ui) {
     var which,
         data;
@@ -245,6 +248,12 @@ ClearCMS.Linking = function() {
     $block.prev('.lookupSuccessTarget').append(tmpl(which,data));
     // TODO: why does this get delated? or overwritten by autocomplete plugin race conditions
     $block.find('.lookupField').val('');
+  };
+
+  // updates the filter type based on selection
+  // NOTE: currently dumb, changes ALL linked content blocks on a page
+  function _updateFitlerType(val) {
+    $('.lookupWrap').data('lookup-filter-type',val);
   };
 
   return {
@@ -271,8 +280,14 @@ ClearCMS.Linking = function() {
         if ($(this).siblings('input').val()) {
           //_addTemplate($(this).parents('.lookupWrap'));
         }
-      })
+      });
 
+      // watch type selector for changes
+      $('.linkedFiltersTypeMonitor').on('change',function(e) {
+        _updateFitlerType(linkedFiltersType[$(this).val()]);
+      });
+
+      // initialize jquery autocomplete widget and outputs
       $('input',$blocks).each(function(i) {
         var $input = $(this),
             $block = $input.parents('.lookupWrap');
