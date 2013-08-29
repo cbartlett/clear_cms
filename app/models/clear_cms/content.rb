@@ -84,6 +84,7 @@ module ClearCMS
     index({publish_at: -1, :_id=>-1})
     index({publish_at: -1, :_type=>1})
     index({categories: 1})
+    index({basename: 1})
     index({tags: 1})
     index({:_type=>1})
 
