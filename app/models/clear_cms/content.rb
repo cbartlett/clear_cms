@@ -82,6 +82,9 @@ module ClearCMS
     index({updated_at: -1})
     index({created_at: -1})
     index({publish_at: -1, '_id'=>-1})
+    index({:_type=>-1})
+    index({:_id=>-1})
+    
     #index({publish_at: -1})
     
     validates_presence_of :title,:subtitle,:author,:basename,:tags,:categories,:site
