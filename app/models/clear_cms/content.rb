@@ -31,6 +31,10 @@ module ClearCMS
       self.form_fields[field_name][:formtastic_options].merge!(formtastic_options)
     end
 
+    def self.content_types
+      subclasses
+    end
+
 
     STATUSES={'Draft'=>'1','Scheduled'=>'2', 'Review'=>'3', 'Published'=>'4'}
     #MT Has States of 1=Draft, 2=Scheduled, 3=Review, 4=Published
@@ -231,7 +235,9 @@ module ClearCMS
       @previous_content ||= site.contents.published.where(:publish_at.lt => publish_at).limit(1).first 
     end
 
-
+    def friendly_path
+      "/content/#{id}"
+    end
 
     def self.find_in_batches(opts = {})
       batch_size = opts[:batch_size] || 1000

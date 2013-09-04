@@ -76,7 +76,7 @@
                   </a>
                   <ul class="dropdown-menu">
                     <% if can? :create, ClearCMS::Content %>
-                      <li><%= link_to t('clear_cms.entry'), clear_cms.new_site_content_path(current_site) %></li>
+                      <li><%= link_to t('clear_cms.content'), clear_cms.new_site_content_path(current_site) %></li>
                     <% end %>
                     <% if can? :create, ClearCMS::User %>
                       <li><%= link_to t('clear_cms.user'), clear_cms.new_user_path %></li>
@@ -94,11 +94,18 @@
                   </a>
                   <ul class="dropdown-menu">
                     <% if can? :read, ClearCMS::Content %>
-                      <li><%= link_to t('clear_cms.entries'), clear_cms.site_contents_path(current_site) %></li>
+                      <li class="dropdown-submenu">
+                        <%= link_to t('clear_cms.contents'), clear_cms.site_contents_path(current_site), :tabindex=>-1 %>
+                        <ul class="dropdown-menu">
+                          <% ClearCMS::Content.content_types.each do |type| %>
+                            <li><%= link_to type.to_s.pluralize, clear_cms.site_contents_path(current_site, 'filter[types]'=>type.to_s) %></li>
+                          <% end %>
+                        </ul>
+                      </li>
                     <% end %>
-                     <% if can? :manage, ClearCMS::Site %>
+<!--                      <% if can? :manage, ClearCMS::Site %>
                       <li><%= link_to t('clear_cms.pages'), clear_cms.site_contents_path(current_site, {'filter[types]'=>'Page'}) %></li>
-                    <% end %>                   
+                    <% end %>    -->                
                     <% if can? :manage, ClearCMS::User %>
                       <li><%= link_to t('clear_cms.users'), clear_cms.users_path %></li>
                     <% end %>

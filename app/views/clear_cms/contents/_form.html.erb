@@ -20,7 +20,7 @@ var linkedFiltersType = {
 <div class="row-fluid">
   <div class="span9">
   <% if @clear_cms_content.persisted? %>
-    <%= link_to (@clear_cms_content.published? ? 'View >>' : "Preview >>"), main_app.content_path(@clear_cms_content), :class=>'pull-right btn', :target=>'_blank' %>
+    <%= link_to (@clear_cms_content.published? ? 'View >>' : "Preview >>"), @clear_cms_content.friendly_path, :class=>'pull-right btn', :target=>'_blank' %>
   <% end %>
   <%= semantic_nested_form_for @clear_cms_content, :as=>:content, :url=>(@clear_cms_content.persisted? ? clear_cms.content_path(@clear_cms_content) : clear_cms.contents_path), :html=>{:multipart=>true, :class=>'form-horizontal well'} do |f| %>
 <!--     <h3>Content Details</h3> -->
@@ -48,7 +48,7 @@ var linkedFiltersType = {
 
 
         <%= f.input :site_id, :as=>:hidden, :value=>current_site.id %>
-        <%= f.input :_type, :as=>:select, :collection=>ClearCMS::Content.subclasses.collect(&:to_s), :include_blank=>false, :input_html=>{:class=>'linkedFiltersTypeMonitor'} %>
+        <%= f.input :_type, :as=>:select, :collection=>ClearCMS::Content.content_types.collect(&:to_s), :include_blank=>false, :input_html=>{:class=>'linkedFiltersTypeMonitor'} %>
         <%= f.input :title, :input_html=>{:class=>'input-xxlarge'} %>
         <%= f.input :subtitle, :input_html=>{:class=>'input-xxlarge'} %>
         <%= f.input :basename, :hint=>'Must not contain spaces or special chars' %>
@@ -99,7 +99,7 @@ var linkedFiltersType = {
       </li>
       <% end %>
     </ul>
-    <div class="lookupWrap well" id="linkedLookupWrap" data-lookup-url="/clear_cms/sites/<%=current_site.id%>/contents.json" data-lookup-filter-type="['Product']" data-lookup-success-tmpl="template-linked-content-form">
+    <div class="lookupWrap well" id="linkedLookupWrap" data-lookup-url="/clear_cms/sites/<%=current_site.id%>/contents.json" data-lookup-filter-type="Product" data-lookup-success-tmpl="template-linked-content-form">
       <!-- CHRIS: you can get json results of content like this:  -->
       <input type="text" class="lookupField" placeholder="begin typing then select content title...">
       <!-- <button class="lookupTrigger">add linked content</button> -->
@@ -205,8 +205,8 @@ var linkedFiltersType = {
 
       <!-- <%= f.input :status, :as=>:select, :collection=>ClearCMS::Content::STATUSES %>  -->
       <%= f.submit 'Save', :class=>'btn btn-primary' %>
-      <%= f.submit (@clear_cms_content.published? ? 'View >>' : "Preview >>"), :class=>'btn' %>
-      <%= f.input :publish_at, :input_html => { :class => 'datetime_picker' } %>
+  <!--     <%= f.submit (@clear_cms_content.published? ? 'View >>' : "Preview >>"), :class=>'btn' %>
+   -->    <%= f.input :publish_at, :input_html => { :class => 'datetime_picker' } %>
       <%= f.input :state, :as=>:select, :collection=>Hash[ClearCMS::Content::STATES.map {|state| [state.humanize, state]}] %>
       <br>
       <div class="well well-small clearfix">
