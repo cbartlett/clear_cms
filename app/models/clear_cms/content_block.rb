@@ -25,4 +25,8 @@ class ClearCMS::ContentBlock
   def body_excerpt
     body.blank? ? '' : body.split[0...50].join(" ").html_safe
   end
+
+  def self.types
+    TYPES
+  end
 end

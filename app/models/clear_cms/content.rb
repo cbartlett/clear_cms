@@ -224,6 +224,9 @@ module ClearCMS
     end
 
 
+    def content_block_types
+      ClearCMS::ContentBlock::TYPES
+    end
     
     def next_content 
       #self

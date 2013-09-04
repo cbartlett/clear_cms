@@ -128,7 +128,7 @@ var linkedFiltersType = {
         <div class="well">
 
           <%= cbf.inputs do %>
-            <%= cbf.input :type, :as=>:select, :collection=>ClearCMS::ContentBlock::TYPES %>
+            <%= cbf.input :type, :as=>:select, :collection=>@clear_cms_content.content_block_types %>
             <%= cbf.input :body, :as=>:text, :input_html=>{:class=>'input-xxlarge markitup'} %>
             <%= cbf.input :order %>
             <%= cbf.check_box '_destroy' %> Delete
