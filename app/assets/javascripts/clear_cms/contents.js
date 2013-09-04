@@ -173,7 +173,7 @@ ClearCMS.Form = function() {
           $(this).val(datetime_unformatted);
         });
 
-      })
+      });
       //$('.datetime_picker').
 
 
@@ -181,8 +181,8 @@ ClearCMS.Form = function() {
       $(".form-action.next-state").bind('click', function(e) {
         //alert($(this).attr('data-next-state'));
         // console.log('save as next state');
-        $('#clear_cms_content_state').val($(this).attr('data-next-state'));
-        $('form.clear_cms_content').submit();
+        $('#content_state').val($(this).attr('data-next-state'));
+        $('form.content').submit();
       });
     }
   }
