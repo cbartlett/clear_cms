@@ -100,6 +100,19 @@ module ClearCMS
     scope :tagged, ->(tag){ tag_regex=Regexp.new("^(#{tag})$",Regexp::IGNORECASE); where(tags: tag_regex) }       
     
     include Sunspot::Mongoid
+
+    def resolve_linked_contents
+      #self.class.published.where(:id.in=>linked_contents.sort{|lc| lc.order<=>lc.order}.map(&:linked_content_id))
+      #ClearCMS::Content.published.where(:id.in=>linked_contents.sort{|lca,lcb| lca.order<=>lcb.order}.map(&:linked_content_id))
+      
+      unsorted_resolved_contents={}
+      ClearCMS::Content.published.where(:id.in=>linked_contents.map(&:linked_content_id)).each {|c| unsorted_resolved_contents[c.id.to_s]=c }
+      sorted_resolved_contents=[]
+      linked_contents.each do |c|
+        sorted_resolved_contents << unsorted_resolved_contents[c.linked_content_id.to_s] 
+      end
+      sorted_resolved_contents.compact
+    end
     
     searchable do
       text :title #, :boost => 500.0

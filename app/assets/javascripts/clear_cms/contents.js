@@ -319,7 +319,7 @@ ClearCMS.Linking = function() {
             $.ajax({
               url: $block.data('lookup-url'),
               data: {
-                'fiters[type]': $block.data('lookup-filter-type'),
+                'filter[types]': $block.data('lookup-filter-type'),
                 q: request.term
               }
             }).success(function(data){
