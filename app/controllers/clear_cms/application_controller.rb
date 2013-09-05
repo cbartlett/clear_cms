@@ -54,7 +54,10 @@ module ClearCMS
       # super.after_sign_in_path_for(user)
       '/clear_cms/sites'
     end
-    
+
+    def current_ability
+      @current_ability ||= ClearCMS::Ability.new(current_user)
+    end
     
     def current_site
       set_site
