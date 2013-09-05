@@ -105,7 +105,7 @@ module ClearCMS
     
     include Sunspot::Mongoid
 
-    def resolve_linked_contents
+    def resolve_linked_contents(limit=nil)
       #self.class.published.where(:id.in=>linked_contents.sort{|lc| lc.order<=>lc.order}.map(&:linked_content_id))
       #ClearCMS::Content.published.where(:id.in=>linked_contents.sort{|lca,lcb| lca.order<=>lcb.order}.map(&:linked_content_id))
       
@@ -116,6 +116,7 @@ module ClearCMS
         sorted_resolved_contents << unsorted_resolved_contents[c.linked_content_id.to_s] 
       end
       sorted_resolved_contents.compact
+      limit ? sorted_resolved_contents.take(limit) : sorted_resolved_contents
     end
     
     searchable do
