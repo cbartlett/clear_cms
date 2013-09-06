@@ -99,7 +99,7 @@ var linkedFiltersType = {
       </li>
       <% end %>
     </ul>
-    <div class="lookupWrap well" id="linkedLookupWrap" data-lookup-url="/clear_cms/sites/<%=current_site.id%>/contents.json" data-lookup-filter-type="Product" data-lookup-success-tmpl="template-linked-content-form">
+    <div class="lookupWrap well" id="linkedLookupWrap" data-lookup-url="/clear_cms/sites/<%=current_site.id%>/contents.json" data-lookup-filter-type="<%= @clear_cms_content.class.linked_content_filter[:types] %>" data-lookup-success-tmpl="template-linked-content-form">
       <!-- CHRIS: you can get json results of content like this:  -->
       <input type="text" class="lookupField" placeholder="begin typing then select content title...">
       <!-- <button class="lookupTrigger">add linked content</button> -->

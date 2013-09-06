@@ -10,6 +10,11 @@ module ClearCMS
     cattr_accessor :form_fields do 
       {}
     end
+
+    class_attribute :linked_content_filter
+
+    self.linked_content_filter={}
+    
     #include SitemapNotifier::ActiveRecord #TODO: submit a PR for a better way to do this for mongoid
     
 

@@ -19,7 +19,12 @@ module ClearCMS
       
       
       if params[:q]
-        @clear_cms_contents=current_site.contents.includes(:site).search {fulltext params[:q]; paginate page: params[:page]; with :site_id, current_site.id; with :_type, params[:filter].try(:[],:types) if params[:filter]}.results
+        @clear_cms_contents=current_site.contents.includes(:site).search {
+              fulltext params[:q]
+              paginate page: params[:page]
+              with :site_id, current_site.id
+              with :_type, params[:filter][:types] if params[:filter] && !params[:filter][:types].blank? 
+            }.results
       elsif types.any?
         @clear_cms_contents=current_site.contents.includes(:site).where(:_type.in=>types).desc(:created_at).page(params[:page])
       else
