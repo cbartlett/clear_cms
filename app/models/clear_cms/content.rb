@@ -29,7 +29,7 @@ module ClearCMS
       when 'ClearCMS::Content'
         field field_name, options
       else
-        self.superclass.field field_name
+        self.superclass.field field_name, options 
       end
       
       self.form_fields[field_name][:models] << self.name
