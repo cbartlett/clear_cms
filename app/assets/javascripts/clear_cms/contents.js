@@ -60,7 +60,8 @@ ClearCMS.Form = function() {
   };
 
   function activateMarkItUp() {
-    $('textarea.markitup').markItUp(markItUpSettings);
+    // quick hack to make sure we don't double initialize
+    $('textarea.markitup').not('.markItUpEditor').markItUp(markItUpSettings);
   };
 
   return {
@@ -343,7 +344,7 @@ ClearCMS.Linking = function() {
           minLength: 4,
           select: function( event, ui ) {
             event.preventDefault();
-            console.log(ui);
+            // console.log(ui);
             // TBD: auto _addTemplate on selection?
             _addTemplate($(this).parents('.lookupWrap'),ui);
           }
