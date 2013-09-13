@@ -367,7 +367,9 @@ var linkedFiltersType = {
   {% var random_id=Math.floor(Math.random() * 10000000); %}
   <li class="linked-content-item media well draggable draggable-ui">
     <button class="close" onclick="$(this).parent().remove(); return false;">&times;</button>
+    {% if (o.medic_src) { %}
     <span class="pull-left"><img class="media-object" src="{%=o.media_src%}"></span>
+    {% } %}
     <div class="media-body">
       <h5 class="media-heading">{%=o.title%}</h5>
       <input type="hidden" id="content_linked_contents_attributes_{%=random_id%}_linked_content_id" name="content[linked_contents][{%=random_id%}][linked_content_id]" value="{%=o.content_id%}">

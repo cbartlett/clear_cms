@@ -256,7 +256,13 @@ ClearCMS.Linking = function() {
   // ui == jQuery UI autocomplete output
   function _addTemplate($block,ui) {
     var which,
-        data;
+        data,
+        img_src = null;
+
+    // circuitous route to image thumb
+    if (ui.item.all.content_blocks[0].content_assets) {
+      img_src = ui.item.all.content_blocks[0].content_assets[0].mounted_file.thumb.url;
+    }
 
     //val = $block.find('input').val();
     which = $block.data('lookup-success-tmpl');
@@ -264,7 +270,7 @@ ClearCMS.Linking = function() {
       //'fiters[type]': $block.data('lookup-filter-type'),
       content_id: ui.item.all._id,
       title: ui.item.all.title,
-      media_src: ui.item.all.content_blocks[0].content_assets[0].mounted_file.thumb.url,
+      media_src: img_src,
       order: 99
     }
     $block.prev('.lookupSuccessTarget').append(tmpl(which,data));
