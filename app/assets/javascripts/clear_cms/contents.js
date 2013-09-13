@@ -290,8 +290,10 @@ ClearCMS.Linking = function() {
       order: _lastOrderIndex++
     }
     $block.prev('.lookupSuccessTarget').append(tmpl(which,data));
-    // TODO: why does this get delated? or overwritten by autocomplete plugin race conditions
+
     $block.find('.lookupField').val('');
+
+    ClearCMS.Form.setUnsavedWarning();
   };
 
   // updates the filter type based on selection
