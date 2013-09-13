@@ -250,7 +250,8 @@ ClearCMS.Interface = function() {
 }(); // ClearCMS.UI
 
 ClearCMS.Linking = function() {
-  var _dataCache;
+  var _dataCache,
+      _lastOrderIndex = 50;
 
   // adds a new record to the collection of linked items
   // $block = .lookupWrap block
@@ -272,7 +273,7 @@ ClearCMS.Linking = function() {
       content_id: ui.item.all._id,
       title: ui.item.all.title,
       media_src: img_src,
-      order: 99
+      order: _lastOrderIndex++
     }
     $block.prev('.lookupSuccessTarget').append(tmpl(which,data));
     // TODO: why does this get delated? or overwritten by autocomplete plugin race conditions
@@ -415,7 +416,8 @@ ClearCMS.Image = function() {
 
 
 ClearCMS.ImageQueue = function() {
-  var assetList={};
+  var assetList={},
+      _lastOrderIndex = 50;
 
 
   return {
@@ -437,6 +439,8 @@ ClearCMS.ImageQueue = function() {
             if(assetList[data._id]['upload_data'].context) {
               assetList[data._id]['upload_data'].context.remove();
             }
+
+            $.extend(data,{order: _lastOrderIndex++});
             $('#asset-sortable').append(tmpl('template-asset-form',data));
             delete assetList[data._id];
             window.uploadsCount--;
