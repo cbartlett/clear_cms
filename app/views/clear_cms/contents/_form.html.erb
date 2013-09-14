@@ -131,7 +131,9 @@ var linkedFiltersType = {
             <%= cbf.input :type, :as=>:select, :collection=>@clear_cms_content.content_block_types %>
             <%= cbf.input :body, :as=>:text, :input_html=>{:class=>'input-xxlarge markitup'} %>
             <%= cbf.input :order %>
-            <%= cbf.check_box '_destroy' %> Delete
+            <% if i!=0 %>
+              <%= cbf.check_box '_destroy' %> Delete
+            <% end %>
             <%= cbf.input :has_gallery, :as=>:boolean, :html=>{:class=>'checkbox'} %>
 
   <!--           <a href="#modal-gallery" role="button" class="btn" data-toggle="modal">Insert Images</a> -->
