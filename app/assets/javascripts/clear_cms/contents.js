@@ -61,7 +61,7 @@ ClearCMS.Form = function() {
 
   function activateMarkItUp() {
     // quick hack to make sure we don't double initialize
-    $('textarea.markitup').not('.markItUpEditor').markItUp(markItUpSettings);
+    $('textarea.markitup').not('.markItUpEditor').markItUp(markItUpSettings).data('tc-ignore-html',true).textcount();
   };
 
   return {

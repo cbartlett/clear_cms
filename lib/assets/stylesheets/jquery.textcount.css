@@ -1,0 +1,17 @@
+/*!
+ * jQuery Textcount
+ *
+ * Copyright 2013 Chris Casciano
+ *
+ */
+
+.tc-hint {
+  display: block;
+  font-style: italic;
+  font-size: 0.8em;
+  color: #999;
+}
+
+.tc-error {
+  color: red;
+}

@@ -10,6 +10,7 @@
  *= require formtastic-plus-bootstrap/responsive
  *= #require bootstrap-wysihtml5
  *= require jquery.fileupload-ui
+ *= require jquery.textcount
  *= #require clear_cms/markitup
  *= require markitup/skins/simple/style
  *= require markitup/sets/html/style
@@ -30,16 +31,11 @@
   border-left: 4px solid #fcfc46;
 }
 
-
-/* textcount styling for hints */
+/* Textcount tweaks
+------------------------------------------- */
 .tc-hint {
-  display: block;
   padding-left: 125px;
-  font-style: italic;
-  font-size: 0.8em;
-  color: #999;
 }
-
 
 /* Markitup tweaks
 ------------------------------------------- */
