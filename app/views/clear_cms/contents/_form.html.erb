@@ -48,10 +48,10 @@ var linkedFiltersType = {
 
 
         <%= f.input :site_id, :as=>:hidden, :value=>current_site.id %>
-        <%= f.input :_type, :as=>:select, :collection=>ClearCMS::Content.content_types.collect(&:to_s), :include_blank=>false, :input_html=>{:class=>'linkedFiltersTypeMonitor'} %>
+        <%= f.input :_type, :as=>:select, :collection=>ClearCMS::Content.content_types.collect(&:to_s), :include_blank=>false, :input_html=>{:class=>'protected linkedFiltersTypeMonitor'} %>
         <%= f.input :title, :input_html=>{:class=>'input-xxlarge'} %>
         <%= f.input :subtitle, :input_html=>{:class=>'input-xxlarge'} %>
-        <%= f.input :basename, :hint=>'Must not contain spaces or special chars' %>
+        <%= f.input :basename, :hint=>'Must not contain spaces or special chars', :input_html=>{:class=>'protected'} %>
         <%= f.input :author, :collection=>(ClearCMS::User.active + [@clear_cms_content.author]).compact.uniq %>
         <%= f.input :tags, :input_html=>{:class=>'input-xxlarge'}%>
         <%= f.input :categories, :input_html=>{:class=>'input-xxlarge', 'autocomplete'=>'off', 'data-provide'=>"typeahead", 'data-source'=>@clear_cms_content.site.categories.collect {|c| c['_id'] }.to_json} %>
@@ -128,7 +128,7 @@ var linkedFiltersType = {
         <div class="well">
 
           <%= cbf.inputs do %>
-            <%= cbf.input :type, :as=>:select, :collection=>@clear_cms_content.content_block_types %>
+            <%= cbf.input :type, :as=>:select, :collection=>@clear_cms_content.content_block_types , :input_html=>{:class=>'protected'}%>
             <%= cbf.input :body, :as=>:text, :input_html=>{:class=>'input-xxlarge markitup', :data=>{:"tc-ignore-html"=> true}} %>
             <%= cbf.input :order %>
             <% if i!=0 %>

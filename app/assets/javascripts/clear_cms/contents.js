@@ -71,6 +71,9 @@ ClearCMS.Form = function() {
     },
 
     initialize: function() {
+      // set up protected fields
+      $('.protected').protectedfield();
+
       // watch window events for unload / unsaved changes
       $('input,select,textarea').on('change keyup',function(e) {
         if (!$(this).is('.hidefromstatus')) {
@@ -85,7 +88,6 @@ ClearCMS.Form = function() {
       });
 
       window.onbeforeunload = warn;
-
 
       // watch for ctrl-s to trigger save
       if ($('form#edit_content').length) {
