@@ -91,6 +91,9 @@ module ClearCMS
     index({updated_at: -1})
     index({created_at: -1})
     index({publish_at: -1, :_id=>-1})
+
+    before_destroy :prevent_if_linked
+
     # index({publish_at: -1, :_type=>1})
     # index({categories: 1})
     # index({basename: 1})
@@ -260,7 +263,12 @@ module ClearCMS
         break if objects.size < batch_size
         objects = self.limit(batch_size).skip(start)
       end
-    end    
+    end
+
+
+    def content_is_linked?
+      ClearCMS::Content.or({'linked_contents.linked_content_id'=>self.id.to_s},{'linked_contents.linked_content_id'=>self.id}).count > 0 ? true : false 
+    end
          
          
 private 
@@ -283,6 +291,17 @@ private
       if scheduled?
         puts "Scheduling a cache clear for #{title} at #{publish_at}"
         ClearCMS::ContentCache.delay_until(publish_at+1.minute).clear      
+      end
+    end
+
+
+
+    def prevent_if_linked
+      if content_is_linked?
+        errors.add(:id, "Content is linked to other content,  can't delete it.")
+        return false
+      else
+        return true
       end
     end
          
