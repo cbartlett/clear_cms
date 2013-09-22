@@ -123,7 +123,7 @@ module ClearCMS
       linked_contents.each do |c|
         sorted_resolved_contents << unsorted_resolved_contents[c.linked_content_id.to_s] 
       end
-      sorted_resolved_contents.compact
+      sorted_resolved_contents.compact!
       limit ? sorted_resolved_contents.take(limit) : sorted_resolved_contents
     end
     
