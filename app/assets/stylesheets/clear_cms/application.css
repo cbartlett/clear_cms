@@ -68,6 +68,15 @@
   cursor: move;
 }
 
+/* jQuery UI tweaks
+------------------------------------------- */
+input.ui-autocomplete-loading {
+  background-image: url('/assets/clear_cms/ajax-loader.gif');
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+
+
 /* Status Bar
 ------------------------------------------- */
 
