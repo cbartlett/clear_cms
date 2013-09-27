@@ -72,6 +72,8 @@ ClearCMS.Form = function() {
 
     initialize: function() {
       // set up protected fields
+      // NOTE: don't protect things for new new special case
+      $('#new_content fieldset.general .protected').removeClass('protected');
       $('.protected').protectedfield();
 
       // watch window events for unload / unsaved changes
