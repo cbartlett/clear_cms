@@ -53,15 +53,13 @@
 /* Sortable Media Styling
 ------------------------------------------- */
 
-#linkedContentSortable {
-  .ui-draggable {
-    height: 160px;
-  }
+#linkedContentSortable > li {
+    height: 150px;
+    list-style: none;
 }
-#asset-sortable {
-  .ui-draggable {
+#asset-sortable > li {
     height: 170px;
-  }
+    list-style: none;
 }
 
 .draggable {
