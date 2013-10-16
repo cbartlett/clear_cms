@@ -77,7 +77,7 @@ ClearCMS.Form = function() {
       $('.protected').protectedfield();
 
       // set up tags completion
-      $("#content_tags").map(function() {
+      $("#content_tags, #content_categories").map(function() {
         var startvals = null;
 
         if ($(this).val() == '[]' || $(this).val() == '') {
@@ -87,10 +87,25 @@ ClearCMS.Form = function() {
           startvals = $.parseJSON($(this).val());
         }
 
-        $(this).tagsManager({
-          prefilled: startvals
-        }).removeAttr('required');
+        $(this)
+          .tagsManager({
+            delimeters: [44],
+            blinkBGColor_1: 'yellow',
+            blinkBGColor_2: '#f5f5f5',
+            prefilled: startvals
+          })
+          .removeAttr('required')
+          .attr('placeholder','press comma (,) to save entry to list')
+          .css({
+            'margin-left': '120px',
+            'display': 'block'
+          });
       });
+
+      // set up categories completion
+      // $("#content_categories").on('typeahead:selected',function(e, item) {
+      //   console.log('selected something');
+      // });
 
       // watch window events for unload / unsaved changes
       $('input,select,textarea').on('change keyup',function(e) {

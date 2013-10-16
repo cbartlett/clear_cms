@@ -54,7 +54,7 @@ var linkedFiltersType = {
         <%= f.input :basename, :hint=>'Must not contain spaces or special chars', :input_html=>{:class=>'protected'} %>
         <%= f.input :author, :collection=>(ClearCMS::User.active + [@clear_cms_content.author]).compact.uniq %>
         <%= f.input :tags, :input_html=>{:class=>'input-xlarge'}%>
-        <%= f.input :categories, :input_html=>{:class=>'input-xxlarge', 'autocomplete'=>'off', 'data-provide'=>"typeahead", 'data-source'=>@clear_cms_content.site.categories.collect {|c| c['_id'] }.to_json} %>
+        <%= f.input :categories, :input_html=>{:class=>'input-xlarge', 'autocomplete'=>'off', 'data-provide'=>"typeahead", 'data-source'=>@clear_cms_content.site.categories.collect {|c| c['_id'] }.to_json} %>
 <!--     </div> -->
 
       <% ClearCMS::Content.form_fields.each do |field,options| %>
