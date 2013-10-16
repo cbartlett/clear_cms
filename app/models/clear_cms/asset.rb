@@ -15,7 +15,7 @@ class ClearCMS::Asset
   
   field :path
   field :caption
-  field :order
+  field :order, type: Integer
   field :title
   field :description
   field :credit

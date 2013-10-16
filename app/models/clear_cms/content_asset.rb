@@ -13,7 +13,7 @@ class ClearCMS::ContentAsset
   
   field :path
   field :caption
-  field :order #using order of first to show as default image
+  field :order, type: Integer #using order of first to show as default image
   field :title
   field :description
   field :credit

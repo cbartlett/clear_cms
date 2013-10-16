@@ -14,7 +14,7 @@ class ClearCMS::ContentBlock
   field :body
   field :type
   field :has_gallery, type: Boolean
-  field :order
+  field :order, type: Integer
   
   default_scope asc(:order)
 

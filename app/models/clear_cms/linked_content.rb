@@ -8,7 +8,7 @@ class ClearCMS::LinkedContent
   #has_one :linked_content, class_name: 'ClearCMS::Content'
   
   field :linked_content_id
-  field :order
+  field :order, type: Integer
   
   default_scope asc(:order)
 
