@@ -21,6 +21,7 @@ require 'jquery-fileupload-rails'
 require 'nested_form'
 require 'kaminari-bootstrap'
 require 'htmlentities'
+require 'tagmanager-rails'
 require 'markitup-rails'
 require 'sidekiq'
 require 'kiqstand'
@@ -29,14 +30,14 @@ require 'compass-rails'
 module ClearCMS
   class Engine < ::Rails::Engine
     isolate_namespace ClearCMS
-  
+
  	def self.activate
 	    Dir.glob(File.join(Rails.application.root, "app/**/*_decorator*.rb")) do |c|
-	      
+
 	      Rails.configuration.cache_classes ? require(c) : load(c)
 	    end
   	end
-    
+
     config.to_prepare &method(:activate).to_proc
 
   end

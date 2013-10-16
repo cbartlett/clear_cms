@@ -15,6 +15,7 @@
 //= #require_tree .
 //= require jquery-fileupload
 //= require ./s3_direct
+//= require tagmanager
 //= require markitup
 //= #require markitup/sets/xbbcode/set
 //= require ./markitup_html_settings

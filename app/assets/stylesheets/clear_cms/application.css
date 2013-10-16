@@ -11,6 +11,7 @@
  *= #require bootstrap-wysihtml5
  *= require jquery.fileupload-ui
  *= require jquery.textcount
+ *= require tagmanager
  *= #require clear_cms/markitup
  *= require markitup/skins/simple/style
  *= require markitup/sets/html/style
