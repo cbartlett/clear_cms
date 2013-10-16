@@ -76,6 +76,22 @@ ClearCMS.Form = function() {
       $('#new_content fieldset.general .protected').removeClass('protected');
       $('.protected').protectedfield();
 
+      // set up tags completion
+      $("#content_tags").map(function() {
+        var startvals = null;
+
+        if ($(this).val() == '[]' || $(this).val() == '') {
+          startvals = null;
+          $(this).val('')
+        } else {
+          startvals = $.parseJSON($(this).val());
+        }
+
+        $(this).tagsManager({
+          prefilled: startvals
+        }).removeAttr('required');
+      });
+
       // watch window events for unload / unsaved changes
       $('input,select,textarea').on('change keyup',function(e) {
         if (!$(this).is('.hidefromstatus')) {
