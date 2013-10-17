@@ -91,6 +91,8 @@ module ClearCMS
     index({updated_at: -1})
     index({created_at: -1})
     index({publish_at: -1, :_id=>-1})
+    index({status: 1})
+    index({state: 1})
 
     before_destroy :prevent_if_linked
 
