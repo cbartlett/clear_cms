@@ -20,7 +20,7 @@
 //= #require markitup/sets/xbbcode/set
 //= require ./markitup_html_settings
 //= require jquery.protectedfield
-//= require jquery.textcount
+//= require jquery.textcount.min
 //= require moment
 //= require bootstrap-datetimepicker
 //= require ./contents
