@@ -74,7 +74,7 @@ ClearCMS.Form = function() {
       // set up protected fields
       // NOTE: don't protect things for new new special case
       $('#new_content fieldset.general .protected').removeClass('protected');
-      $('.protected').protectedfield();
+      $('.protected').protectedfield({lockClass:'icon-lock'});
 
       // set up tags completion
       $("#content_tags, #content_categories").map(function() {
