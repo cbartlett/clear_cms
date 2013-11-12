@@ -91,8 +91,9 @@ module ClearCMS
     index({updated_at: -1})
     index({created_at: -1})
     index({publish_at: -1, :_id=>-1})
-    index({status: 1})
-    index({state: 1})
+    #index({state: 1, status: 1, publish_at: -1, :_id=>-1})
+    #index({status: 1})
+    index({state: 1, publish_at: -1, :_id=>-1})
 
     before_destroy :prevent_if_linked
 
@@ -216,11 +217,11 @@ module ClearCMS
     end
     
     def tags=(tag_list)
-      self[:tags] = (tag_list.kind_of?(String) ? tag_list.gsub(/[^a-zA-Z,\-_\ ]/,'').split(',').collect {|s| s.strip} : tag_list)     
+      self[:tags] = (tag_list.kind_of?(String) ? tag_list.gsub(/[^a-zA-Z0-9,\-_\ ]/,'').split(',').collect {|s| s.strip} : tag_list)     
     end
     
     def categories=(category_list)
-      self[:categories] = (category_list.kind_of?(String) ? category_list.gsub(/[^a-zA-Z,\-_\ ]/,'').split(',').collect {|s| s.strip; s.downcase} : category_list)
+      self[:categories] = (category_list.kind_of?(String) ? category_list.gsub(/[^a-zA-Z0-9,\-_\ ]/,'').split(',').collect {|s| s.strip; s.downcase} : category_list)
     end
     
     
