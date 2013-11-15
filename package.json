@@ -1,0 +1,9 @@
+{
+  "name": "clearcms",
+  "title": "Clear CMS",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-cli": "~0.1.7",
+    "grunt-contrib-jshint": "~0.4.3"
+  }
+}
