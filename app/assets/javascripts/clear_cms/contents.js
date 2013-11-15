@@ -1,15 +1,15 @@
 'use strict';
 
-var ClearCMS = Window.ClearCMS || {};
+var ClearCMS = window.ClearCMS || {};
 
-ClearCMS.e = function() {
+ClearCMS.e = (function() {
   return {
-    FORM_FIELDS_MODIFIED: "form fields modified"
-  }
-}();
+    FORM_FIELDS_MODIFIED: 'form fields modified'
+  };
+}());
 
 // Manages the content type metadata / form switching for edit pages
-ClearCMS.ContentTypes = function() {
+ClearCMS.ContentTypes = (function() {
   var $typeSelect,
       currentType,
       allType = 'ClearCMS::Content';
@@ -28,7 +28,7 @@ ClearCMS.ContentTypes = function() {
       }
 
     });
-  };
+  }
 
   return {
     initialize: function() {
@@ -42,27 +42,27 @@ ClearCMS.ContentTypes = function() {
         // STEP 2: Set initial
         displayMetaFields(currentType);
         // STEP 3: Watch Chage of type field
-        $typeSelect.on('change',displayMetaFields)
+        $typeSelect.on('change',displayMetaFields);
 
-        }
+      }
       // TBD: what do we do with content in dropped fields - are those hidden and not submitted? zerod out?
     }
-  }
-}(); // ClearCMS.Types
+  };
+}()); // ClearCMS.Types
 
-ClearCMS.Form = function() {
+ClearCMS.Form = (function() {
   var warnBeforeUnload = false;
 
   function warn() {
     if (warnBeforeUnload) {
       return 'There are unsaved changes.';
     }
-  };
+  }
 
   function activateMarkItUp() {
     // quick hack to make sure we don't double initialize
     $('textarea.markitup').not('.markItUpEditor').markItUp(markItUpSettings).data('tc-ignore-html',true).textcount();
-  };
+  }
 
   return {
     setUnsavedWarning: function() {
@@ -77,12 +77,12 @@ ClearCMS.Form = function() {
       $('.protected').protectedfield({lockClass:'icon-lock'});
 
       // set up tags completion
-      $("#content_tags, #content_categories").map(function() {
+      $('#content_tags, #content_categories').map(function() {
         var startvals = null;
 
         if ($(this).val() == '[]' || $(this).val() == '') {
           startvals = null;
-          $(this).val('')
+          $(this).val('');
         } else {
           startvals = $.parseJSON($(this).val());
         }
@@ -147,18 +147,18 @@ ClearCMS.Form = function() {
           });
         }
       });
-      $( ".draggable","#linkedContentSortable").draggable({
-        connectToSortable: "#linkedContentSortable",
-        helper: "original",
-        axis: "x",
-        revert: "invalid",
+      $('.draggable','#linkedContentSortable').draggable({
+        connectToSortable: '#linkedContentSortable',
+        helper: 'original',
+        axis: 'x',
+        revert: 'invalid',
         stop: function() {
           //alert('done');
         }
       });
 
       // initialize sortable widgets - media items
-      $( "#asset-sortable" ).sortable({
+      $('#asset-sortable').sortable({
         revert: true,
         update: function() {
 
@@ -169,18 +169,18 @@ ClearCMS.Form = function() {
 
         }
       });
-      $( ".draggable","#asset-sortable").draggable({
-        connectToSortable: "#asset-sortable",
-        helper: "original",
-        axis: "x",
-        revert: "invalid",
+      $( '.draggable','#asset-sortable').draggable({
+        connectToSortable: '#asset-sortable',
+        helper: 'original',
+        axis: 'x',
+        revert: 'invalid',
         stop: function() {
           //alert('done');
         }
       });
 
       // "Disabling text selection is bad. Don't use this." http://api.jqueryui.com/disableSelection/
-      $( ".draggabke ul" ).disableSelection();
+      $('.draggabke ul').disableSelection();
 
       // activate markitup widgets
       activateMarkItUp();
@@ -194,20 +194,20 @@ ClearCMS.Form = function() {
       // hack to make date field format so datepicker sees it
       $('.datetime_picker').each(function(i){
         var datetime = moment($(this).val()),
-            datetime_reformatted = "";
+            datetime_reformatted = '';
 
         if (datetime) {
           datetime_reformatted = datetime.format('YYYY-MM-DDTHH:mm:00');
         }
         $(this).val(datetime_reformatted);
-      })
+      });
 
       $('.datetime_picker').datetimepicker({
         format: 'yyyy-mm-ddThh:ii',
         autoclose: true,
         showMeridian: true,
         todayBtn: true,
-        pickerPosition: "bottom-left"
+        pickerPosition: 'bottom-left'
       });
 
 
@@ -215,7 +215,7 @@ ClearCMS.Form = function() {
       $('form').on('submit',function(e) {
         $('.datetime_picker').each(function(i){
           var datetime = moment($(this).val()),
-            datetime_unformatted = "";
+            datetime_unformatted = '';
 
           if (datetime) {
             datetime_unformatted = datetime.format('YYYY-MM-DDTHH:mm:00Z');
@@ -228,30 +228,30 @@ ClearCMS.Form = function() {
 
 
       // activate "save as next state" button (TODO: refactor)
-      $(".form-action.next-state").bind('click', function(e) {
+      $('.form-action.next-state').bind('click', function(e) {
         //alert($(this).attr('data-next-state'));
         // console.log('save as next state');
         $('#content_state').val($(this).attr('data-next-state'));
         $('form.content').submit();
       });
     }
-  }
-}(); // ClearCMS.Form
+  };
+}()); // ClearCMS.Form
 
 
-ClearCMS.Interface = function() {
+ClearCMS.Interface = (function() {
   function drawStatus(uploads,unsaved) {
-    var uploads = uploads ? uploads : "0",
-        unsaved = unsaved ? "yes" : "no";
+    uploads = uploads ? uploads : '0';
+    unsaved = unsaved ? 'yes' : 'no';
 
     if ($('#template-status-bar').length) {
-      $('body').append(tmpl('template-status-bar',{"uploads": uploads,"unsaved": unsaved}));
+      $('body').append(tmpl('template-status-bar',{'uploads': uploads,'unsaved': unsaved}));
     }
-  };
+  }
 
   function updateStatus(which, val) {
     $('#status-bar .val-'+which).html(val);
-  };
+  }
 
   return {
     setStatus: function(which, val) {
@@ -295,10 +295,10 @@ ClearCMS.Interface = function() {
 
       // $('#linkedLookup')
     }
-  }
-}(); // ClearCMS.UI
+  };
+}()); // ClearCMS.UI
 
-ClearCMS.Linking = function() {
+ClearCMS.Linking = (function() {
   var _dataCache,
       _lastOrderIndex = 50;
 
@@ -323,25 +323,25 @@ ClearCMS.Linking = function() {
       title: ui.item.all.title,
       media_src: img_src,
       order: _lastOrderIndex++
-    }
+    };
     $block.prev('.lookupSuccessTarget').append(tmpl(which,data));
 
     $block.find('.lookupField').val('');
 
     ClearCMS.Form.setUnsavedWarning();
-  };
+  }
 
   // updates the filter type based on selection
   // NOTE: currently dumb, changes ALL linked content blocks on a page
   function _updateFitlerType(val) {
     $('.lookupWrap').data('lookup-filter-type',val);
-  };
+  }
 
   return {
     initialize: function() {
-      var $blocks,
-          $field,
-          $button;
+      var $blocks;
+          //$field,
+          // $button;
 
       // look up linkage blocks and attach needed event handlers
       $blocks = $('.lookupWrap');
@@ -387,7 +387,7 @@ ClearCMS.Linking = function() {
                   label: content.title,
                   value: content._id,
                   all: content
-                }
+                };
               });
               _dataCache = data;
               response(results);
@@ -403,15 +403,14 @@ ClearCMS.Linking = function() {
         });
       });
     }
-  }
-}(); // ClearCMS.Linking
+  };
+}()); // ClearCMS.Linking
 
-ClearCMS.Image = function() {
+ClearCMS.Image = (function() {
 
   function internal_sample() {
 
-
-  };
+  }
 
 
   return {
@@ -431,18 +430,15 @@ ClearCMS.Image = function() {
 
 
 */
-      var modal=$('#modal-image-insert');
-      var src=$.trim($(modal).find('#image-url').html());
-
-      var alignment=$(modal).find('input[name=image_alignment]:checked').val();
-      var image_size=$(modal).find('input[name=image_size]:checked').val();
-
-      var path=$(modal).find('input[name=path]').val();
-      var file=$(modal).find('input[name=file]').val();
-
-      var srchost = $('<a>').prop('href', src).prop('hostname');
+      var modal=$('#modal-image-insert'),
+          src=$.trim($(modal).find('#image-url').html()),
+          alignment=$(modal).find('input[name=image_alignment]:checked').val(),
+          image_size=$(modal).find('input[name=image_size]:checked').val(),
+          path=$(modal).find('input[name=path]').val(),
+          file=$(modal).find('input[name=file]').val(),
+          srchost = $('<a>').prop('href', src).prop('hostname'),
       /* var alt=src; */
-      var alt='';
+          alt='';
 
       //var title=
       //var caption=
@@ -453,20 +449,20 @@ ClearCMS.Image = function() {
       return false;
     },
     insertWizard: function(imageInsertButton) {
-      var assetDiv=$(imageInsertButton).parent('.content-form-asset');
-      var src=$(assetDiv).find('img').attr('src');
-      var path=$(assetDiv).find('input.path').val();
-      var file=$(assetDiv).find('input.file').val();
-      $('#modal-image-insert > .modal-body').html(tmpl('template-insert-wizard',{"url": src,"path": path, "file": file}));
+      var assetDiv=$(imageInsertButton).parent('.content-form-asset'),
+          src=$(assetDiv).find('img').attr('src'),
+          path=$(assetDiv).find('input.path').val(),
+          file=$(assetDiv).find('input.file').val();
+      $('#modal-image-insert > .modal-body').html(tmpl('template-insert-wizard',{'url': src,'path': path, 'file': file}));
       $('#modal-image-insert').modal();
       return false;
     }
-  }
+  };
 
-}(); // ClearCMS.Image
+}()); // ClearCMS.Image
 
 
-ClearCMS.ImageQueue = function() {
+ClearCMS.ImageQueue = (function() {
   var assetList={},
       _lastOrderIndex = 50;
 
@@ -503,9 +499,9 @@ ClearCMS.ImageQueue = function() {
       });
     }
 
-  }
+  };
 
-}(); // ClearCMS.ImageQueue
+}()); // ClearCMS.ImageQueue
 
 
 
@@ -519,7 +515,7 @@ ClearCMS.ImageQueue = function() {
   ClearCMS.Form.initialize();
   ClearCMS.Interface.initialize();
   ClearCMS.ContentTypes.initialize();
-  ClearCMS.Linking.initialize()
+  ClearCMS.Linking.initialize();
 
 })(jQuery);
 

@@ -34,4 +34,4 @@ markItUpSettings = {
     {name:'Link', key:'L', openWith:'<a href="[![Link:!:http://]!]"(!( title="[![Title]!]")!)>', closeWith:'</a>', placeHolder:'Your text to link...' },
     {separator:'---------------' }
   ]
-}
+};
