@@ -1,8 +1,8 @@
-'use strict';
-
 var ClearCMS = window.ClearCMS || {};
 
 ClearCMS.e = (function() {
+  'use strict';
+
   return {
     FORM_FIELDS_MODIFIED: 'form fields modified'
   };
@@ -10,18 +10,21 @@ ClearCMS.e = (function() {
 
 // Manages the content type metadata / form switching for edit pages
 ClearCMS.ContentTypes = (function() {
+  'use strict';
+
   var $typeSelect,
       currentType,
       allType = 'ClearCMS::Content';
 
   function displayMetaFields(thing) {
-    var type = (typeof thing == 'string') ? thing : $(this).val();
+    /*jshint -W040 */
+    var type = (typeof thing === 'string') ? thing : $(this).val();
 
     // loop though fieldset.general li and inspect the data('types') array
     // TBD: this may not be the final method of identifying these fields/areas
     $('.general li[data-types]').each(function(i) {
 
-      if ((-1 != $.inArray(type, $(this).data('types'))) || (-1 != $.inArray(allType, $(this).data('types')))) {
+      if ((-1 !== $.inArray(type, $(this).data('types'))) || (-1 !== $.inArray(allType, $(this).data('types')))) {
         $(this).show();
       } else {
         $(this).hide();
@@ -51,6 +54,8 @@ ClearCMS.ContentTypes = (function() {
 }()); // ClearCMS.Types
 
 ClearCMS.Form = (function() {
+  'use strict';
+
   var warnBeforeUnload = false;
 
   function warn() {
@@ -80,7 +85,7 @@ ClearCMS.Form = (function() {
       $('#content_tags, #content_categories').map(function() {
         var startvals = null;
 
-        if ($(this).val() == '[]' || $(this).val() == '') {
+        if ($(this).val() === '[]' || $(this).val() === '') {
           startvals = null;
           $(this).val('');
         } else {
@@ -126,7 +131,7 @@ ClearCMS.Form = (function() {
       if ($('form#edit_content').length) {
         $('body').on('keydown',function(e) {
           if (e.ctrlKey || e.metaKey) {
-            if (String.fromCharCode(e.which).toLowerCase() == 's') {
+            if (String.fromCharCode(e.which).toLowerCase() === 's') {
               e.preventDefault();
               if (confirm('Save your changes?')) {
                 $('form#edit_content').submit();
@@ -240,6 +245,8 @@ ClearCMS.Form = (function() {
 
 
 ClearCMS.Interface = (function() {
+  'use strict';
+
   function drawStatus(uploads,unsaved) {
     uploads = uploads ? uploads : '0';
     unsaved = unsaved ? 'yes' : 'no';
@@ -299,6 +306,8 @@ ClearCMS.Interface = (function() {
 }()); // ClearCMS.UI
 
 ClearCMS.Linking = (function() {
+  'use strict';
+
   var _dataCache,
       _lastOrderIndex = 50;
 
@@ -348,7 +357,7 @@ ClearCMS.Linking = (function() {
 
       // prevent some edge cases / form submits
       $('input',$blocks).addClass('hidefromstatus').on('keyup',function(e) {
-        if (e.keyCode == 13) {
+        if (e.keyCode === 13) {
           //_addTemplate($(this).parents('.lookupWrap'));
           e.preventDefault();
           e.stopPropagation();
@@ -407,10 +416,11 @@ ClearCMS.Linking = (function() {
 }()); // ClearCMS.Linking
 
 ClearCMS.Image = (function() {
+  'use strict';
 
-  function internal_sample() {
+  // function internal_sample() {
 
-  }
+  // }
 
 
   return {
@@ -463,6 +473,8 @@ ClearCMS.Image = (function() {
 
 
 ClearCMS.ImageQueue = (function() {
+  'use strict';
+
   var assetList={},
       _lastOrderIndex = 50;
 
@@ -483,8 +495,8 @@ ClearCMS.ImageQueue = (function() {
       $.ajax('/clear_cms/assets/'+asset_id,{
         success: function(data) {
           if(data.processed_at) {
-            if(assetList[data._id]['upload_data'].context) {
-              assetList[data._id]['upload_data'].context.remove();
+            if(assetList[data._id].upload_data.context) {
+              assetList[data._id].upload_data.context.remove();
             }
 
             $.extend(data,{order: _lastOrderIndex++});
@@ -512,6 +524,8 @@ ClearCMS.ImageQueue = (function() {
 
 // On Load, Initilize sites
 (function($){
+  'use strict';
+
   ClearCMS.Form.initialize();
   ClearCMS.Interface.initialize();
   ClearCMS.ContentTypes.initialize();
