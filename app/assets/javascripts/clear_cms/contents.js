@@ -78,7 +78,7 @@ ClearCMS.Form = (function() {
     initialize: function() {
       // set up protected fields
       // NOTE: don't protect things for new new special case
-      $('#new_content fieldset.general .protected').removeClass('protected');
+      $('#new_content .protected').removeClass('protected');
       $('.protected').protectedfield({lockClass:'icon-lock'});
 
       // set up tags completion
@@ -218,6 +218,8 @@ ClearCMS.Form = (function() {
 
       // hack to convert date to utc before submission
       $('form').on('submit',function(e) {
+
+        // clean up datepicker data
         $('.datetime_picker').each(function(i){
           var datetime = moment($(this).val()),
             datetime_unformatted = '';
@@ -229,7 +231,6 @@ ClearCMS.Form = (function() {
         });
 
       });
-      //$('.datetime_picker').
 
 
       // activate "save as next state" button (TODO: refactor)
