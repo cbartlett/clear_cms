@@ -18,7 +18,7 @@
 //= require tagmanager
 //= require markitup
 //= #require markitup/sets/xbbcode/set
-//= require ./markitup_html_settings
+//= require clear_cms/markitup_html_settings
 //= require jquery.protectedfield.min
 //= require jquery.textcount.min
 //= require moment
