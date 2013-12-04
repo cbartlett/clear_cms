@@ -286,8 +286,9 @@ private
     end
     
     def set_publish_at
-#       if self[:state]=='Finished' && self[:publish_at].blank?
-      self[:publish_at] ||= Time.now
+      if self[:state]=='Finished' && self[:publish_at].blank?
+        self[:publish_at] = Time.now
+      end
     end
    
     def schedule_cache_clear
