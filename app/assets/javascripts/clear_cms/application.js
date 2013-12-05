@@ -14,7 +14,7 @@
 //= #require bootstrap-wysihtml5
 //= #require_tree .
 //= require jquery-fileupload
-//= require ./s3_direct
+//= require clear_cms/s3_direct
 //= require tagmanager
 //= require markitup
 //= #require markitup/sets/xbbcode/set
@@ -23,7 +23,7 @@
 //= require jquery.textcount.min
 //= require moment
 //= require bootstrap-datetimepicker
-//= require ./contents
+//= require clear_cms/contents
 //= require_self
 
 
