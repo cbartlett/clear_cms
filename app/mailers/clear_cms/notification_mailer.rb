@@ -1,7 +1,7 @@
 module ClearCMS
   class NotificationMailer < ActionMailer::Base
 
-    default :from=>'cms@captainlucas.com'
+    #default :from=>'cms@captainlucas.com'
   
     def generic_content_notification(user,content,subject,message)
       @content=content 
