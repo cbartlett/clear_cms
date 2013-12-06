@@ -51,6 +51,7 @@ module ClearCMS
     #after_save :update_search_index #OLD FOR INDEXTANK
     before_save :set_publish_at
     after_save :schedule_cache_clear
+    after_save :notify_assignee
 
     embeds_many :content_blocks, class_name: 'ClearCMS::ContentBlock', cascade_callbacks: true
     embeds_many :content_notes, class_name: 'ClearCMS::ContentNote', cascade_callbacks: true
@@ -295,6 +296,12 @@ private
       if scheduled?
         puts "Scheduling a cache clear for #{title} at #{publish_at}"
         ClearCMS::ContentCache.delay_until(publish_at+1.minute).clear      
+      end
+    end
+
+    def notify_assignee
+      if assignee_id && assignee_id_changed?
+        ClearCMS::NotificationMailer.generic_content_notification(assignee, self, "New Content Assigned","You've been assigned to content:").deliver
       end
     end
 
