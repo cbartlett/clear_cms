@@ -63,7 +63,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'twitter-bootstrap-rails'
   s.add_dependency 'sass-rails', '~> 3.2.3'
   s.add_dependency 'coffee-rails', '~> 3.2.1'
-  s.add_dependency 'therubyracer', '0.10.2'
+  #s.add_dependency 'therubyracer', '0.10.2'
   s.add_dependency 'less-rails'
   s.add_dependency 'markitup-rails'
   s.add_dependency 'tagmanager-rails'
