@@ -55,7 +55,7 @@ module ClearCMS
 
     embeds_many :content_blocks, class_name: 'ClearCMS::ContentBlock', cascade_callbacks: true
     embeds_many :content_notes, class_name: 'ClearCMS::ContentNote', cascade_callbacks: true, :order=>'updated_at DESC'
-    embeds_many :content_logs, class_name: 'ClearCMS::ContentLog', cascade_callbacks: true
+    embeds_many :content_logs, class_name: 'ClearCMS::ContentLog', cascade_callbacks: true, :order=>'updated_at DESC'
     embeds_many :linked_contents, class_name: 'ClearCMS::LinkedContent', cascade_callbacks: true, inverse_of: :content
 
     accepts_nested_attributes_for :content_blocks, :content_notes, :content_logs, :linked_contents, :allow_destroy=>true
