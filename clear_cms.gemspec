@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~> 3.2.13"
+  s.add_dependency "rails" #, "~> 3.2.13"
 
   #Redis caches/needed for sidekiq
   s.add_dependency "redis-rails"
@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'compass-rails'
 
   #Mongo DB ORM and support
-  s.add_dependency "mongoid", "~> 3.1.3"
+  s.add_dependency "mongoid" #, "~> 3.1.3"
   s.add_dependency "kiqstand" #handles connections for sidekiq
 
   #Authentication and Roles
@@ -61,8 +61,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'jquery-ui-rails'
   s.add_dependency 'jquery-fileupload-rails'
   s.add_dependency 'twitter-bootstrap-rails'
-  s.add_dependency 'sass-rails', '~> 3.2.3'
-  s.add_dependency 'coffee-rails', '~> 3.2.1'
+  s.add_dependency 'sass-rails' #, '~> 3.2.3'
+  s.add_dependency 'coffee-rails' #, '~> 3.2.1'
   s.add_dependency 'therubyracer' #, '0.10.2'
   s.add_dependency 'less-rails'
   s.add_dependency 'markitup-rails'
