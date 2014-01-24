@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails" #, "~> 3.2.13"
+  s.add_dependency "rails", "~>4.0.0"
 
   #Redis caches/needed for sidekiq
   s.add_dependency "redis-rails"
@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'compass-rails'
 
   #Mongo DB ORM and support
-  s.add_dependency "mongoid" #, "~> 3.1.3"
+  s.add_dependency "mongoid" #, "~>4.0.0", :git=>'git://github.com/mongoid/mongoid.git'
   s.add_dependency "kiqstand" #handles connections for sidekiq
 
   #Authentication and Roles
@@ -57,7 +57,7 @@ Gem::Specification.new do |s|
   #s.add_dependency 'sunspot_solr' #had to add this to the main app
 
   #Asset related gems
-  s.add_dependency 'jquery-rails'
+  #s.add_dependency 'jquery-rails'
   s.add_dependency 'jquery-ui-rails'
   s.add_dependency 'jquery-fileupload-rails'
   s.add_dependency 'twitter-bootstrap-rails'
@@ -66,7 +66,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'therubyracer' #, '0.10.2'
   s.add_dependency 'less-rails'
   s.add_dependency 'markitup-rails'
-  s.add_dependency 'tagmanager-rails', '3.0.0.1'
+  s.add_dependency 'tagmanager-rails' #, '3.0.0.1'
 
 
   #Utilities
