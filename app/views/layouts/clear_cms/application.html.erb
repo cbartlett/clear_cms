@@ -11,7 +11,7 @@
 
     <!-- Le styles -->
     <%= stylesheet_link_tag "clear_cms/application", :media => "all" %>
-  
+
 
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -20,8 +20,8 @@
     <![endif]-->
 
 
-            
-    
+
+
 
     <!-- Le fav and touch icons -->
 <!--
@@ -42,7 +42,7 @@
 
           <% if current_user %>
             <div class="row-fluid">
-         
+
               <% if can? :manage, ClearCMS::Site %>
                 <div class="btn-group pull-left">
                   <a class="btn  dropdown-toggle btn-inverse" data-toggle="dropdown" href="#">
@@ -54,7 +54,7 @@
                       <li><%= link_to site.name, clear_cms.site_contents_path(site) %></li>
                     <% end %>
                   </ul>
-                </div>                           
+                </div>
               <% elsif current_user.permissions.any? %>
                 <div class="btn-group pull-left">
                   <a class="btn  dropdown-toggle btn-inverse" data-toggle="dropdown" href="#">
@@ -66,7 +66,7 @@
                       <li><%= link_to permission.site.name, clear_cms.site_contents_path(permission.site) %></li>
                     <% end %>
                   </ul>
-                </div> 
+                </div>
               <% end %>
 
                 <div class="btn-group pull-left">
@@ -81,12 +81,12 @@
                     <% if can? :create, ClearCMS::User %>
                       <li><%= link_to t('clear_cms.user'), clear_cms.new_user_path %></li>
                     <% end %>
-                    <% if can? :create, ClearCMS::Site %>  
+                    <% if can? :create, ClearCMS::Site %>
                       <li><%= link_to t('clear_cms.site'), clear_cms.new_site_path %></li>
                     <% end %>
                   </ul>
                 </div>
-                            
+
                 <div class="btn-group pull-left">
                   <a class="btn  dropdown-toggle btn-inverse" data-toggle="dropdown" href="#">
                     Manage
@@ -105,7 +105,7 @@
                     <% end %>
 <!--                      <% if can? :manage, ClearCMS::Site %>
                       <li><%= link_to t('clear_cms.pages'), clear_cms.site_contents_path(current_site, {'filter[types]'=>'Page'}) %></li>
-                    <% end %>    -->                
+                    <% end %>    -->
                     <% if can? :manage, ClearCMS::User %>
                       <li><%= link_to t('clear_cms.users'), clear_cms.users_path %></li>
                     <% end %>
@@ -113,10 +113,19 @@
                       <li><%= link_to t('clear_cms.sites'), clear_cms.sites_path %></li>
                     <% end %>
                   </ul>
+
                 </div>
-   
- <!--               
-  MANAGE, 
+
+                <div class="pull-left btn-group search-bar">
+                  <form method="get" action="<%= clear_cms.site_contents_path(current_site) %>" class="form-search">
+                    <div class="input-append">
+                      <input type="text" name="q">
+                      <button type="submit" class="btn">Search</button>
+                    </div>
+                  </form>
+                </div>
+ <!--
+  MANAGE,
   Entries
   Create/Edit Entry,
   Potential Assignments,
@@ -141,11 +150,11 @@
   Permissions,
   Social Media,
   Analytics,
-  Languages, 
-  Settings, 
-  API, 
+  Languages,
+  Settings,
+  API,
   Log -->
-          
+
               <div class="btn-group pull-right">
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                   <i class="icon-user"></i> <%= current_user.email %>
@@ -161,19 +170,19 @@
           <% end %>
         </div>
       </div>
-    </div> 
+    </div>
 
     <div class="container-fluid">
 <!--
       <div class="row-fluid">
           <div id="title_bar">
           <div id="titlebar_left">
-            <h2 id="page_title"><%= yield :title %></h2>      
+            <h2 id="page_title"><%= yield :title %></h2>
           </div>
-        </div>     
+        </div>
       </div>
 -->
-    
+
       <div class="row-fluid">
 
         <% message = notice || alert %>
@@ -185,18 +194,18 @@
       </div>
 
 
-          
+
       <%#= render_breadcrumbs %>
-      
+
       <%#= flash_block %>
 
-    
+
       <div class="row-fluid">
         <div class="span12">
-            <%= yield %>        
+            <%= yield %>
         </div><!--/span-->
 <!--
-        
+
 
 -->
       </div><!--/row-->
