@@ -145,7 +145,7 @@ var linkedFiltersType = {
               <div class="media well well-small content-form-asset draggable">
 
                 <a class="pull-left" onclick="ClearCMS.Image.insertWizard(this); return false;">
-                  <%= image_tag caf.object.mounted_file.thumb.url, class: 'img-polaroid', width: '100px', :"data-orig-src" => caf.object.mounted_file.url %>
+                  <%= image_tag caf.object.mounted_file.thumb.url, class: 'img-polaroid', width: '100', :"data-orig-src" => caf.object.mounted_file.url %>
                 </a>
                 <% if caf.object.persisted? %>
                     <a class="btn btn-small pull-left" onclick="ClearCMS.Image.insertWizard(this); return false;">Insert</a>
