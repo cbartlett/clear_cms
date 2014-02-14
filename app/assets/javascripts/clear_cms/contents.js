@@ -461,7 +461,7 @@ ClearCMS.Image = (function() {
     },
     insertWizard: function(imageInsertButton) {
       var assetDiv=$(imageInsertButton).parent('.content-form-asset'),
-          src=$(assetDiv).find('img').attr('src'),
+          src=$(assetDiv).find('img').data('orig-src'),
           path=$(assetDiv).find('input.path').val(),
           file=$(assetDiv).find('input.file').val();
       $('#modal-image-insert > .modal-body').html(tmpl('template-insert-wizard',{'url': src,'path': path, 'file': file}));
