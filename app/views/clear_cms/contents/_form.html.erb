@@ -111,10 +111,10 @@ var linkedFiltersType = {
     <p><%= f.link_to_add "Add a Content Block", :content_blocks, :class=>'btn btn-xlarge', :data => { :target => "#myTab+.tab-content" } %></p>
 
 
-    <div class="tabbable">
+    <div class="tabbable" id="contentBlocksContainer">
       <ul class="nav nav-tabs" id="myTab">
         <% @clear_cms_content.content_blocks.each_with_index do |cb,i| %>
-          <li<%= i==0 ? ' class=active' : '' %>><a href="#content_block_<%= cb.type.present? ? cb.type : cb.object_id %>_<%= i %>" data-toggle="tab"><%= cb.type.present? ? cb.type : cb.object_id %></a></li>
+          <li<%= i==0 ? ' class=active' : '' %>><a href="#content_block_<%= cb.type.present? ? cb.type : cb.object_id %>_<%= i %>" data-toggle="tab"><%= i==0 ? '<i class="icon-picture"></i> '.html_safe : '' %><%= cb.type.present? ? cb.type : cb.object_id %></a></li>
         <% end %>
       </ul>
       <div class="tab-content">

@@ -51,6 +51,12 @@
   padding: 0 3px 6px;
 }
 
+/* Tabbed Content Block Styles
+------------------------------------------- */
+#contentBlocksContainer .tab-pane:nth-child(n+2) #asset-sortable {
+  display: none;
+}
+
 /* Sortable Media Styling
 ------------------------------------------- */
 
