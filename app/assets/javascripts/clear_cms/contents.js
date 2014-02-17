@@ -195,6 +195,28 @@ ClearCMS.Form = (function() {
       // activate field counters
       $('textarea').textcount();
 
+      // activate special tab creation functionality
+      $('#edit_content').on('nested:fieldAdded',function(e) {
+        var $tabBar = $('#myTab'),
+            $newFields,
+            $tabContainer,
+            $newTab,
+            id = Date.now();
+
+        $tabContainer = $tabBar.parent();
+        $newFields = $tabContainer.find('.fields').last();
+
+        // wrap newly added content (todo: can we modify the template?)
+        $newFields.wrap('<div class="tab-pane" id="content_block_added_'+id+'"></div>');
+
+        // add associated tab
+        $newTab = $tabBar.append('<li><a href="#content_block_added_'+id+'" data-toggle="tab">ADDED</a></li>');
+
+        // update tab state showing new block
+        $newTab.find('a').trigger('click');
+
+      });
+
       // activate special datetimepickers
       // hack to make date field format so datepicker sees it
       $('.datetime_picker').each(function(i){
