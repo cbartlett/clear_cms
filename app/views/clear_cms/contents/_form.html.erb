@@ -81,7 +81,7 @@ var linkedFiltersType = {
       <% @clear_cms_content.linked_contents.each do |lc| %>
       <li class="linked-content-item media well draggable">
         <% if lc.persisted? %>
-          <span class="pull-left media-oject"><%= image_tag lc.linked_content.default_image_url(:thumb) %></span>
+          <span class="pull-left media-object"><%= image_tag lc.linked_content.default_image_url(:thumb) %></span>
           <div class="media-body">
             <h5 class="media-heading"><%= lc.linked_content.title %></h5>
         <% else %>
@@ -139,10 +139,10 @@ var linkedFiltersType = {
   <!--           <a href="#modal-gallery" role="button" class="btn" data-toggle="modal">Insert Images</a> -->
             <hr>
 
-            <div id="asset-sortable">
             <h4>Images</h4>
+            <div id="asset-sortable" class="well">
             <%= cbf.semantic_fields_for :content_assets do |caf| %>
-              <div class="media well well-small content-form-asset draggable">
+              <div class="media well content-form-asset draggable">
 
                 <a class="pull-left" onclick="ClearCMS.Image.insertWizard(this); return false;">
                   <%= image_tag caf.object.mounted_file.thumb.url, class: 'img-polaroid', width: '100', :"data-orig-src" => caf.object.mounted_file.url %>

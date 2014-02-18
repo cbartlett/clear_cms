@@ -144,12 +144,14 @@ ClearCMS.Form = (function() {
       // TODO: abstract this all
       // initialize sortable widgets - linked content
       $('#linkedContentSortable').sortable({
-        revert: true,
-        update: function() {
+        revert: false,
+        update: function(e,ui) {
           // loop thorugh items and update order field
           $('#linkedContentSortable .draggable').each(function(i) {
             $(this).find('[id$=_order]').val(i);
           });
+          // TODO: why do i have to manually remove the jquery ui class?
+          ui.item.removeClass('ui-draggable-dragging').effect('highlight');
         }
       });
       $('.draggable','#linkedContentSortable').draggable({
@@ -164,14 +166,16 @@ ClearCMS.Form = (function() {
 
       // initialize sortable widgets - media items
       $('#asset-sortable').sortable({
-        revert: true,
-        update: function() {
+        revert: false,
+        update: function(e,ui) {
 
           // loop thorugh items and update order field
           $('#asset-sortable .draggable').each(function(i) {
             $(this).find('[id$=_order]').val(i); //content[content_blocks_attributes][0][content_assets_attributes][0][order])
           });
 
+          // TODO: why do i have to manually remove the jquery ui class?
+          ui.item.removeClass('ui-draggable-dragging').effect('highlight');
         }
       });
       $( '.draggable','#asset-sortable').draggable({
