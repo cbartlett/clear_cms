@@ -445,22 +445,12 @@ var linkedFiltersType = {
         Align Right
       </label>
       <hr>
+    <% ClearCMS::Uploaders::ContentAssetUploader.version_list.each do |version| %>
       <label class="radio inline">
-        <input type="radio" name="image_size" value="half_width">
-        Half-Width
+        <input type="radio" name="image_size" value="<%= version[:prefix] %>" <%= version[:default] ? 'checked' : '' %>>
+        <%= version[:label] %>
       </label>
-      <label class="radio inline">
-        <input type="radio" name="image_size" value="full_width" checked>
-        Full-Width
-      </label>
-      <label class="radio inline">
-        <input type="radio" name="image_size" value="feature">
-        Feature (300px)
-      </label>
-      <label class="radio inline">
-        <input type="radio" name="image_size" value="thumb">
-        Thumb (200px)
-      </label>
+    <% end %>
 <!--
       <hr>
       <label>Width</label>
@@ -475,9 +465,14 @@ var linkedFiltersType = {
       <!-- <button class="btn" type="submit">Generate</button> -->
     </fieldset>
   </form>
-  <div class="well">
-    <p>Original Image URL</p>
-    <a href="{%= o.url %}" target="_blank" id="image-url">{%= o.url %}</a>
+  <div class="well well-small" style="overflow-x: hidden; overflow-y: auto; font-size: 0.8em; max-height: 60px">
+    <% ClearCMS::Uploaders::ContentAssetUploader.version_list.each do |version| %>
+    <p><%= version[:label] %>:<br>
+    <a href="{%= o.url.substring(0,o.url.lastIndexOf('/')+1) + '<%= version[:prefix] %>_' + o.url.substring(o.url.lastIndexOf('/')+1)  %}" target="_blank">{%= o.url.substring(0,o.url.lastIndexOf('/')+1) + '<%= version[:prefix] %>_' + o.url.substring(o.url.lastIndexOf('/')+1)  %}</a></p>
+    <% end %>
+
+    <p>Original Image:<br>
+    <a href="{%= o.url %}" target="_blank" id="image-url">{%= o.url %}</a></p>
   </div>
 </script>
 

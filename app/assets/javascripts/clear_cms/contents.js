@@ -481,7 +481,7 @@ ClearCMS.Image = (function() {
       //var caption=
       //var description=
 
-      $.markItUp({ replaceWith:'<img src="http://'+srchost+'/'+path+'/'+image_size+'_'+file+'" alt="'+alt+'" class="'+alignment+'" />' });
+      $.markItUp({ replaceWith:'<img src="//'+srchost+'/'+path+'/'+image_size+'_'+file+'" alt="'+alt+'" class="'+alignment+'" />' });
       modal.modal('hide');
       return false;
     },
