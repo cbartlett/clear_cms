@@ -47,7 +47,12 @@
     <% if can? :review, c %>
       <%= link_to 'Review', clear_cms.site_content_path(c.site,c) %> |
     <% end %>
-      <%= link_to (c.published? ? 'View' : 'Preview'), c.friendly_path, :target=>'_blank'  %> </td>
+      <% if c.published? %>
+       <%= link_to 'View', c.friendly_path, :target=>'_blank'  %>     
+      <% else %><%# TODO: should make this use standard url_for and named routes so we can support other query params in the future %> 
+      <%= link_to 'Preview', c.friendly_path+'?preview=true', :target=>'_blank'  %>
+      <% end %>
+    </td>
     <td>
       <% if c.categories.count <= 1 %>
         <%= c.categories.first.try(:titleize) %>

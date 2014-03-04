@@ -20,7 +20,11 @@ var linkedFiltersType = {
 <div class="row-fluid">
   <div class="span9">
   <% if @clear_cms_content.persisted? %>
-    <%= link_to (@clear_cms_content.published? ? 'View >>' : "Preview >>"), @clear_cms_content.friendly_path, :class=>'pull-right btn', :target=>'_blank' %>
+    <% if @clear_cms_content.published? %>
+      <%= link_to 'View >>', @clear_cms_content.friendly_path, :class=>'pull-right btn', :target=>'_blank' %>
+    <% else %>
+      <%= link_to "Preview >>", @clear_cms_content.friendly_path+"?preview=true", :class=>'pull-right btn', :target=>'_blank' %>
+    <% end %>
   <% end %>
   <%= semantic_nested_form_for @clear_cms_content, :as=>:content, :url=>(@clear_cms_content.persisted? ? clear_cms.content_path(@clear_cms_content) : clear_cms.contents_path), :html=>{:multipart=>true, :class=>'form-horizontal well'} do |f| %>
 <!--     <h3>Content Details</h3> -->
