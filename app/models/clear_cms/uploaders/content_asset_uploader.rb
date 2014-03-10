@@ -14,6 +14,19 @@ class ClearCMS::Uploaders::ContentAssetUploader < CarrierWave::Uploader::Base
 
   storage :fog
   process :set_content_type
+  process :store_geometry
+  
+
+  def store_geometry
+    if @file
+      img = ::MiniMagick::Image::open(@file.file) #.first
+      if model
+        model.width = img[:width]
+        model.height = img[:height]
+      end
+    end
+  end
+
 
 
   def override_path=(path)

@@ -18,6 +18,8 @@ class ClearCMS::ContentAsset
   field :description
   field :credit
   field :file
+  field :width
+  field :height
   
   field :source_id
   field :tags, type: Array

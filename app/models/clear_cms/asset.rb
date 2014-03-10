@@ -21,6 +21,8 @@ class ClearCMS::Asset
   field :credit
   field :file
   field :original_file_url
+  field :width
+  field :height
   field :processed_at, type: DateTime
 
 #   def remote_file_url(url)
