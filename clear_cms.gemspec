@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~>4.0.0"
+  s.add_dependency "rails", "~>4.1.0"
 
   #Redis caches/needed for sidekiq
   s.add_dependency "redis-rails"
@@ -29,11 +29,11 @@ Gem::Specification.new do |s|
 
   #Mongo DB ORM and support
   s.add_dependency "mongoid" #, "~>4.0.0", :git=>'git://github.com/mongoid/mongoid.git'
-  s.add_dependency "kiqstand" #handles connections for sidekiq
+  #s.add_dependency "kiqstand" #handles connections for sidekiq
 
   #Authentication and Roles
   s.add_dependency 'devise'
-  s.add_dependency 'devise-encryptable'
+  #s.add_dependency 'devise-encryptable'
   s.add_dependency 'cancan'
 
   #File upload and storage on S3
