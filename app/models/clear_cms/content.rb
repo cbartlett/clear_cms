@@ -134,8 +134,8 @@ module ClearCMS
     searchable do
       text :title #, :boost => 500.0
       text :subtitle #, :boost => 50.0 
-      text :tags #, :boost=>5.0
-      text :categories #, :boost=>1.0
+      text :tags, :more_like_this => true #, :boost=>5.0
+      text :categories, :more_like_this => true  #, :boost=>1.0
       text :content, :more_like_this => true do 
         content_blocks.map &:body
       end
