@@ -57,7 +57,7 @@ module Mongoid::Document
     Float                 => :float,
     Hash                  => :string,
     Integer               => :integer,
-    Moped::BSON::ObjectId => :string,
+    #Moped::BSON::ObjectId => :string,
     Range                 => :range,
     Regexp                => :string,
     String                => :string,
