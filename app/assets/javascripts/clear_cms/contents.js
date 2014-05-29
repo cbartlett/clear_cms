@@ -97,6 +97,7 @@ ClearCMS.Form = (function() {
             delimeters: [44],
             blinkBGColor_1: 'yellow',
             blinkBGColor_2: '#f5f5f5',
+            replace: true,
             prefilled: startvals
           })
           .removeAttr('required')
