@@ -82,7 +82,7 @@ module ClearCMS
       # since it's instantiated as that by Mongoid BEWARE****
       
       #if @clear_cms_content.save
-      if @clear_cms_content.update_attributes(params[:content],:without_protection=>true)
+      if @clear_cms_content.update_attributes(params[:content].permit!)
         redirect_to({:action=>:edit}, notice: 'Content was successfully updated.')
       else
         flash.now[:notice]='Error saving content!'
@@ -92,7 +92,7 @@ module ClearCMS
 
 
     def create
-      @clear_cms_content = params[:content]['_type'].constantize.new(params[:content])
+      @clear_cms_content = params[:content]['_type'].constantize.new(params[:content].permit!)
       #@clear_cms_content = Content.new(params[:content])
       @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"created")
   
