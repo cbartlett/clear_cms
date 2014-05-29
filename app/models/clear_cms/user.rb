@@ -4,8 +4,8 @@ module ClearCMS
   class User
     include Mongoid::Document
     include Mongoid::Timestamps
-    include Mongoid::Versioning
-    max_versions 10
+    #include Mongoid::Versioning
+    #max_versions 10
     
     ROLES=%w(reader alumni contributor intern writer editor managing_editor administrator)
     
@@ -97,7 +97,7 @@ module ClearCMS
     ## Invitable
     # field :invitation_token, :type => String
     
-    scope :active, where(active: true)
+    scope :active, ->{where(active: true)}
 
     def default_site
       ClearCMS::Site.where(:domain=>'coolhunting.com').first

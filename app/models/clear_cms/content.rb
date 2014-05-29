@@ -1,9 +1,9 @@
 module ClearCMS
   class Content 
     include Mongoid::Document
-    include Mongoid::Versioning
+    #include Mongoid::Versioning
     # keep at most 5 versions of a record
-    max_versions 20
+    #max_versions 20
     include Mongoid::Timestamps
 
     #@@form_fields = {}

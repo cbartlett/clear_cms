@@ -22,9 +22,9 @@ class ClearCMS::ContentAsset
   field :source_id
   field :tags, type: Array
 
-  default_scope asc(:order)
+  default_scope ->{asc(:order)}
   
-  scope :gallery_assets, self.in(:tags=>"gallery")
+  scope :gallery_assets, ->{self.in(:tags=>"gallery")}
 
 #   def remote_file_url(url)
 #     self.file.store_dir=File.dirname(url)

@@ -10,11 +10,11 @@ ClearCMS::Engine.routes.draw do
     controllers:  { sessions: 'clear_cms/sessions', passwords: 'clear_cms/passwords', unlocks: 'clear_cms/unlocks' }
 
   devise_scope :users do
-    match '/'         => 'sessions#new'
+    get '/'         => 'sessions#new'
     #delete 'signout'  => 'sessions#destroy', as: :destroy_user_session
   end 	
 
-	match "email" => "contents#email"
+	get "email" => "contents#email"
 
 	resources :sites do 
 	  resources :contents
