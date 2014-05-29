@@ -58,6 +58,7 @@ module Mongoid::Document
     Hash                  => :string,
     Integer               => :integer,
     BSON::ObjectId => :string,
+    Mongoid::Boolean => :boolean,
     Range                 => :range,
     Regexp                => :string,
     String                => :string,
