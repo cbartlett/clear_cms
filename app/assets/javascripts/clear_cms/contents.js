@@ -112,13 +112,21 @@ ClearCMS.Form = (function() {
       //   console.log('selected something');
       // });
 
-      // watch window events for unload / unsaved changes
-      $('input,select,textarea').on('change keyup',function(e) {
-        if (!$(this).is('.hidefromstatus')) {
-          ClearCMS.Interface.setStatus('unsaved','true');
-          warnBeforeUnload = true;
-        }
-      });
+      // watch fields for changes
+      // then watch window events for unload w/ unsaved changes
+      $('input,select,textarea')
+        .not('.hidefromstatus')
+        .each(function() {
+          $(this)
+            .data('original-value',$(this).val())
+            .data('original-state',$(this).is(':checked'));
+        })
+        .on('change keyup',function(e) {
+          if (($(this).val() !== $(this).data('original-value')) || ($(this).is(':checked') !== $(this).data('original-state'))) {
+            ClearCMS.Interface.setStatus('unsaved','true');
+            warnBeforeUnload = true;
+          }
+        });
       // watch for (SUCCESSFUL?) submit to clear warning
       $('form').on('submit',function(e) {
         ClearCMS.Interface.setStatus('unsaved','false');
