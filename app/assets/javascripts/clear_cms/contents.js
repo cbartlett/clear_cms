@@ -200,7 +200,7 @@ ClearCMS.Form = (function() {
       $('textarea').textcount();
 
       // activate special tab creation functionality
-      $('#edit_content').on('nested:fieldAdded',function(e) {
+      $('#edit_content,#new_content').on('nested:fieldAdded',function(e) {
         var $tabBar = $('#myTab'),
             $newFields,
             $tabContainer,
