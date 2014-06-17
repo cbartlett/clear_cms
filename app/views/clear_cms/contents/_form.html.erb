@@ -26,7 +26,7 @@ var linkedFiltersType = {
       <%= link_to "Preview >>", @clear_cms_content.friendly_path+"?preview=true", :class=>'pull-right btn', :target=>'_blank' %>
     <% end %>
   <% end %>
-  <%= semantic_nested_form_for @clear_cms_content, :as=>:content, :url=>(@clear_cms_content.persisted? ? clear_cms.content_path(@clear_cms_content) : clear_cms.contents_path), :html=>{:multipart=>true, :class=>'form-horizontal well'} do |f| %>
+  <%= semantic_nested_form_for @clear_cms_content, :as=>:content, :url=>(@clear_cms_content.persisted? ? clear_cms.content_path(@clear_cms_content) : clear_cms.contents_path), :html=>{:multipart=>true, :class=>'form-horizontal well primary'} do |f| %>
 <!--     <h3>Content Details</h3> -->
       <div id="modal-note-form" class="modal hide fade">
         <div class="modal-header">

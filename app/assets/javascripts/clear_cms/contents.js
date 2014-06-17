@@ -127,14 +127,14 @@ ClearCMS.Form = (function() {
 
       window.onbeforeunload = warn;
 
-      // watch for ctrl-s to trigger save
-      if ($('form#edit_content').length) {
+      // watch for ctrl-s to trigger save for primary page forms
+      if ($('form.primary').length) {
         $('body').on('keydown',function(e) {
           if (e.ctrlKey || e.metaKey) {
             if (String.fromCharCode(e.which).toLowerCase() === 's') {
               e.preventDefault();
               if (confirm('Save your changes?')) {
-                $('form#edit_content').submit();
+                $('form.primary').submit();
               }
             }
           }
