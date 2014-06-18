@@ -28,8 +28,10 @@ Gem::Specification.new do |s|
   s.add_dependency 'compass-rails'
 
   #Mongo DB ORM and support
+
   s.add_dependency "mongoid" #, "~>4.0.0", :git=>'git://github.com/mongoid/mongoid.git'
   #s.add_dependency "kiqstand" #handles connections for sidekiq
+
 
   #Authentication and Roles
   s.add_dependency 'devise'
@@ -61,8 +63,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'jquery-ui-rails'
   s.add_dependency 'jquery-fileupload-rails'
   s.add_dependency 'twitter-bootstrap-rails'
-  s.add_dependency 'sass-rails' #, '~> 3.2.3'
-  s.add_dependency 'coffee-rails' #, '~> 3.2.1'
+  s.add_dependency 'sass-rails', '~> 3.2.3'
+  s.add_dependency 'coffee-rails', '~> 3.2.1'
   s.add_dependency 'therubyracer' #, '0.10.2'
   s.add_dependency 'less-rails'
   s.add_dependency 'markitup-rails'

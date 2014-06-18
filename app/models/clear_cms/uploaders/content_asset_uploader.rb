@@ -14,6 +14,19 @@ class ClearCMS::Uploaders::ContentAssetUploader < CarrierWave::Uploader::Base
 
   storage :fog
   process :set_content_type
+  process :store_geometry
+  
+
+  def store_geometry
+    if @file
+      img = ::MiniMagick::Image::open(@file.file) #.first
+      if model
+        model.width = img[:width]
+        model.height = img[:height]
+      end
+    end
+  end
+
 
 
   def override_path=(path)
@@ -111,5 +124,14 @@ class ClearCMS::Uploaders::ContentAssetUploader < CarrierWave::Uploader::Base
 
   def default_url
     "/images/fallback/" + [version_name, "default.png"].compact.join('_')
+  end
+
+  # version list for CMS UI, allows for easy decoration in local app
+  def self.version_list
+    list = []
+    versions.each do |version,i|
+      list.push({:prefix => version[0], :label => version[0], :default => (i == 0 ? true : false) });
+    end
+    list
   end
 end

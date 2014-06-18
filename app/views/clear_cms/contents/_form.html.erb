@@ -20,9 +20,13 @@ var linkedFiltersType = {
 <div class="row-fluid">
   <div class="span9">
   <% if @clear_cms_content.persisted? %>
-    <%= link_to (@clear_cms_content.published? ? 'View >>' : "Preview >>"), @clear_cms_content.friendly_path, :class=>'pull-right btn', :target=>'_blank' %>
+    <% if @clear_cms_content.published? %>
+      <%= link_to 'View >>', @clear_cms_content.friendly_path, :class=>'pull-right btn', :target=>'_blank' %>
+    <% else %>
+      <%= link_to "Preview >>", @clear_cms_content.friendly_path+"?preview=true", :class=>'pull-right btn', :target=>'_blank' %>
+    <% end %>
   <% end %>
-  <%= semantic_nested_form_for @clear_cms_content, :as=>:content, :url=>(@clear_cms_content.persisted? ? clear_cms.content_path(@clear_cms_content) : clear_cms.contents_path), :html=>{:multipart=>true, :class=>'form-horizontal well'} do |f| %>
+  <%= semantic_nested_form_for @clear_cms_content, :as=>:content, :url=>(@clear_cms_content.persisted? ? clear_cms.content_path(@clear_cms_content) : clear_cms.contents_path), :html=>{:multipart=>true, :class=>'form-horizontal well primary'} do |f| %>
 <!--     <h3>Content Details</h3> -->
       <div id="modal-note-form" class="modal hide fade">
         <div class="modal-header">
@@ -81,7 +85,7 @@ var linkedFiltersType = {
       <% @clear_cms_content.linked_contents.each do |lc| %>
       <li class="linked-content-item media well draggable">
         <% if lc.persisted? %>
-          <span class="pull-left media-oject"><%= image_tag lc.linked_content.default_image_url(:thumb) %></span>
+          <span class="pull-left media-object"><%= image_tag lc.linked_content.default_image_url(:thumb) %></span>
           <div class="media-body">
             <h5 class="media-heading"><%= lc.linked_content.title %></h5>
         <% else %>
@@ -108,13 +112,13 @@ var linkedFiltersType = {
 
     <h3>Content Block(s)</h3>
 
-    <p><%= f.link_to_add "Add a Content Block", :content_blocks, :class=>'btn btn-xlarge' %></p>
+    <p><%= f.link_to_add "Add a Content Block", :content_blocks, :class=>'btn btn-xlarge', :data => { :target => "#myTab+.tab-content" } %></p>
 
 
-    <div class="tabbable">
+    <div class="tabbable" id="contentBlocksContainer">
       <ul class="nav nav-tabs" id="myTab">
         <% @clear_cms_content.content_blocks.each_with_index do |cb,i| %>
-          <li<%= i==0 ? ' class=active' : '' %>><a href="#content_block_<%= cb.type.present? ? cb.type : cb.object_id %>_<%= i %>" data-toggle="tab"><%= cb.type.present? ? cb.type : cb.object_id %></a></li>
+          <li<%= i==0 ? ' class=active' : '' %>><a href="#content_block_<%= cb.type.present? ? cb.type : cb.object_id %>_<%= i %>" data-toggle="tab"><%= i==0 ? '<i class="icon-picture"></i> '.html_safe : '' %><%= cb.type.present? ? cb.type : cb.object_id %></a></li>
         <% end %>
       </ul>
       <div class="tab-content">
@@ -139,14 +143,13 @@ var linkedFiltersType = {
   <!--           <a href="#modal-gallery" role="button" class="btn" data-toggle="modal">Insert Images</a> -->
             <hr>
 
-            <div id="asset-sortable">
             <h4>Images</h4>
+            <div id="asset-sortable" class="well">
             <%= cbf.semantic_fields_for :content_assets do |caf| %>
-              <div class="media well well-small content-form-asset draggable">
+              <div class="media well content-form-asset draggable">
 
                 <a class="pull-left" onclick="ClearCMS.Image.insertWizard(this); return false;">
-                  <%= image_tag caf.object.mounted_file.url, class: 'img-polaroid', width: '100px' %>
-
+                  <%= image_tag caf.object.mounted_file.thumb.url, class: 'img-polaroid', width: '100', :"data-orig-src" => caf.object.mounted_file.url %>
                 </a>
                 <% if caf.object.persisted? %>
                     <a class="btn btn-small pull-left" onclick="ClearCMS.Image.insertWizard(this); return false;">Insert</a>
@@ -397,7 +400,7 @@ var linkedFiltersType = {
   <div class="fields">
     <div class="media well well-small content-form-asset draggable">
       <a class="pull-left" onclick="ClearCMS.Image.insertWizard(this); return false;">
-        <img alt="{%=filename%}" class="img-polaroid" src="{%=o.file.url%}" width="100px">
+        <img alt="{%=filename%}" class="img-polaroid" src="{%=o.file.url%}" width="100" data-orig-src="{%=o.file.url%}">
       </a>
 <!--       <div class="pull-right"><input name="content[content_blocks_attributes][0][content_assets_attributes][1][_destroy]" type="hidden" value="0"><input id="content_content_blocks_attributes_0_content_assets_attributes_1__destroy" name="content[content_blocks_attributes][0][content_assets_attributes][1][_destroy]" type="checkbox" value="1"> Delete </div> -->
       <a class="btn btn-small pull-left" onclick="ClearCMS.Image.insertWizard(this); return false;">Insert</a>
@@ -420,6 +423,13 @@ var linkedFiltersType = {
                 <li class="hidden input optional stringish" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_order_input"><input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_order" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][order]" type="hidden" value="{%=o.order%}">
 
 </li>
+                <li class="hidden input optional stringish" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_width_input"><input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_width" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][width]" type="hidden" value="{%=o.width%}">
+
+</li>
+                <li class="hidden input optional stringish" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_height_input"><input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_height" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][height]" type="hidden" value="{%=o.height%}">
+
+</li>
+
       </div>
       </div>
     </div>
@@ -446,22 +456,12 @@ var linkedFiltersType = {
         Align Right
       </label>
       <hr>
+    <% ClearCMS::Uploaders::ContentAssetUploader.version_list.each do |version| %>
       <label class="radio inline">
-        <input type="radio" name="image_size" value="half_width">
-        Half-Width
+        <input type="radio" name="image_size" value="<%= version[:prefix] %>" <%= version[:default] ? 'checked' : '' %>>
+        <%= version[:label] %>
       </label>
-      <label class="radio inline">
-        <input type="radio" name="image_size" value="full_width" checked>
-        Full-Width
-      </label>
-      <label class="radio inline">
-        <input type="radio" name="image_size" value="feature">
-        Feature (300px)
-      </label>
-      <label class="radio inline">
-        <input type="radio" name="image_size" value="thumb">
-        Thumb (200px)
-      </label>
+    <% end %>
 <!--
       <hr>
       <label>Width</label>
@@ -476,9 +476,14 @@ var linkedFiltersType = {
       <!-- <button class="btn" type="submit">Generate</button> -->
     </fieldset>
   </form>
-  <div class="well">
-    <p>Original Image URL</p>
-    <a href="{%= o.url %}" target="_blank" id="image-url">{%= o.url %}</a>
+  <div class="well well-small" style="overflow-x: hidden; overflow-y: auto; font-size: 0.8em; max-height: 60px">
+    <% ClearCMS::Uploaders::ContentAssetUploader.version_list.each do |version| %>
+    <p><%= version[:label] %>:<br>
+    <a href="{%= o.url.substring(0,o.url.lastIndexOf('/')+1) + '<%= version[:prefix] %>_' + o.url.substring(o.url.lastIndexOf('/')+1)  %}" target="_blank">{%= o.url.substring(0,o.url.lastIndexOf('/')+1) + '<%= version[:prefix] %>_' + o.url.substring(o.url.lastIndexOf('/')+1)  %}</a></p>
+    <% end %>
+
+    <p>Original Image:<br>
+    <a href="{%= o.url %}" target="_blank" id="image-url">{%= o.url %}</a></p>
   </div>
 </script>
 

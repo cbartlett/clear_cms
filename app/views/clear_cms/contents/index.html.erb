@@ -1,18 +1,13 @@
 <% content_for :title do %>
-  Contents 
+  Contents
 <% end %>
 
-
-<div class="filters">
-
-<form method="get" action="<%= clear_cms.site_contents_path(current_site) %>" class="form-search">
-  <div class="input-append">
-    <input type="text" name="q">
-    <button type="submit" class="btn">Filter</button>
-  </div>
-</form>
-
-</div>
+<% if (params[:filter] && params[:filter][:types].present?) %>
+  <h1>Manage: <%= params[:filter][:types] %></h1>
+<% end %>
+<% if params[:q].present? %>
+  <h1>Search: &ldquo;<%= params[:q] %>&rdquo;</h1>
+<% end %>
 
 <!--
 <%= button_to 'Create Content', clear_cms.new_content_path, :method=>:get, :class=>'btn' %>
@@ -31,7 +26,7 @@
     <th>Created At</th>
     <th>Note</th>
 <!--
-    <th>Source</th>    
+    <th>Source</th>
     <th>Status</th>
     <th>Import</th>
     <th>Actions</th>
@@ -49,10 +44,15 @@
     <% if can? :edit, c %>
       <%= link_to 'Edit', clear_cms.edit_site_content_path(c.site,c)  %> |
     <% end %>
-    <% if can? :review, c %> 
+    <% if can? :review, c %>
       <%= link_to 'Review', clear_cms.site_content_path(c.site,c) %> |
     <% end %>
-      <%= link_to (c.published? ? 'View' : 'Preview'), c.friendly_path, :target=>'_blank'  %> </td>
+      <% if c.published? %>
+       <%= link_to 'View', c.friendly_path, :target=>'_blank'  %>     
+      <% else %><%# TODO: should make this use standard url_for and named routes so we can support other query params in the future %> 
+      <%= link_to 'Preview', c.friendly_path+'?preview=true', :target=>'_blank'  %>
+      <% end %>
+    </td>
     <td>
       <% if c.categories.count <= 1 %>
         <%= c.categories.first.try(:titleize) %>

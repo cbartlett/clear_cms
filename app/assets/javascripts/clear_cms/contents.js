@@ -113,13 +113,21 @@ ClearCMS.Form = (function() {
       //   console.log('selected something');
       // });
 
-      // watch window events for unload / unsaved changes
-      $('input,select,textarea').on('change keyup',function(e) {
-        if (!$(this).is('.hidefromstatus')) {
-          ClearCMS.Interface.setStatus('unsaved','true');
-          warnBeforeUnload = true;
-        }
-      });
+      // watch fields for changes
+      // then watch window events for unload w/ unsaved changes
+      $('input,select,textarea')
+        .not('.hidefromstatus')
+        .each(function() {
+          $(this)
+            .data('original-value',$(this).val())
+            .data('original-state',$(this).is(':checked'));
+        })
+        .on('change keyup',function(e) {
+          if (($(this).val() !== $(this).data('original-value')) || ($(this).is(':checked') !== $(this).data('original-state'))) {
+            ClearCMS.Interface.setStatus('unsaved','true');
+            warnBeforeUnload = true;
+          }
+        });
       // watch for (SUCCESSFUL?) submit to clear warning
       $('form').on('submit',function(e) {
         ClearCMS.Interface.setStatus('unsaved','false');
@@ -128,14 +136,14 @@ ClearCMS.Form = (function() {
 
       window.onbeforeunload = warn;
 
-      // watch for ctrl-s to trigger save
-      if ($('form#edit_content').length) {
+      // watch for ctrl-s to trigger save for primary page forms
+      if ($('form.primary').length) {
         $('body').on('keydown',function(e) {
           if (e.ctrlKey || e.metaKey) {
             if (String.fromCharCode(e.which).toLowerCase() === 's') {
               e.preventDefault();
               if (confirm('Save your changes?')) {
-                $('form#edit_content').submit();
+                $('form.primary').submit();
               }
             }
           }
@@ -145,12 +153,14 @@ ClearCMS.Form = (function() {
       // TODO: abstract this all
       // initialize sortable widgets - linked content
       $('#linkedContentSortable').sortable({
-        revert: true,
-        update: function() {
+        revert: false,
+        update: function(e,ui) {
           // loop thorugh items and update order field
           $('#linkedContentSortable .draggable').each(function(i) {
             $(this).find('[id$=_order]').val(i);
           });
+          // TODO: why do i have to manually remove the jquery ui class?
+          ui.item.removeClass('ui-draggable-dragging').effect('highlight');
         }
       });
       $('.draggable','#linkedContentSortable').draggable({
@@ -165,14 +175,16 @@ ClearCMS.Form = (function() {
 
       // initialize sortable widgets - media items
       $('#asset-sortable').sortable({
-        revert: true,
-        update: function() {
+        revert: false,
+        update: function(e,ui) {
 
           // loop thorugh items and update order field
           $('#asset-sortable .draggable').each(function(i) {
             $(this).find('[id$=_order]').val(i); //content[content_blocks_attributes][0][content_assets_attributes][0][order])
           });
 
+          // TODO: why do i have to manually remove the jquery ui class?
+          ui.item.removeClass('ui-draggable-dragging').effect('highlight');
         }
       });
       $( '.draggable','#asset-sortable').draggable({
@@ -195,6 +207,28 @@ ClearCMS.Form = (function() {
 
       // activate field counters
       $('textarea').textcount();
+
+      // activate special tab creation functionality
+      $('#edit_content,#new_content').on('nested:fieldAdded',function(e) {
+        var $tabBar = $('#myTab'),
+            $newFields,
+            $tabContainer,
+            $newTab,
+            id = Date.now();
+
+        $tabContainer = $tabBar.parent();
+        $newFields = $tabContainer.find('.fields').last();
+
+        // wrap newly added content (todo: can we modify the template?)
+        $newFields.wrap('<div class="tab-pane" id="content_block_added_'+id+'"></div>');
+
+        // add associated tab
+        $newTab = $tabBar.append('<li><a href="#content_block_added_'+id+'" data-toggle="tab">ADDED</a></li>');
+
+        // update tab state showing new block
+        $newTab.find('a').trigger('click');
+
+      });
 
       // activate special datetimepickers
       // hack to make date field format so datepicker sees it
@@ -456,13 +490,13 @@ ClearCMS.Image = (function() {
       //var caption=
       //var description=
 
-      $.markItUp({ replaceWith:'<img src="http://'+srchost+'/'+path+'/'+image_size+'_'+file+'" alt="'+alt+'" class="'+alignment+'" />' });
+      $.markItUp({ replaceWith:'<img src="//'+srchost+'/'+path+'/'+image_size+'_'+file+'" alt="'+alt+'" class="'+alignment+'" />' });
       modal.modal('hide');
       return false;
     },
     insertWizard: function(imageInsertButton) {
       var assetDiv=$(imageInsertButton).parent('.content-form-asset'),
-          src=$(assetDiv).find('img').attr('src'),
+          src=$(assetDiv).find('img').data('orig-src'),
           path=$(assetDiv).find('input.path').val(),
           file=$(assetDiv).find('input.file').val();
       $('#modal-image-insert > .modal-body').html(tmpl('template-insert-wizard',{'url': src,'path': path, 'file': file}));
