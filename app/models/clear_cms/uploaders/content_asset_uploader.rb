@@ -22,6 +22,7 @@ class ClearCMS::Uploaders::ContentAssetUploader < CarrierWave::Uploader::Base
       manipulate! do |img|
         model.width = img[:width]
         model.height = img[:height]        
+        img 
       end
      end
   end
