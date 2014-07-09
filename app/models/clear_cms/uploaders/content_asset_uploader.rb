@@ -18,13 +18,13 @@ class ClearCMS::Uploaders::ContentAssetUploader < CarrierWave::Uploader::Base
   
 
   def store_geometry
-    if @file
-      img = ::MiniMagick::Image::open(@file.file) #.first
-      if model
+    if @file && model 
+      manipulate! do |img|
         model.width = img[:width]
-        model.height = img[:height]
+        model.height = img[:height]        
+        img 
       end
-    end
+     end
   end
 
 
