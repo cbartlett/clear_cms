@@ -1,0 +1,17 @@
+<script id="template-asset-picker" type="text/x-tmpl">
+<div id="modal-asset-picker" class="modal hide fade">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">&times;</a>
+    <h3 class="modal-title">Select an Asset for {%= o.action %}</h3>
+  </div>
+  <div class="modal-body">
+    <ul>
+    {% for (var i=0; i<o.assets.length; i++) { %}
+      <li>{%= o.assets[i].thumbnail_url %}</li>
+    {% } %}
+    </ul>
+  </div>
+  <div class="modal-footer">
+  </div>
+</div>
+</script>

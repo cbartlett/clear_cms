@@ -8,6 +8,30 @@ ClearCMS.e = (function() {
   };
 }());
 
+ClearCMS.dataCache = (function() {
+  'use strict';
+
+  var _dataCache = {};
+
+  return {
+    getData: function(key) {
+      if (typeof _dataCache[key] !== 'undefined') {
+        return _dataCache[key];
+      } else {
+        return;
+      }
+    },
+    updateData: function(key, data) {
+      _dataCache[key] = data;
+      return true;
+    },
+    clearData: function(key) {
+      delete _dataCache[key];
+      return true;
+    }
+  }
+}());
+
 // Manages the content type metadata / form switching for edit pages
 ClearCMS.ContentTypes = (function() {
   'use strict';
@@ -186,10 +210,10 @@ ClearCMS.Form = (function() {
           ui.item.removeClass('ui-draggable-dragging').effect('highlight');
         }
       });
-      $( '.draggable','#asset-sortable').draggable({
-        connectToSortable: '#asset-sortable',
+      $( '.draggable','#asset-sortable').sortable({
+        // connectToSortable: '#asset-sortable',
         helper: 'original',
-        axis: 'x',
+        // axis: 'x',
         revert: 'invalid',
         stop: function() {
           //alert('done');
@@ -295,6 +319,51 @@ ClearCMS.Interface = (function() {
     $('#status-bar .val-'+which).html(val);
   }
 
+  function _showAssetsDialog(e) {
+    var data = {
+          action: "associated",
+          assets: null
+        },
+        tmplId = 'template-asset-picker';
+
+    e.preventDefault();
+
+    data.assets = $('#content_block_raw_0 #asset-sortable img').map(function(){
+      return {
+        thumbnail_url: $(this).attr('src')
+      }
+    });
+
+    ClearCMS.dataCache.updateData('assets',data.assets);
+    $(tmpl(tmplId,data)).modal();
+  }
+
+  function _showLinkedContentsPicker(e) {
+    var data = {
+          action: "image contains",
+          linkedcontents: null
+        },
+        tmplId = 'template-linkedcontent-picker';
+
+    e.preventDefault();
+
+    data.linkedcontents = $('.linked-content-item').map(function(){
+      return {
+        name: $(this).find('.media-heading').text(),
+        thumbnail_url: $(this).find('img').attr('src')
+      }
+    });
+
+    ClearCMS.dataCache.updateData('linkedcontents',data.linkedcontents);
+    $(tmpl(tmplId,data)).modal();
+  }
+
+  function _showAssetsEditor(e) {
+    e.preventDefault();
+
+    $(this).parents('.content-form-asset').find('.media-body').modal();
+  }
+
   return {
     setStatus: function(which, val) {
       updateStatus(which, val);
@@ -334,6 +403,11 @@ ClearCMS.Interface = (function() {
       //     e.preventDefault();
       //   }
       // });
+
+
+      $('.showAssets').on('click',_showAssetsDialog);
+      $('.showLinkedContents').on('click',_showLinkedContentsPicker);
+      $('.showAssetEditor').on('click',_showAssetsEditor);
 
       // $('#linkedLookup')
     }
