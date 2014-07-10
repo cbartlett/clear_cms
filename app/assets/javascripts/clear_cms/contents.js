@@ -210,7 +210,7 @@ ClearCMS.Form = (function() {
           ui.item.removeClass('ui-draggable-dragging').effect('highlight');
         }
       });
-      $( '.draggable','#asset-sortable').sortable({
+      $( '.draggable','#asset-sortable').draggable({
         // connectToSortable: '#asset-sortable',
         helper: 'original',
         // axis: 'x',
