@@ -17,6 +17,11 @@
     </ul>
   </div>
   <div class="modal-footer">
+    <h5>Add New Linked Item</h5>
+    <div class="lookupWrap well" id="linkedLookupWrap" data-lookup-url="/clear_cms/sites/<%=current_site.id%>/contents.json" data-lookup-filter-type="<%= @clear_cms_content.class.linked_content_filter[:types] %>" data-lookup-success-tmpl="template-linked-content-form">
+        <input type="text" class="lookupField" placeholder="begin typing then select content title...">
+      </div>
+
     <button class="btn btn-primary" href="#" data-dismiss="modal">Update</span></button>
   </div>
 </div>

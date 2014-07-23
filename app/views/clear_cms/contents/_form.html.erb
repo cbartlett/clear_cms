@@ -82,8 +82,9 @@ wholeJSON = <%= @clear_cms_content.to_json.html_safe %>;
 -->
 
     <h3>Protoype Stuffs</h3>
-    <a href="#" class="showAssets">click to see assets list</a><br>
-    <a href="#" class="showLinkedContents">click to see linked contents list</a><br>
+    <button class="showAssets">show assets list</button><br>
+    <button class="showLinkedContents">show linked contents list</button><br>
+    <button class="applyLinkedItemLimit">apply linked item limit</button><br>
 
     <h3>Linked Contents</h3>
 
@@ -150,16 +151,18 @@ wholeJSON = <%= @clear_cms_content.to_json.html_safe %>;
             <hr>
 
             <h4>Images</h4>
-            <div id="asset-sortable" class="well thumbnails">
+            <div id="asset-sortable" class="well" style="overflow:auto">
             <%= cbf.semantic_fields_for :content_assets do |caf| %>
-              <div class="media well content-form-asset draggable span2">
+              <div class="media content-form-asset" style="border: 1px solid #333; padding: 2px; width: 200px; height:300px; float: left; margin: 2px;">
 
-                <a class="pull-left" onclic="ClearCMS.Image.insertWizard(this); return false;">
-                  <%= image_tag caf.object.mounted_file.thumb.url, class: 'img-polaroid', width: '200', :"data-orig-src" => caf.object.mounted_file.url %>
+                <a onclic="ClearCMS.Image.insertWizard(this); return false;" style="display:block;">
+                  <%= image_tag caf.object.mounted_file.thumb.url, class: 'img-polaroid', width: '200', :"data-orig-src" => caf.object.mounted_file.url, style: 'display: block; max-height:225px' %>
                 </a>
                 <% if caf.object.persisted? %>
-                    <button class="btn btn-small pull-left showAssetEditor" onclic="ClearCMS.Image.insertWizard(this); return false;">Edit</button>
+                    <button class="btn btn-small showAssetEditor" onclic="ClearCMS.Image.insertWizard(this); return false;">Edit</button>
                     <button class="btn btn-small showLinkedContents" onclic="ClearCMS.Image.insertWizard(this); return false;">Link</button>
+                    <button class="btn btn-small" onclic="ClearCMS.Image.insertWizard(this); return false;">Delete</button><br>
+                    <button class="btn btn-small showAssetEditorB" onclic="ClearCMS.Image.insertWizard(this); return false;">Alternate Edit+Link</button>
                 <% end %>
                 <div class="media-body" style="display:none">
 
@@ -554,6 +557,7 @@ wholeJSON = <%= @clear_cms_content.to_json.html_safe %>;
 
 <%= render :partial=>"asset_picker_tmpl" %>
 <%= render :partial=>"linkedcontent_picker_tmpl" %>
+<%= render :partial=>"temp_tmpl" %>
 
 
 
