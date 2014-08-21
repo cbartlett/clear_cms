@@ -13,7 +13,7 @@
     <td><%= c.assignee[:full_name] if c.assignee %></td>
     <td><%= c.source %></td>
     <td><%= c.status %></td>
-    <td><%= link_to 'show', c %></td>
+    <td><%= link_to 'show', clear_cms.content_path(c) %></td>
   </tr>
   <% end %>
 </table>

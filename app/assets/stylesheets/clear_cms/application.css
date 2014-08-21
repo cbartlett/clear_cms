@@ -10,13 +10,19 @@
  *= require formtastic-plus-bootstrap/responsive
  *= #require bootstrap-wysihtml5
  *= require jquery.fileupload-ui
+ *= require jquery.textcount
+ *= require tagmanager
  *= #require clear_cms/markitup
  *= require markitup/skins/simple/style
  *= require markitup/sets/html/style
+ *= require datetimepicker
  *= require_self
+ *= require test
  *= #require_tree .
 */
 
+
+/*@import "compass/typography/lists/bullets"*/
 
 .published {
   border-left: 4px solid #6fdf65;
@@ -26,12 +32,99 @@
   border-left: 4px solid #fcfc46;
 }
 
-
-/* textcount styling for hints */
+/* Textcount tweaks
+------------------------------------------- */
 .tc-hint {
-  display: block;
   padding-left: 125px;
-  font-style: italic;
-  font-size: 0.8em;
-  color: #999;
+}
+
+/* Markitup tweaks
+------------------------------------------- */
+.markItUp {
+  clear: both;
+  padding-top: 1em;
+}
+.markItUpHeader .markItUpButtonNoIcon a {
+  width: auto;
+  text-indent: 0;
+  font-size: 10px;
+  padding: 0 3px 6px;
+}
+
+/* Tabbed Content Block Styles
+------------------------------------------- */
+#contentBlocksContainer .tab-pane:nth-child(n+2) #asset-sortable {
+  display: none;
+}
+
+/* Sortable Media Styling
+------------------------------------------- */
+
+#linkedContentSortable > li {
+    /*height: 150px;*/
+    list-style: none;
+}
+#asset-sortable > li {
+    /*height: 170px;*/
+    list-style: none;
+}
+
+.draggable {
+  cursor: move;
+}
+
+
+.slimMode .media-object,
+.slimMode .fields {
+  display: none;
+}
+
+#linkedContentSortable.slimMode > li {
+  height: auto;
+}
+
+#linkedContentSortable,
+#asset-sortable {
+  /*max-height: 800px;*/
+  /*overflow-y: auto;*/
+  background: #fff;
+}
+
+.ui-draggable-dragging {
+  background: #ddd;
+}
+
+/* jQuery UI tweaks
+------------------------------------------- */
+input.ui-autocomplete-loading {
+  background-image: url('/assets/clear_cms/ajax-loader.gif');
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+
+
+/* Status Bar
+------------------------------------------- */
+
+#status-bar {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  height: 2em;
+  line-height: 2em;
+  background: #fff;
+  border-top: 1px #000 solid;
+}
+
+#status-bar * {
+  display: inline;
+  padding: 0 0.5em;
+}
+
+
+/* Lined Content Block
+------------------------------------------- */
+.linked-content-item {
+
 }

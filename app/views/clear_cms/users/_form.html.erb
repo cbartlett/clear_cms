@@ -1,6 +1,6 @@
-<%= semantic_nested_form_for @clear_cms_user, :html=>{:multipart=>true, :class=>'form-horizontal well clearfix'} do |f| %>
+<%= semantic_nested_form_for @clear_cms_user, :html=>{:multipart=>true, :class=>'form-horizontal well clearfix primary'} do |f| %>
   <%= f.inputs do %>
-    
+
     <% if f.object.persisted? && f.object.avatar? %>
       <%= image_tag f.object.avatar.url, class: 'img-polaroid', width: '100px' %>
     <% end %>
@@ -10,24 +10,24 @@
     <%= f.input :base_name %>
     <%= f.input :short_name %>
 
-    
+
     <%= f.input :avatar %>
     <%= f.input :bio, :as=>:text, :input_html=>{:class=>'input-xxlarge', :rows=>5} %>
 
     <% if can? :manage, :user %>
       <%= f.input :system_permission, :collection=>ClearCMS::User::ROLES %>
     <% end %>
-    
+
     <%= f.input :active, :as=>:boolean %>
   <% end %>
-  
+
 <!--
   <%= f.inputs "Notifications" do %>
-  
-  
+
+
   <% end %>
 -->
-  
+
   <% if can? :manage, :user %>
     <%= f.inputs "Permissions" do %>
       <%= f.semantic_fields_for :permissions do |p| %>
@@ -38,22 +38,22 @@
             <li><%= p.link_to_remove "remove", :class=>'btn' %></li>
           </div>
         <% end %>
-      <% end %> 
+      <% end %>
       <%= f.link_to_add "Add Permissions", :permissions, :class=>'btn btn-xlarge' %>
     <% end %>
   <% end %>
 
-  
 
-  
+
+
 <!--
   <%= f.inputs "Password" do %>
     <%= f.input :password %>
     <%= f.input :password_confirmation %>
   <% end %>
 -->
-  
-  
-  
+
+
+
   <%= f.submit :class=>'btn pull-right' %>
 <% end %>

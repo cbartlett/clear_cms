@@ -1,7 +1,7 @@
 @import "twitter/bootstrap/bootstrap";
 
 body {
-  padding-top: 60px;
+  padding-top: 60px !important;
 }
 
 @import "twitter/bootstrap/responsive";
@@ -11,14 +11,14 @@ body {
 @iconWhiteSpritePath: asset-path("twitter/bootstrap/glyphicons-halflings-white");
 
 // Set the Font Awesome (Font Awesome is default. You can disable by commenting below lines)
-@fontAwesomeEotPath: asset-url("fontawesome-webfont.eot");
-@fontAwesomeEotPath_iefix: asset-url("fontawesome-webfont.eot#iefix");
-@fontAwesomeWoffPath: asset-url("fontawesome-webfont.woff");
-@fontAwesomeTtfPath: asset-url("fontawesome-webfont.ttf");
-@fontAwesomeSvgPath: asset-url("fontawesome-webfont.svg#fontawesomeregular");
+//@fontAwesomeEotPath: asset-url("fontawesome-webfont.eot");
+//@fontAwesomeEotPath_iefix: asset-url("fontawesome-webfont.eot#iefix");
+//@fontAwesomeWoffPath: asset-url("fontawesome-webfont.woff");
+//@fontAwesomeTtfPath: asset-url("fontawesome-webfont.ttf");
+//@fontAwesomeSvgPath: asset-url("fontawesome-webfont.svg#fontawesomeregular");
 
 // Font Awesome
-@import "fontawesome/font-awesome";
+//@import "fontawesome/font-awesome";
 
 // Glyphicons
 //@import "twitter/bootstrap/sprites.less";
@@ -41,11 +41,11 @@ body {
 }
 
 .content-form-sidebar {
-  
+
   li {
     list-style: none;
   }
-  
+
   label {
     color: black;
     background-color: transparent;
@@ -64,11 +64,11 @@ body {
     display: block;
     float: left;
   }
-  
+
   label:hover {
     color: black;
   }
-  
+
   li {
     margin: 2px;
   }
@@ -80,11 +80,29 @@ body {
   li {
     float: left;
     margin: 10px;
-  
+
     label {
       display: none;
     }
-  
+
   }
 }
 
+
+/* Modal
+------------------------------------------- */
+.modal {
+  padding: 1em 2em;
+}
+
+
+
+
+/* Menu Bar
+------------------------------------------- */
+@media only screen and (max-width : 850px) {
+  .search-bar {
+    /* competes with .btn-group */
+    display: none !important;
+  }
+}

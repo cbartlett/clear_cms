@@ -15,12 +15,14 @@ class ClearCMS::Asset
   
   field :path
   field :caption
-  field :order
+  field :order, type: Integer
   field :title
   field :description
   field :credit
   field :file
   field :original_file_url
+  field :width
+  field :height
   field :processed_at, type: DateTime
 
 #   def remote_file_url(url)

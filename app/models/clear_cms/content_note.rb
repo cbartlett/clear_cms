@@ -7,6 +7,7 @@ module ClearCMS
     belongs_to :user, class_name: 'ClearCMS::User'
     
     field :entry
+ 
       
   end
 end

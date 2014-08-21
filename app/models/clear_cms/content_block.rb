@@ -10,15 +10,23 @@ class ClearCMS::ContentBlock
   accepts_nested_attributes_for :content_assets, :allow_destroy=>true
   # git test
   
+
   field :body
   field :type
   field :has_gallery, type: Boolean
+  field :order, type: Integer
   
+  default_scope ->{asc(:order)}
+
   def body
     self[:body].html_safe unless self[:body].blank?
   end
   
   def body_excerpt
     body.blank? ? '' : body.split[0...50].join(" ").html_safe
+  end
+
+  def self.types
+    TYPES
   end
 end

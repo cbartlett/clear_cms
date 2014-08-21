@@ -1,3 +1,3 @@
 $(document).ready(function() {
-  $('.inactive_user').hide();  
+  $('.inactive_user').hide();
 });

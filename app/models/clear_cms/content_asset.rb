@@ -13,18 +13,20 @@ class ClearCMS::ContentAsset
   
   field :path
   field :caption
-  field :order #using order of first to show as default image
+  field :order, type: Integer #using order of first to show as default image
   field :title
   field :description
   field :credit
   field :file
+  field :width
+  field :height
   
   field :source_id
   field :tags, type: Array
 
-  default_scope asc(:order)
+  default_scope ->{asc(:order)}
   
-  scope :gallery_assets, self.in(:tags=>"gallery")
+  scope :gallery_assets, ->{self.in(:tags=>"gallery")}
 
 #   def remote_file_url(url)
 #     self.file.store_dir=File.dirname(url)

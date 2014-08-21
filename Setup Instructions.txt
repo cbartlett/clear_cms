@@ -11,6 +11,11 @@ sunspot_solr gem -- bug with dev port needing to be 8983
 sidekiq/redis setup...background image processing on upload
 
 
+brew install imagemagick
+rvm pkg install openssl issue
+
+decorators
+
 main_app.content_path
 
 rake clear_cms:create_user

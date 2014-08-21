@@ -8,143 +8,197 @@
 -->
 <% end %>
 
+<%#TBD: based on site config, set this object up %>
+<script>
+var linkedFiltersType = {
+  Product: ['Product'],
+  Brand: ['Editorial'],
+  Editorial: ['Product']
+};
+</script>
 
 <div class="row-fluid">
   <div class="span9">
   <% if @clear_cms_content.persisted? %>
-    <%= link_to (@clear_cms_content.published? ? 'View >>' : "Preview >>"), main_app.content_path(@clear_cms_content), :class=>'pull-right btn', :target=>'_blank' %>
+    <% if @clear_cms_content.published? %>
+      <%= link_to 'View >>', @clear_cms_content.friendly_path, :class=>'pull-right btn', :target=>'_blank' %>
+    <% else %>
+      <%= link_to "Preview >>", @clear_cms_content.friendly_path+"?preview=true", :class=>'pull-right btn', :target=>'_blank' %>
+    <% end %>
   <% end %>
-  <%= semantic_nested_form_for @clear_cms_content, :html=>{:multipart=>true, :class=>'form-horizontal well'} do |f| %>
+  <%= semantic_nested_form_for @clear_cms_content, :as=>:content, :url=>(@clear_cms_content.persisted? ? clear_cms.content_path(@clear_cms_content) : clear_cms.contents_path), :html=>{:multipart=>true, :class=>'form-horizontal well primary'} do |f| %>
 <!--     <h3>Content Details</h3> -->
       <div id="modal-note-form" class="modal hide fade">
+        <div class="modal-header">
+          <a class="close" data-dismiss="modal">&times;</a>
+          <h3 class="modal-title">Notes</h3>
+        </div>
+        <div class="modal-body">
+          <h4>New Note</h4>
+          <button onclick="$(this).after(tmpl('template-note-form')); $(this).remove(); return false;">add new note</button>
+          <div id="newNoteWrap">
+          </div>
+          <h4>Other Notes</h4>
+          <ul>
+            <% @clear_cms_content.content_notes.each do |content_note| %>
+            <li><%= content_note.entry %></li>
+            <% end %>
+          </ul>
+        </div>
       </div>
 
-    <%= f.inputs do %>
-      <%= f.input :type, :as=>:select, :collection=>ClearCMS::Content::TYPES %> 
-      <%= f.input :promote, :as=>:boolean, :html=>{:class=>'checkbox'} %>
-      <%= f.input :title, :input_html=>{:class=>'input-xxlarge'} %>
-      <%= f.input :subtitle, :input_html=>{:class=>'input-xxlarge'} %>
-      <%= f.input :basename %>
-      <%= f.input :author, :collection=>(ClearCMS::User.active + [@clear_cms_content.author]).compact.uniq %> 
-      <%= f.input :tags, :input_html=>{:class=>'input-xxlarge'}%>
-      <%= f.input :categories, :input_html=>{:class=>'input-xxlarge', 'autocomplete'=>'off', 'data-provide'=>"typeahead", 'data-source'=>@clear_cms_content.site.categories.collect {|c| c['_id'] }.to_json} %>
-      <%= f.input :tweet, :as=>:text, :input_html=>{:class=>'input-xxlarge', rows: 3} %>
-      <%= f.input :address, :as=>:text, :input_html=>{:rows=>5 }%>
-      <%= f.input :latitude %>
-      <%= f.input :longitude %>
-      <%= f.input :video_url, :label=>'Video URL', :input_html=>{:class=>'input-xxlarge'} %>
-      <%= f.input :campaign_tracking_pixel, :label=>'Campaign Tracking Pixel', :input_html=>{:class=>'input-xxlarge'} %>
+<!--     <div class="well well-small"> -->
+    <%= f.inputs "General", :class=>"inputs general" do %>
 
 
-      <%= f.input :brand_name, :label=>'Brand Name' %>
-      <%= f.input :brand_url, :label=>'Brand URL' %>
-      <%= f.input :buy_url, :label=>'Buy URL' %>
-      <%= f.input :store_name, :label=>'Store Name' %>
-      <%= f.input :price %>
-      <%= f.input :scale, :collection=>[1,2,3] %>
-      <%= f.input :product_image, :label=>'Product Image' %>
-      <%= f.input :product_description, :as=>:text, :label=>'Product Description', :input_html=>{:class=>'input-xxlarge', rows: 3}  %>
-      <%= f.input :fancy_item, :as=>:boolean, :html=>{:class=>'checkbox'} %>
-      <%= f.input :ios_app_exclusive, :as=>:boolean, :html=>{:class=>'checkbox'}, :label=>'iOS APP Exclusive' %>
-      
-      <%= f.input :site_id, :as=>:hidden, :value=>current_site.id %>
+        <%= f.input :site_id, :as=>:hidden, :value=>current_site.id %>
+        <%= f.input :_type, :as=>:select, :collection=>ClearCMS::Content.content_types.collect(&:to_s), :include_blank=>false, :input_html=>{:class=>'protected linkedFiltersTypeMonitor'} %>
+        <%= f.input :title, :input_html=>{:class=>'input-xxlarge'} %>
+        <%= f.input :subtitle, :input_html=>{:class=>'input-xxlarge'} %>
+        <%= f.input :basename, :hint=>'Must not contain spaces or special chars', :input_html=>{:class=>'protected'} %>
+        <%= f.input :author, :collection=>(ClearCMS::User.active + [@clear_cms_content.author]).compact.uniq %>
+        <%= f.input :tags, :input_html=>{:class=>'input-xlarge'}%>
+        <%= f.input :categories, :input_html=>{:class=>'input-xlarge', 'autocomplete'=>'off', 'data-provide'=>"typeahead", 'data-source'=>@clear_cms_content.site.categories.collect {|c| c['_id'] }.to_json} %>
+<!--     </div> -->
+
+      <% ClearCMS::Content.form_fields.each do |field,options| %>
+        <%# if models.include?(@clear_cms_content.class.to_s) %>
+          <%= f.input field, options[:formtastic_options].merge(:wrapper_html=>{'data-types'=>options[:models].to_json}) %>
+        <%# end %>
+      <% end %>
+
+
     <% end %>
-    
-    
+
+
 <!--
     <div>
     <h3>Assets</h3>
-    
-    
+
+
     </div>
 -->
-    
-    <h3>Content Block(s)</h3>
 
-    <p><%= f.link_to_add "Add a Content Block", :content_blocks, :class=>'btn btn-xlarge' %></p>
+    <h3>Linked Contents</h3>
 
-    
-    <ul class="nav nav-tabs" id="myTab">
-      <% @clear_cms_content.content_blocks.each_with_index do |cb,i| %>
-        <li<%= i==0 ? ' class=active' : '' %>><a href="#content_block_<%= cb.type.present? ? cb.type : cb.object_id %>" data-toggle="tab"><%= cb.type.present? ? cb.type : cb.object_id %></a></li>
+    <ul id="linkedContentSortable" class="linked-content-items lookupSuccessTarget well">
+      <% @clear_cms_content.linked_contents.each do |lc| %>
+      <li class="linked-content-item media well draggable">
+        <% if lc.persisted? %>
+          <span class="pull-left media-object"><%= image_tag lc.linked_content.default_image_url(:thumb) %></span>
+          <div class="media-body">
+            <h5 class="media-heading"><%= lc.linked_content.title %></h5>
+        <% else %>
+          <div class="media-body">
+        <% end %>
+
+        <%= f.semantic_fields_for :linked_contents, lc do |lcf| %>
+          <%= lcf.inputs do %>
+            <%= lcf.input :linked_content_id, :as => :hidden %>
+            <%= lcf.input :order, :as => :hidden %>
+            <%= lcf.check_box '_destroy' %> Delete
+          <% end %>
+        <% end %>
+          </div> <!-- /.media-body -->
+      </li>
       <% end %>
     </ul>
-    
-       
-    <div class="tab-content">    
-      <% @clear_cms_content.content_blocks.each_with_index do |cb,i| %>
+    <div class="lookupWrap well" id="linkedLookupWrap" data-lookup-url="/clear_cms/sites/<%=current_site.id%>/contents.json" data-lookup-filter-type="<%= @clear_cms_content.class.linked_content_filter[:types] %>" data-lookup-success-tmpl="template-linked-content-form">
+      <!-- CHRIS: you can get json results of content like this:  -->
+      <input type="text" class="lookupField" placeholder="begin typing then select content title...">
+      <!-- <button class="lookupTrigger">add linked content</button> -->
+    </div> <!-- /.lookupWrap -->
 
-      <div class="tab-pane <%= i==0 ? 'active' : '' %>" id="content_block_<%= cb.type.present? ? cb.type : cb.object_id %>">
-      <%= f.semantic_fields_for :content_blocks, cb do |cbf| %>
-      
 
-      <div class="well">
-        
-        <%= cbf.inputs do %>
-          <%= cbf.input :type, :as=>:select, :collection=>ClearCMS::ContentBlock::TYPES %>
-          <%= cbf.input :body, :as=>:text, :input_html=>{:class=>'input-xxlarge markitup'} %>
-          <%= cbf.input :has_gallery, :as=>:boolean, :html=>{:class=>'checkbox'} %>
-          
-<!--           <a href="#modal-gallery" role="button" class="btn" data-toggle="modal">Insert Images</a> -->
-          <hr>
-          
-          <div id="asset-sortable">
-          <h4>Images</h4>
-          <%= cbf.semantic_fields_for :content_assets do |caf| %>            
-            <div class="media well well-small content-form-asset draggable">
+    <h3>Content Block(s)</h3>
 
-              <a class="pull-left" onclick="ClearCMS.Image.insertWizard(this); return false;">
-                <%= image_tag caf.object.mounted_file.url, class: 'img-polaroid', width: '100px' %>
+    <p><%= f.link_to_add "Add a Content Block", :content_blocks, :class=>'btn btn-xlarge', :data => { :target => "#myTab+.tab-content" } %></p>
 
-              </a>
-              <% if caf.object.persisted? %>
-                  <a class="btn btn-small pull-left" onclick="ClearCMS.Image.insertWizard(this); return false;">Insert</a>
-              <% end %>
-              <div class="media-body">
 
-                <% unless caf.object.persisted? %>
-<!--
-                  <%= caf.input :mounted_file %>
-                  <%= caf.input :remote_mounted_file_url, :as=>:hidden %>
--->
-                <% end %>
-                
-                <%= caf.input :path, :as=>:hidden, :input_html=>{:class=>'path'} %>
-                <%= caf.input :file, :as=>:hidden, :input_html=>{:class=>'file'} %>
-              
-                <div class="span5">
-                <%= caf.input :title %>
-                <%= caf.input :description, :as=>:text, :input_html=>{:rows=>1} %>
-                <%= caf.input :credit %>
-                </div>
-                <div class="span5">
-                <%= caf.input :tags %>
-                <%#= caf.input :tags, :input_html=>{:class=>'input-xxlarge'}%>
-                <%= caf.input :order %>
-                <%= caf.check_box '_destroy' %> Delete
-                </div>
-<!--
-                <%= caf.input :caption %>
-                <%= caf.input :order %>
--->
-
-                 
-              </div>
-            </div>
-          <% end %>
-          </div>
-
-         <!--  <p><%= cbf.link_to_add "Add an Asset", :content_assets, :class=>'btn btn-xlarge' %></p> -->
-    
-        
+    <div class="tabbable" id="contentBlocksContainer">
+      <ul class="nav nav-tabs" id="myTab">
+        <% @clear_cms_content.content_blocks.each_with_index do |cb,i| %>
+          <li<%= i==0 ? ' class=active' : '' %>><a href="#content_block_<%= cb.type.present? ? cb.type : cb.object_id %>_<%= i %>" data-toggle="tab"><%= i==0 ? '<i class="icon-picture"></i> '.html_safe : '' %><%= cb.type.present? ? cb.type : cb.object_id %></a></li>
         <% end %>
-      </div>
+      </ul>
+      <div class="tab-content">
+
+        <% @clear_cms_content.content_blocks.each_with_index do |cb,i| %>
+
+        <div class="tab-pane <%= i==0 ? 'active' : '' %>" id="content_block_<%= cb.type.present? ? cb.type : cb.object_id %>_<%= i %>">
+        <%= f.semantic_fields_for :content_blocks, cb do |cbf| %>
+
+
+        <div class="well">
+
+          <%= cbf.inputs do %>
+            <%= cbf.input :type, :as=>:select, :collection=>@clear_cms_content.content_block_types , :input_html=>{:class=>'protected'}%>
+            <%= cbf.input :body, :as=>:text, :input_html=>{:class=>'input-xxlarge markitup', :data=>{:"tc-ignore-html"=> true}} %>
+            <%= cbf.input :order %>
+            <% if i!=0 %>
+              <%= cbf.check_box '_destroy' %> Delete
+            <% end %>
+            <%= cbf.input :has_gallery, :as=>:boolean, :html=>{:class=>'checkbox'} %>
+
+  <!--           <a href="#modal-gallery" role="button" class="btn" data-toggle="modal">Insert Images</a> -->
+            <hr>
+
+            <h4>Images</h4>
+            <div id="asset-sortable" class="well">
+            <%= cbf.semantic_fields_for :content_assets do |caf| %>
+              <div class="media well content-form-asset draggable">
+
+                <a class="pull-left" onclick="ClearCMS.Image.insertWizard(this); return false;">
+                  <%= image_tag caf.object.mounted_file.thumb.url, class: 'img-polaroid', width: '100', :"data-orig-src" => caf.object.mounted_file.url %>
+                </a>
+                <% if caf.object.persisted? %>
+                    <a class="btn btn-small pull-left" onclick="ClearCMS.Image.insertWizard(this); return false;">Insert</a>
+                <% end %>
+                <div class="media-body">
+
+                  <% unless caf.object.persisted? %>
+  <!--
+                    <%= caf.input :mounted_file %>
+                    <%= caf.input :remote_mounted_file_url, :as=>:hidden %>
+  -->
+                  <% end %>
+
+                  <%= caf.input :path, :as=>:hidden, :input_html=>{:class=>'path'} %>
+                  <%= caf.input :file, :as=>:hidden, :input_html=>{:class=>'file'} %>
+
+                  <div class="span5">
+                  <%= caf.input :title %>
+                  <%= caf.input :description, :as=>:text, :input_html=>{:rows=>1} %>
+                  <%= caf.input :credit %>
+                  </div>
+                  <div class="span5">
+                  <%= caf.input :tags %>
+                  <%#= caf.input :tags, :input_html=>{:class=>'input-xxlarge'}%>
+                  <%= caf.input :order, :as=>:hidden %>
+                  <%= caf.check_box '_destroy' %> Delete
+                  </div>
+  <!--
+                  <%= caf.input :caption %>
+                  <%= caf.input :order %>
+  -->
+
+
+                </div>
+              </div>
+            <% end %>
+            </div>
+
+           <!--  <p><%= cbf.link_to_add "Add an Asset", :content_assets, :class=>'btn btn-xlarge' %></p> -->
+
+
+          <% end %>
+        </div>
+        <% end %>
+        </div><!-- /.tab-pane -->
       <% end %>
-      </div>
-    <% end %>
-    </div>
-      
-  </div>    
+      </div><!-- /.tab-content -->
+    </div> <!--/.tabbable -->
+  </div>
 
 
 
@@ -154,32 +208,31 @@
 
 
 
-      <!-- <%= f.input :status, :as=>:select, :collection=>ClearCMS::Content::STATUSES %>  -->  
+      <!-- <%= f.input :status, :as=>:select, :collection=>ClearCMS::Content::STATUSES %>  -->
       <%= f.submit 'Save', :class=>'btn btn-primary' %>
-      <%= f.submit (@clear_cms_content.published? ? 'View >>' : "Preview >>"), :class=>'btn' %>
-      <%= f.input :publish_at %>
+  <!--     <%= f.submit (@clear_cms_content.published? ? 'View >>' : "Preview >>"), :class=>'btn' %>
+   -->    <%= f.input :publish_at, :input_html => { :class => 'datetime_picker' } %>
       <%= f.input :state, :as=>:select, :collection=>Hash[ClearCMS::Content::STATES.map {|state| [state.humanize, state]}] %>
       <br>
       <div class="well well-small clearfix">
         <!-- <h6>Save and mark as:</h6> -->
         <%= link_to "Save as #{@clear_cms_content.next_state.humanize.downcase} >>", '#', :class=>'form-action next-state btn btn-warning btn-small', 'data-next-state'=>@clear_cms_content.next_state %>
-        
+
       </div>
       <% if @clear_cms_content.persisted? %>
-        <%= link_to 'Delete', @clear_cms_content,:confirm=>'Are you sure you want to delete this entry?',:method=>:delete,:class=>'btn' %>
+        <%= link_to 'Delete', clear_cms.content_path(@clear_cms_content),:confirm=>'Are you sure you want to delete this entry?',:method=>:delete,:class=>'btn' %>
       <% end %>
     </div>
-    
+
     <div class="well">
       <h4>Assignee</h4>
       <%= f.input :assignee, :collection=>(ClearCMS::User.active + [@clear_cms_content.assignee]).compact.uniq %>
       <%= f.input :deadline_at %>
     </div>
-    
+
     <div class="well">
       <h4>Content Notes</h4>
-      <p><a class='btn btn-xlarge' onclick="$('#modal-note-form').append(tmpl('template-note-form'));
-      $('#modal-note-form').modal(); return false;">Add Note</a></p>
+      <p><a class='btn btn-xlarge' onclick="$('#modal-note-form').modal(); return false;">View/Add Notes</a></p>
       <!-- modal-note-form is at the top of the semantic form because of the way formtastic is closing the form before this block, this all needs a major refactoring...CHRIS! -->
 
 <!--
@@ -187,11 +240,11 @@
         <%#= note.user.full_name %>:<br>
         <%= simple_format note.entry %>
       <% end %>
-      
+
       <div id="content_notes_form_wrapper">
-      
+
       </div>
-      
+
 
       <%= f.semantic_fields_for :content_notes do |cnf| %>
         <%= cnf.inputs do %>
@@ -200,41 +253,41 @@
       <% end %>
 -->
       <% @clear_cms_content.content_notes.each do |content_note| %>
-        <p><%= content_note.entry %></p>
+        <p><%= truncate(content_note.entry, length: 40) %></p>
       <% end %>
-      
-      <a>ALL NOTES...</a>
 
-    </div> 
-    
+      <!-- <a>ALL NOTES...</a> -->
+
+    </div>
+
     <div class="well">
       <h4>History</h4>
       <p><b>CREATED AT</b><br><small><i><%= @clear_cms_content.created_at %></i></small></p>
-      <p><b>UPDATED AT</b><br><small><i><%= @clear_cms_content.updated_at %></i></small></p>    
-      <p><b>SOURCE</b><br><small><i><%= @clear_cms_content.source %></i></small></p>
+      <p><b>UPDATED AT</b><br><small><i><%= @clear_cms_content.updated_at %></i></small></p>
+      <p><b>SOURCE</b><br><small><i><%#= @clear_cms_content.source %></i></small></p>
       <p><b>ACTIVITY</b>
       <% @clear_cms_content.content_logs.each do |log| %>
         <br><small><i><%= log.entry.capitalize %> by <%= log.user.full_name %> at <%= log.created_at %></i></small>
       <% end %>
       </p>
-    </div>    
-  </div>  
-  
+    </div>
+  </div>
+
 <div data-spy="affix-bottom" id="content-controls" class="row-fluid">
   <div class="span9 well">
     <%= f.submit 'Save', :class=>'btn btn-primary pull-right' %>
   </div>
-</div>  
+</div>
 
   <% end %> <!-- end content form -->
 
 <div class="row-fluid">
-  <div class="span9 well">  
+  <div class="span9 well">
     <!-- The file upload form used as target for the file upload widget -->
     <%= s3_uploader_form post: "#{clear_cms.site_assets_path(params[:site_id] || @clear_cms_content.site_id )}", as: "asset[image_url]", bucket: ClearCMS.config.s3_upload_bucket do %>
       <%= file_field_tag :file, multiple: true %>
     <% end %>
-    
+
   </div>
 </div>
 
@@ -314,11 +367,28 @@
 </div>
 
 
+<!-- The template to insert linked content -->
+<script id="template-linked-content-form" type="text/x-tmpl">
+  {% var random_id=Math.floor(Math.random() * 10000000); %}
+  <li class="linked-content-item media well draggable draggable-ui">
+    <button class="close" onclick="$(this).parent().remove(); return false;">&times;</button>
+    {% if (o.media_src) { %}
+    <span class="pull-left"><img class="media-object" src="{%=o.media_src%}"></span>
+    {% } %}
+    <div class="media-body">
+      <h5 class="media-heading">{%=o.title%}</h5>
+      <input type="hidden" id="content_linked_contents_attributes_{%=random_id%}_linked_content_id" name="content[linked_contents][{%=random_id%}][linked_content_id]" value="{%=o.content_id%}">
+      <input type="hidden" id="content_linked_contents_attributes_{%=random_id%}_order" name="content[linked_contents][{%=random_id%}][order]" value="{%=o.order%}">
+    </div> <!-- /.media-body -->
+  </li>
+</script>
+
+
 <!-- The template to insert a note -->
 <script id="template-note-form" type="text/x-tmpl">
   {% var random_id=Math.floor(Math.random() * 10000000); %}
-  <li class="text input optional" id="content_content_notes_attributes_{%=random_id%}_entry_input"><label class=" label" for="content_content_notes_attributes_{%=random_id%}_entry">Description</label><textarea id="content_content_notes_attributes_{%=random_id%}_entry" name="content[content_notes][{%=random_id%}][entry]" rows="10"></textarea>
-  </li>
+  <div class="text input optional" id="content_content_notes_attributes_{%=random_id%}_entry_input"><label class=" label" for="content_content_notes_attributes_{%=random_id%}_entry">Description</label><textarea id="content_content_notes_attributes_{%=random_id%}_entry" name="content[content_notes][{%=random_id%}][entry]" rows="8" cols="40" style="width:100%"></textarea>
+  </div>
 </script>
 
 
@@ -327,14 +397,14 @@
 <script id="template-asset-form" type="text/x-tmpl">
   {% var random_id=Math.floor(Math.random() * 10000000); %}
   {% var filename=o.file.url.match(/.*\/(.*)$/)[1]; %}
-  <div class="fields">            
+  <div class="fields">
     <div class="media well well-small content-form-asset draggable">
       <a class="pull-left" onclick="ClearCMS.Image.insertWizard(this); return false;">
-        <img alt="{%=filename%}" class="img-polaroid" src="{%=o.file.url%}" width="100px">
+        <img alt="{%=filename%}" class="img-polaroid" src="{%=o.file.url%}" width="100" data-orig-src="{%=o.file.url%}">
       </a>
 <!--       <div class="pull-right"><input name="content[content_blocks_attributes][0][content_assets_attributes][1][_destroy]" type="hidden" value="0"><input id="content_content_blocks_attributes_0_content_assets_attributes_1__destroy" name="content[content_blocks_attributes][0][content_assets_attributes][1][_destroy]" type="checkbox" value="1"> Delete </div> -->
       <a class="btn btn-small pull-left" onclick="ClearCMS.Image.insertWizard(this); return false;">Insert</a>
-      <div class="media-body">              
+      <div class="media-body">
 <!--         <input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_remote_mounted_file_url" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][remote_mounted_file_url]" type="hidden" value="{%=o.url%}">  -->
       <div class="span5">
       <input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_path" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][path]" type="hidden" value="{%=o.path%}" class="path">
@@ -350,10 +420,17 @@
                 <li class="string input optional stringish" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_tags_input"><label class=" label" for="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_tags">Tags</label><input class="input-xxlarge" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_tags" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][tags]" type="text" value="[]">
 
 </li>
-                <li class="string input optional stringish" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_order_input"><label class=" label" for="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_order">Order</label><input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_order" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][order]" type="text" value="99">
+                <li class="hidden input optional stringish" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_order_input"><input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_order" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][order]" type="hidden" value="{%=o.order%}">
 
-</li>       
-      </div>        
+</li>
+                <li class="hidden input optional stringish" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_width_input"><input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_width" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][width]" type="hidden" value="{%=o.width%}">
+
+</li>
+                <li class="hidden input optional stringish" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_height_input"><input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_height" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][height]" type="hidden" value="{%=o.height%}">
+
+</li>
+
+      </div>
       </div>
     </div>
   </div>
@@ -371,30 +448,20 @@
         Align Left
       </label>
       <label class="radio inline">
-        <input type="radio" name="image_alignment" value="center" checked>  
-        Align Center      
-      </label>      
+        <input type="radio" name="image_alignment" value="center" checked>
+        Align Center
+      </label>
       <label class="radio inline">
         <input type="radio" name="image_alignment" value="right">
         Align Right
       </label>
       <hr>
+    <% ClearCMS::Uploaders::ContentAssetUploader.version_list.each do |version| %>
       <label class="radio inline">
-        <input type="radio" name="image_size" value="half_width">
-        Half-Width
+        <input type="radio" name="image_size" value="<%= version[:prefix] %>" <%= version[:default] ? 'checked' : '' %>>
+        <%= version[:label] %>
       </label>
-      <label class="radio inline">
-        <input type="radio" name="image_size" value="full_width" checked>  
-        Full-Width     
-      </label>
-      <label class="radio inline">
-        <input type="radio" name="image_size" value="feature">  
-        Feature (300px)     
-      </label>
-      <label class="radio inline">
-        <input type="radio" name="image_size" value="thumb">  
-        Thumb (200px)     
-      </label>                  
+    <% end %>
 <!--
       <hr>
       <label>Width</label>
@@ -409,9 +476,14 @@
       <!-- <button class="btn" type="submit">Generate</button> -->
     </fieldset>
   </form>
-  <div class="well">
-    <p>Original Image URL</p>
-    <a href="{%= o.url %}" target="_blank" id="image-url">{%= o.url %}</a>
+  <div class="well well-small" style="overflow-x: hidden; overflow-y: auto; font-size: 0.8em; max-height: 60px">
+    <% ClearCMS::Uploaders::ContentAssetUploader.version_list.each do |version| %>
+    <p><%= version[:label] %>:<br>
+    <a href="{%= o.url.substring(0,o.url.lastIndexOf('/')+1) + '<%= version[:prefix] %>_' + o.url.substring(o.url.lastIndexOf('/')+1)  %}" target="_blank">{%= o.url.substring(0,o.url.lastIndexOf('/')+1) + '<%= version[:prefix] %>_' + o.url.substring(o.url.lastIndexOf('/')+1)  %}</a></p>
+    <% end %>
+
+    <p>Original Image:<br>
+    <a href="{%= o.url %}" target="_blank" id="image-url">{%= o.url %}</a></p>
   </div>
 </script>
 
@@ -459,6 +531,20 @@
     </tr>
 {% } %}
 </script>
+
+
+<!-- The template do draw the status bar -->
+<script id="template-status-bar" type="text/x-tmpl">
+<div id="status-bar">
+<dl>
+<dt>Uploads In Progress</dt>
+<dd class="val-uploads">{%=o.uploads%}</dd>
+<dt>Unsaved Changes?</dt>
+<dd class="val-unsaved">{%=o.unsaved%}</dd>
+</dl>
+</div>
+</script>
+
 
 
 
