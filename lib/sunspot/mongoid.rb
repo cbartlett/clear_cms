@@ -32,12 +32,12 @@ module Sunspot
 
     class DataAccessor < Sunspot::Adapters::DataAccessor
       def load(id)
-        @clazz.criteria.for_ids(Moped::BSON::ObjectId(id))
+        @clazz.criteria.for_ids(BSON::ObjectId.from_string(id))
       end
 
       def load_all(ids)
         #ids.map { |id| self.load(id) }
-        @clazz.criteria.in(:_id => ids.map {|id| Moped::BSON::ObjectId(id)})
+        @clazz.criteria.in(:_id => ids.map {|id| BSON::ObjectId.from_string(id)})
       end
 
 #       private
