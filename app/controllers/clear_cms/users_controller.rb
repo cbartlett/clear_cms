@@ -57,7 +57,7 @@ module ClearCMS
     def create
       
     
-      @clear_cms_user = ClearCMS::User.new(params[:user])
+      @clear_cms_user = ClearCMS::User.new(params[:user].permit!)
       temporary_password=SecureRandom.base64(13)
       @clear_cms_user.password = temporary_password
       @clear_cms_user.password_confirmation = temporary_password
@@ -79,7 +79,7 @@ module ClearCMS
       @clear_cms_user = ClearCMS::User.find(params[:id])
 
       respond_to do |format|
-        if @clear_cms_user.update_attributes(params[:user])
+        if @clear_cms_user.update_attributes(params[:user].permit!)
           format.html { redirect_to clear_cms.edit_user_path(@clear_cms_user), notice: 'User was successfully updated.' }
           format.json { head :ok }
         else
