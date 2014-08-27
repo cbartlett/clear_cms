@@ -17,7 +17,7 @@
 //= require clear_cms/s3_direct
 //= require tagmanager
 //= require markitup
-//= require markitup/sets/html/set
+//= #require markitup/sets/html/set
 //= require clear_cms/markitup_html_settings
 //= require jquery.protectedfield.min
 //= require jquery.textcount.min
