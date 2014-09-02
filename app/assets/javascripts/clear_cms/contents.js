@@ -364,7 +364,7 @@ ClearCMS.Linking = (function() {
     which = $block.data('lookup-success-tmpl');
     data = {
       //'fiters[type]': $block.data('lookup-filter-type'),
-      content_id: ui.item.all._id,
+      content_id: ui.item.all._id.$oid,
       title: ui.item.all.title,
       media_src: img_src,
       order: _lastOrderIndex++
@@ -430,7 +430,7 @@ ClearCMS.Linking = (function() {
               var results = $.map(data, function(content) {
                 return {
                   label: content.title,
-                  value: content._id,
+                  value: content._id.$oid,
                   all: content
                 };
               });
