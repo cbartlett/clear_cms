@@ -97,8 +97,8 @@
                       <li class="dropdown-submenu">
                         <%= link_to t('clear_cms.contents'), clear_cms.site_contents_path(current_site), :tabindex=>-1 %>
                         <ul class="dropdown-menu">
-                          <% ClearCMS::Content.content_types.each do |type| %>
-                            <li><%= link_to type.to_s.pluralize, clear_cms.site_contents_path(current_site, 'filter[types]'=>type.to_s) %></li>
+                          <% ClearCMS::Content.sorted_content_types.each do |type| %>
+                            <li><%= link_to type.pluralize, clear_cms.site_contents_path(current_site, 'filter[types]'=>type) %></li>
                           <% end %>
                         </ul>
                       </li>
