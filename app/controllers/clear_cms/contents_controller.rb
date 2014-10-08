@@ -1,7 +1,7 @@
 module ClearCMS
   class ContentsController < ClearCMS::ApplicationController
     require 'mail'
-    #require 'mongoid'
+    
     before_filter :authenticate_user!, :except=>[:email] 
     skip_before_filter :verify_authenticity_token, :only=>[:email]
     
@@ -49,6 +49,7 @@ module ClearCMS
       @clear_cms_content.source='web'
       #@clear_cms_content.linked_contents.build
       @clear_cms_content.content_blocks.build(:type=>'raw')
+
   
       respond_to do |format|
         format.html # new.html.erb
@@ -83,6 +84,13 @@ module ClearCMS
       
       #if @clear_cms_content.save
       if @clear_cms_content.update_attributes(params[:content].permit!)
+        # add a raw block if it was taken out due to issues that arise when deleted
+        content_blocks_from_params = []
+        @clear_cms_content.content_blocks.each { |cb| content_blocks_from_params << cb.type }
+        unless content_blocks_from_params.include?("raw")
+          @clear_cms_content.content_blocks.push(ContentBlock.new(type: "raw"))
+          @clear_cms_content.save
+        end
         redirect_to({:action=>:edit}, notice: 'Content was successfully updated.')
       else
         flash.now[:notice]='Error saving content!'
@@ -93,7 +101,14 @@ module ClearCMS
 
     def create
       @clear_cms_content = params[:content]['_type'].constantize.new(params[:content].permit!)
-      #@clear_cms_content = Content.new(params[:content])
+
+      # add a raw block if it was taken out due to issues that arise when deleted
+      content_blocks_from_params = []
+      @clear_cms_content.content_blocks.each { |cb| content_blocks_from_params << cb.type }
+      unless content_blocks_from_params.include?("raw")
+        @clear_cms_content.content_blocks.push(ContentBlock.new(type: "raw"))
+      end
+
       @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"created")
   
       respond_to do |format|

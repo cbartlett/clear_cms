@@ -124,10 +124,9 @@ var linkedFiltersType = {
       <div class="tab-content">
 
         <% @clear_cms_content.content_blocks.each_with_index do |cb,i| %>
-
+        
         <div class="tab-pane <%= i==0 ? 'active' : '' %>" id="content_block_<%= cb.type.present? ? cb.type : cb.object_id %>_<%= i %>">
         <%= f.semantic_fields_for :content_blocks, cb do |cbf| %>
-
 
         <div class="well">
 
