@@ -113,7 +113,6 @@ module ClearCMS
       @clear_cms_content = params[:content]['_type'].constantize.new(params[:content].permit!)
 
       begin
-        binding.pry
         content_blocks_obj = params["content"]["content_blocks_attributes"].values
         content_blocks_from_params = []
         content_blocks_obj.each { |cb| content_blocks_from_params << cb["type"] }
