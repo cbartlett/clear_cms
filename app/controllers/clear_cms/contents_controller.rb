@@ -2,13 +2,13 @@ module ClearCMS
   class ContentsController < ClearCMS::ApplicationController
     require 'mail'
     #require 'mongoid'
-    before_filter :authenticate_user!, :except=>[:email] 
+    before_filter :authenticate_user!, :except=>[:email]
+    
     skip_before_filter :verify_authenticity_token, :only=>[:email]
     
     load_and_authorize_resource :class=>'ClearCMS::Content', :except=>[:email]
     
-
-   
+    
     def index
       
       types=[]
@@ -67,8 +67,24 @@ module ClearCMS
     def update 
       @clear_cms_content=Content.find(params[:id])
 
+      begin
+        content_blocks_obj = params["content"]["content_blocks_attributes"].values
+        content_blocks_from_params = []
+        content_blocks_obj.each { |cb| content_blocks_from_params << cb["type"] }
+        unless content_blocks_from_params.include?("raw")
+          @clear_cms_content.errors[:content_blocks_attributes] = "Raw content block type required."
+          raise ArgumentError.new('Raw block needed.')
+        end
+      rescue
+        respond_to do |format|
+        format.html {
+              flash.now[:notice]='Error saving content! At least one "raw" content block type required!' 
+              render :action=>:edit 
+            }
+          format.json { render json: @clear_cms_content.errors, status: :unprocessable_entity }
+        end
+      else
       #@clear_cms_content.assign_attributes(params[:content])
-      
       @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"edited")
 
       #@clear_cms_content=@clear_cms_content.becomes(params[:content]['_type'].constantize)
@@ -84,47 +100,52 @@ module ClearCMS
       
       #if @clear_cms_content.save
       if @clear_cms_content.update_attributes(params[:content].permit!)
-        # add a raw block if it was taken out due to issues that arise when deleted
-        content_blocks_from_params = []
-        @clear_cms_content.content_blocks.each { |cb| content_blocks_from_params << cb.type }
-        unless content_blocks_from_params.include?("raw")
-          @clear_cms_content.content_blocks.push(ContentBlock.new(type: "raw"))
-          @clear_cms_content.save
-        end
         redirect_to({:action=>:edit}, notice: 'Content was successfully updated.')
       else
         flash.now[:notice]='Error saving content!'
         render :action=>:edit
-      end           
+      end
+      end         
     end
 
 
     def create
       @clear_cms_content = params[:content]['_type'].constantize.new(params[:content].permit!)
 
-      # add a raw block if it was taken out due to issues that arise when deleted
-      content_blocks_from_params = []
-      @clear_cms_content.content_blocks.each { |cb| content_blocks_from_params << cb.type }
-      unless content_blocks_from_params.include?("raw")
-        @clear_cms_content.content_blocks.push(ContentBlock.new(type: "raw"))
-      end
-
-      @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"created")
-  
-      respond_to do |format|
-        if @clear_cms_content.save
-          format.html { 
-            redirect_to(clear_cms.edit_site_content_path(@clear_cms_content.site_id,@clear_cms_content.id), notice: 'Content was successfully created.')
-          }
-          format.json { render json: @clear_cms_content, status: :created, location: clear_cms.content_path(@clear_cms_content)}
-        else
-          format.html {
-              flash.now[:notice]='Error creating content!' 
-              render action: "new" 
+      begin
+        binding.pry
+        content_blocks_obj = params["content"]["content_blocks_attributes"].values
+        content_blocks_from_params = []
+        content_blocks_obj.each { |cb| content_blocks_from_params << cb["type"] }
+        unless content_blocks_from_params.include?("raw")
+          @clear_cms_content.errors[:content_blocks_attributes] = "Raw content block type required."
+          raise ArgumentError.new('Raw block needed.')
+        end
+      rescue
+        respond_to do |format|
+        format.html {
+              flash.now[:notice]='Error creating content! At least one "raw"   content block type required!' 
+              render action: 'new' 
             }
           format.json { render json: @clear_cms_content.errors, status: :unprocessable_entity }
         end
-      end
+      else
+        @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"created")
+        respond_to do |format|
+          if @clear_cms_content.save
+            format.html { 
+              redirect_to(clear_cms.edit_site_content_path(@clear_cms_content.site_id,@clear_cms_content.id), notice: 'Content was successfully created.')
+            }
+            format.json { render json: @clear_cms_content, status: :created, location: clear_cms.content_path(@clear_cms_content)}
+          else 
+            format.html {
+              flash.now[:notice]='Error creating content!' 
+              render action: "new" 
+            }
+            format.json { render json: @clear_cms_content.errors, status: :unprocessable_entity }
+          end
+        end
+      end  
     end
     
     
@@ -162,7 +183,6 @@ module ClearCMS
 
     end
 
-    
     def email
   #       message = Mail.new(params[:message])
   #       Rails.logger.log message.subject #print the subject to the logs
@@ -179,7 +199,6 @@ module ClearCMS
   
       render :text => 'success', :status => 200 # a status of 404 would reject the mail      
     end
-  
   end
 end
 

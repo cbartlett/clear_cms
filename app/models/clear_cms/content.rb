@@ -272,11 +272,9 @@ module ClearCMS
       end
     end
 
-
     def content_is_linked?
       ClearCMS::Content.or({'linked_contents.linked_content_id'=>self.id.to_s},{'linked_contents.linked_content_id'=>self.id}).count > 0 ? true : false
     end
-
 
 private
 

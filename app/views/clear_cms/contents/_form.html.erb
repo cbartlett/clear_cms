@@ -134,7 +134,7 @@ var linkedFiltersType = {
             <%= cbf.input :type, :as=>:select, :collection=>@clear_cms_content.content_block_types , :input_html=>{:class=>'protected'}%>
             <%= cbf.input :body, :as=>:text, :input_html=>{:class=>'input-xxlarge markitup', :data=>{:"tc-ignore-html"=> true}} %>
             <%= cbf.input :order %>
-            <% if i!=0 && cb.type!='raw' %>
+            <% if i!=0 %>
               <%= cbf.check_box '_destroy' %> Delete
             <% end %>
             <%= cbf.input :has_gallery, :as=>:boolean, :html=>{:class=>'checkbox'} %>
