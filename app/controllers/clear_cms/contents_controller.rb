@@ -80,9 +80,6 @@ module ClearCMS
       # using with_protection and move on.  Generally speaking, this means we can't use any special subclass of Content functions or validations until it's fixed (and that the validations WILL run for the previous type)
       # since it's instantiated as that by Mongoid BEWARE****
       
-      # if @clear_cms_content.save
-      # binding.pry
-      # end
       if @clear_cms_content.update_attributes(params[:content].permit!)
         redirect_to({:action=>:edit}, notice: 'Content was successfully updated.')
       else
