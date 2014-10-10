@@ -66,24 +66,6 @@ module ClearCMS
     
     def update 
       @clear_cms_content=Content.find(params[:id])
-
-      begin
-        content_blocks_obj = params["content"]["content_blocks_attributes"].values
-        content_blocks_from_params = []
-        content_blocks_obj.each { |cb| content_blocks_from_params << cb["type"] }
-        unless content_blocks_from_params.include?("raw")
-          @clear_cms_content.errors[:content_blocks_attributes] = "Raw content block type required."
-          raise ArgumentError.new('Raw block needed.')
-        end
-      rescue
-        respond_to do |format|
-        format.html {
-              flash.now[:notice]='Error saving content! At least one "raw" content block type required!' 
-              render :action=>:edit 
-            }
-          format.json { render json: @clear_cms_content.errors, status: :unprocessable_entity }
-        end
-      else
       #@clear_cms_content.assign_attributes(params[:content])
       @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"edited")
 
@@ -102,47 +84,36 @@ module ClearCMS
       if @clear_cms_content.update_attributes(params[:content].permit!)
         redirect_to({:action=>:edit}, notice: 'Content was successfully updated.')
       else
+        unless @clear_cms_content.raw_block_exists?
+            @clear_cms_content.errors.add(:content_blocks, 'need at least one "raw" type')
+        end
         flash.now[:notice]='Error saving content!'
         render :action=>:edit
       end
-      end         
+      # end         
     end
 
 
     def create
       @clear_cms_content = params[:content]['_type'].constantize.new(params[:content].permit!)
-
-      begin
-        content_blocks_obj = params["content"]["content_blocks_attributes"].values
-        content_blocks_from_params = []
-        content_blocks_obj.each { |cb| content_blocks_from_params << cb["type"] }
-        unless content_blocks_from_params.include?("raw")
-          @clear_cms_content.errors[:content_blocks_attributes] = "Raw content block type required."
-          raise ArgumentError.new('Raw block needed.')
-        end
-      rescue
-        respond_to do |format|
-        format.html {
-              flash.now[:notice]='Error creating content! At least one "raw"   content block type required!' 
-              render action: 'new' 
-            }
-          format.json { render json: @clear_cms_content.errors, status: :unprocessable_entity }
-        end
-      else
-        @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"created")
-        respond_to do |format|
-          if @clear_cms_content.save
-            format.html { 
-              redirect_to(clear_cms.edit_site_content_path(@clear_cms_content.site_id,@clear_cms_content.id), notice: 'Content was successfully created.')
-            }
-            format.json { render json: @clear_cms_content, status: :created, location: clear_cms.content_path(@clear_cms_content)}
-          else 
-            format.html {
-              flash.now[:notice]='Error creating content!' 
-              render action: "new" 
-            }
-            format.json { render json: @clear_cms_content.errors, status: :unprocessable_entity }
+      @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"created")
+      
+      respond_to do |format|
+        if @clear_cms_content.save
+          format.html { 
+            redirect_to(clear_cms.edit_site_content_path(@clear_cms_content.site_id,@clear_cms_content.id), notice: 'Content was successfully created.')
+          }
+          format.json { render json: @clear_cms_content, status: :created, location: clear_cms.content_path(@clear_cms_content)}
+        else
+          unless @clear_cms_content.raw_block_exists?
+            @clear_cms_content.errors.add(:content_blocks, 'need at least one "raw" type')
           end
+
+          format.html { 
+            flash.now[:notice]='Error creating content!'
+            render action: "new" 
+          }
+          format.json { render json: @clear_cms_content.errors, status: :unprocessable_entity }
         end
       end  
     end

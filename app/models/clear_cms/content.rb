@@ -52,6 +52,7 @@ module ClearCMS
 
 
     #after_save :update_search_index #OLD FOR INDEXTANK
+    before_save :raw_block_exists?
     before_save :set_publish_at
     after_save :schedule_cache_clear
     after_save :notify_assignee
@@ -207,6 +208,14 @@ module ClearCMS
     # def safe_subtitle
     #   self[:subtitle].html_safe unless self[:subtitle].blank?
     # end
+
+    def raw_block_exists?
+      content_block_types = []
+      self.content_blocks.each { |cb| content_block_types<<cb.type }
+      unless content_block_types.include?("raw")
+        return false
+      end 
+    end
 
     def related(limit=25)
       result = Sunspot.more_like_this(self) do
