@@ -66,7 +66,7 @@ module ClearCMS
     
     def update 
       @clear_cms_content=Content.find(params[:id])
-      #@clear_cms_content.assign_attributes(params[:content])
+      # @clear_cms_content.assign_attributes(params[:content])
       @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"edited")
 
       #@clear_cms_content=@clear_cms_content.becomes(params[:content]['_type'].constantize)
@@ -80,13 +80,12 @@ module ClearCMS
       # using with_protection and move on.  Generally speaking, this means we can't use any special subclass of Content functions or validations until it's fixed (and that the validations WILL run for the previous type)
       # since it's instantiated as that by Mongoid BEWARE****
       
-      #if @clear_cms_content.save
+      # if @clear_cms_content.save
+      # binding.pry
+      # end
       if @clear_cms_content.update_attributes(params[:content].permit!)
         redirect_to({:action=>:edit}, notice: 'Content was successfully updated.')
       else
-        unless @clear_cms_content.raw_block_exists?
-            @clear_cms_content.errors.add(:content_blocks, 'need at least one "raw" type')
-        end
         flash.now[:notice]='Error saving content!'
         render :action=>:edit
       end
@@ -105,10 +104,6 @@ module ClearCMS
           }
           format.json { render json: @clear_cms_content, status: :created, location: clear_cms.content_path(@clear_cms_content)}
         else
-          unless @clear_cms_content.raw_block_exists?
-            @clear_cms_content.errors.add(:content_blocks, 'need at least one "raw" type')
-          end
-
           format.html { 
             flash.now[:notice]='Error creating content!'
             render action: "new" 

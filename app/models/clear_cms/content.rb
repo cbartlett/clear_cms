@@ -213,6 +213,7 @@ module ClearCMS
       content_block_types = []
       self.content_blocks.each { |cb| content_block_types<<cb.type }
       unless content_block_types.include?("raw")
+        self.errors.add(:content_blocks, 'need at least one "raw" type')
         return false
       end 
     end
