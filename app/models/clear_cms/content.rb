@@ -53,6 +53,7 @@ module ClearCMS
 
     #after_save :update_search_index #OLD FOR INDEXTANK
     before_save :set_publish_at
+    before_validation :run_validations_by_type
     after_save :schedule_cache_clear
     after_save :notify_assignee
 
@@ -279,6 +280,39 @@ module ClearCMS
 
 
 private
+
+    def run_validations_by_type
+        case self._type
+        when "Apartment" #belongs to volume
+          validates_presence_of :apartment_number, :volume_id, :address, :hours
+          validates_uniqueness_of :apartment_number
+          validates_numericality_of :apartment_number, only_integer: true
+          validates_length_of :address, :hours, maximum: 215
+        when "Volume" #has many chapters and apartments
+          validates_presence_of :volume_number
+          validates_uniqueness_of :volume_number
+          validates_numericality_of :volume_number, only_integer: true
+        when "Brand" # has many products
+          validates_numericality_of :artist, :hide_from_designer_index, only_integer: true
+          validates_numericality_of :established, only_integer: true, allow_blank: true
+        when "Chapter" #belongs to volume
+          validates_presence_of :chapter_number, :volume_id, :short_description
+          validates_uniqueness_of :chapter_number
+          validates_numericality_of :chapter_number, only_integer: true
+          validates_length_of :short_description, maximum: 215
+          validates_inclusion_of :linked_item_limit, in: 4..20, allow_blank: true
+        when "Event" # belongs to apartment
+          validates_presence_of :start_time, :end_time, :apartment_id
+        when "Product"
+          validates_presence_of :brand_id, :product_state, :available_date
+          validates_numericality_of :brand_id
+          validates_numericality_of :original_price, :external_price, allow_nil: true, allow_blank: true, greater_than_or_equal_to: 0
+          validates_numericality_of :exclusive, :spree_product_id, :brightpearl_product_group_id, :brightpearl_brand_id, allow_blank: true, only_integer: true
+        when "ProductFeature"
+          validates_length_of :short_description, maximum: 215, allow_nil: true, allow_blank: true
+        else
+        end
+    end
 
     def update_search_index
       if self.published?
