@@ -52,7 +52,7 @@ module ClearCMS
 
 
     #after_save :update_search_index #OLD FOR INDEXTANK
-    before_save :raw_block_exists?
+    # before_save :raw_block_exists?
     before_save :set_publish_at
     after_save :schedule_cache_clear
     after_save :notify_assignee
@@ -114,6 +114,7 @@ module ClearCMS
 
     validates_presence_of :title,:subtitle,:author,:basename,:tags,:categories,:site
     validates_uniqueness_of :basename, :scope=>:site_id
+    validates :content_blocks, presence: true, raw_block: true
 
     scope :published, lambda{ all.or({:state.in => ['Finished']},{:status.in => [2,4]}).and({:publish_at.lte => Time.now}).desc(:publish_at) }
     scope :recently_published, ->(limit){ published.limit(limit) }
@@ -209,14 +210,14 @@ module ClearCMS
     #   self[:subtitle].html_safe unless self[:subtitle].blank?
     # end
 
-    def raw_block_exists?
-      content_block_types = []
-      self.content_blocks.each { |cb| content_block_types<<cb.type }
-      unless content_block_types.include?("raw")
-        self.errors.add(:content_blocks, 'need at least one "raw" type')
-        return false
-      end 
-    end
+    # def raw_block_exists?
+    #   content_block_types = []
+    #   self.content_blocks.each { |cb| content_block_types<<cb.type }
+    #   unless content_block_types.include?("raw")
+    #     self.errors.add(:content_blocks, 'need at least one "raw" type')
+    #     return false
+    #   end 
+    # end
 
     def related(limit=25)
       result = Sunspot.more_like_this(self) do

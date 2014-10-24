@@ -1,7 +1,6 @@
 module ClearCMS
   class UsersController < ClearCMS::ApplicationController
     layout 'clear_cms/application'
-
     before_filter :authenticate_user!
     
     load_and_authorize_resource :class=>'ClearCMS::User'
