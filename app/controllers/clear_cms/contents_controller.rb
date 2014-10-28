@@ -63,26 +63,12 @@ module ClearCMS
 #       @clear_cms_content.content_blocks.build
     end
     
-    def update 
-      @clear_cms_content=Content.find(params[:id])
-
-      #@clear_cms_content.assign_attributes(params[:content])
+    def update
+        @clear_cms_content=ClearCMS::Content.find(params[:id])
+        @clear_cms_content.update(content_params)
+        @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"edited")
       
-      @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"edited")
-
-      #@clear_cms_content=@clear_cms_content.becomes(params[:content]['_type'].constantize)
-      #@clear_cms_content.flag_children_persisted #TODO: this is due to a bug in mongoid where it is duplicating > 2nd tier children
-
-      #@clear_cms_content._type=params[:content].delete '_type' 
-
-      #TODO: NOTE: not able to use becomes at the moment, too many bugs, was trying to hack mongoid because it's duplicating 2nd-tier documents, but trying to mark the documents all as new_record=new_record? 
-      #of the parent (basically to false) is causing update attributes to not work correctly.  trying to work around that by assigning_attributes and then using becomes was throwing all kinds of weird callback
-      # errors and document find issues related to callbacks and mongoid thinking the state of these embedded relationships were already persisted...so, i'm going to override the _type manually on updating
-      # using with_protection and move on.  Generally speaking, this means we can't use any special subclass of Content functions or validations until it's fixed (and that the validations WILL run for the previous type)
-      # since it's instantiated as that by Mongoid BEWARE****
-      
-      #if @clear_cms_content.save
-      if @clear_cms_content.update_attributes(params[:content].permit!)
+      if @clear_cms_content.save
         redirect_to({:action=>:edit}, notice: 'Content was successfully updated.')
       else
         flash.now[:notice]='Error saving content!'
@@ -92,10 +78,12 @@ module ClearCMS
 
 
     def create
-      @clear_cms_content = params[:content]['_type'].constantize.new(params[:content].permit!)
-      #@clear_cms_content = Content.new(params[:content])
-      @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"created")
-  
+      @clear_cms_content = Mongoid::Factory.build(params[:content][:_type].constantize, params[:content])
+
+      if @clear_cms_content.save
+        @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"created")
+      end
+
       respond_to do |format|
         if @clear_cms_content.save
           format.html { 
@@ -165,6 +153,11 @@ module ClearCMS
       render :text => 'success', :status => 200 # a status of 404 would reject the mail      
     end
   
+    private
+
+    def content_params
+      params.require(:content).permit!
+    end
   end
 end
 
