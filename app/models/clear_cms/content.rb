@@ -91,6 +91,7 @@ module ClearCMS
 
     field :publish_at, type: DateTime
     field :deadline_at, type: DateTime
+    field :expire_at, type: DateTime
 
     index({updated_at: -1})
     index({created_at: -1})
@@ -114,7 +115,7 @@ module ClearCMS
     validates_presence_of :title,:subtitle,:author,:basename,:tags,:categories,:site
     validates_uniqueness_of :basename, :scope=>:site_id
 
-    scope :published, lambda{ all.or({:state.in => ['Finished']},{:status.in => [2,4]}).and({:publish_at.lte => Time.now}).desc(:publish_at) }
+    scope :published, lambda{ all.or({:state.in => ['Finished']},{:status.in => [2,4]}).and({:publish_at.lte => Time.now}).or({:expire_at=>nil, :expire_at.gt=> Time.now}).desc(:publish_at) }
     scope :recently_published, ->(limit){ published.limit(limit) }
     scope :tagged, ->(tag){ tag_regex=Regexp.new("^(#{tag})$",Regexp::IGNORECASE); where(tags: tag_regex) }
 
