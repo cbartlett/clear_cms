@@ -6,6 +6,8 @@ module ClearCMS
     #max_versions 20
     include Mongoid::Timestamps
 
+    include Mongoid::History::Trackable
+
     #@@form_fields = {}
     cattr_accessor :form_fields do
       {}
