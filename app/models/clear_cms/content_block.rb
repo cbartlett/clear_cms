@@ -16,7 +16,7 @@ class ClearCMS::ContentBlock
   field :has_gallery, type: Boolean
   field :order, type: Integer
   
-  default_scope asc(:order)
+  default_scope ->{asc(:order)}
 
   def body
     self[:body].html_safe unless self[:body].blank?

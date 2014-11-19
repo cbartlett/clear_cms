@@ -1,5 +1,5 @@
 require 'devise'
-require 'devise-encryptable'
+#require 'devise-encryptable'
 require 'carrierwave'
 require 'carrierwave/mongoid'
 require 'sunspot'
@@ -24,7 +24,7 @@ require 'htmlentities'
 require 'tagmanager-rails'
 require 'markitup-rails'
 require 'sidekiq'
-require 'kiqstand'
+#require 'kiqstand'
 require 'compass-rails'
 
 module ClearCMS

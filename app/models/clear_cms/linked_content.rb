@@ -10,7 +10,7 @@ class ClearCMS::LinkedContent
   field :linked_content_id
   field :order, type: Integer
   
-  default_scope asc(:order)
+  default_scope ->{asc(:order)}
 
   validates_presence_of :linked_content_id
   

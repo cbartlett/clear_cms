@@ -45,13 +45,13 @@ module ClearCMS
   #     end
   #   end
 
-
     def after_sign_out_path_for(user)
       '/clear_cms'
     end
     
     def after_sign_in_path_for(user)
       # super.after_sign_in_path_for(user)
+
       '/clear_cms/sites'
     end
 
