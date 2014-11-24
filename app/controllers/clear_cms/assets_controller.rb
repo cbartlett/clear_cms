@@ -2,20 +2,20 @@ module ClearCMS
   class AssetsController < ClearCMS::ApplicationController
     before_filter :authenticate_user!
     skip_before_filter :verify_authenticity_token, :only=>[:email]
-    
+
     load_and_authorize_resource :class=>'ClearCMS::Asset'
 
 
     def create
       @clear_cms_site = ClearCMS::Site.find(params[:site_id])
-      
+
       if params[:asset][:image_url]
-        @clear_cms_asset = ClearCMS::Asset.new(:original_file_url=>params[:asset][:image_url],:path=>File.join([@clear_cms_site.slug,Time.now.strftime('%Y/%m/%d')]))
+        @clear_cms_asset = ClearCMS::Asset.new(:original_file_url=>ActiveSupport::Multibyte::Unicode.normalize(params[:asset][:image_url]),:path=>File.join([@clear_cms_site.slug,Time.now.strftime('%Y/%m/%d')]))
       else
         @clear_cms_asset = ClearCMS::Asset.new(:file=>params[:files][0],:path=>File.join([@clear_cms_site.slug,Time.now.strftime('%Y/%m/%d')]))
       end
       #@clear_cms_content_asset.content_logs.build(:user=>current_user, :entry=>"created")
-  
+
       respond_to do |format|
         if @clear_cms_asset.save
           if params[:asset][:image_url]
@@ -30,20 +30,20 @@ module ClearCMS
         end
       end
     end
-    
-    
+
+
     def show
       @clear_cms_asset=ClearCMS::Asset.find(params[:id])
       respond_to do |format|
         format.json { render json: @clear_cms_asset}
       end
     end
-    
-    
+
+
     def resize
-      
-    
-    end    
+
+
+    end
 
 
 # {"files": [
@@ -68,7 +68,7 @@ module ClearCMS
 
 
 
-   
+
 #     def index
 #       if params[:q]
 #         @clear_cms_contents=current_site.contents.includes(:site).search {fulltext params[:q]; paginate page: params[:page]; with :site_id, current_site.id}.results
@@ -77,42 +77,42 @@ module ClearCMS
 #         @clear_cms_contents=current_site.contents.includes(:site).desc(:updated_at).page(params[:page])
 #       end
 #     end
-#     
+#
 #     def show
 #       @content=Content.find(params[:id])
 #     end
-# 
+#
 #     def new
 #       @clear_cms_content = ClearCMS::Content.new
 # #       @clear_cms_content.content_notes.build
 # #       @clear_cms_content.content_blocks.build
 #       @clear_cms_content.source='web'
 #       @clear_cms_content.content_blocks.build
-#   
+#
 #       respond_to do |format|
 #         format.html # new.html.erb
 #         format.json { render json: @clear_cms_content }
 #       end
-#     end    
-#        
+#     end
+#
 #     def edit
 #       @clear_cms_content=Content.find(params[:id])
 #       # @clear_cms_content.content_notes.build
 # #       @clear_cms_content.content_notes.build
 # #       @clear_cms_content.content_blocks.build
 #     end
-#     
-#     def update 
+#
+#     def update
 #       @clear_cms_content=Content.find(params[:id])
-#       
+#
 #       @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"edited")
-#       
+#
 #       if @clear_cms_content.update_attributes(params[:clear_cms_content])
 #         redirect_to({:action=>:edit}, notice: 'Content was successfully updated.')
 #       else
 #         flash.now[:notice]='Error saving content!'
 #         render :action=>:edit
-#       end           
+#       end
 #     end
 
 
