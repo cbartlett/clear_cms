@@ -26,6 +26,8 @@ require 'markitup-rails'
 require 'sidekiq'
 #require 'kiqstand'
 require 'compass-rails'
+require 'mongoid-history'
+
 
 module ClearCMS
   class Engine < ::Rails::Engine

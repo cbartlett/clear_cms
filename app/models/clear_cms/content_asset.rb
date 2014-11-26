@@ -1,5 +1,6 @@
 class ClearCMS::ContentAsset
   include Mongoid::Document
+  include Mongoid::History::Trackable
   
   #before_save :output_contents
   #before_create :append_site_to_path
@@ -27,6 +28,8 @@ class ClearCMS::ContentAsset
   default_scope ->{asc(:order)}
   
   scope :gallery_assets, ->{self.in(:tags=>"gallery")}
+
+  track_history :track_create => true, :track_destroy => true
 
 #   def remote_file_url(url)
 #     self.file.store_dir=File.dirname(url)

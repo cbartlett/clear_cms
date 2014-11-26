@@ -1,6 +1,8 @@
 class ClearCMS::ContentBlock
   include Mongoid::Document
   #include Mongoid::Timestamps
+
+  include Mongoid::History::Trackable
   
   TYPES=%w(raw more sidebar)
   
@@ -17,6 +19,8 @@ class ClearCMS::ContentBlock
   field :order, type: Integer
   
   default_scope ->{asc(:order)}
+
+  track_history :track_create => true, :track_destroy => true #scope: :clear_cms_content
 
   def body
     self[:body].html_safe unless self[:body].blank?

@@ -121,6 +121,9 @@ module ClearCMS
     scope :recently_published, ->(limit){ published.limit(limit) }
     scope :tagged, ->(tag){ tag_regex=Regexp.new("^(#{tag})$",Regexp::IGNORECASE); where(tags: tag_regex) }
 
+    # telling Mongoid::History how you want to track changes
+    track_history :track_create => true, :track_destroy => true 
+
     include Sunspot::Mongoid
 
     def resolve_linked_contents(limit=nil)

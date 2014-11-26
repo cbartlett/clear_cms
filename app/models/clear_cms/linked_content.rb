@@ -1,5 +1,7 @@
 class ClearCMS::LinkedContent
   include Mongoid::Document
+  include Mongoid::History::Trackable
+
   #include Mongoid::Timestamps
   validate :linked_content_exists
 
@@ -11,6 +13,8 @@ class ClearCMS::LinkedContent
   field :order, type: Integer
   
   default_scope ->{asc(:order)}
+
+  track_history :track_create => true, :track_destroy => true
 
   validates_presence_of :linked_content_id
   
