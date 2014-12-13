@@ -8,7 +8,7 @@
 //= require jquery_ujs
 //= require jquery_nested_form
 //= #require jquery-ui-1.8.16.custom.min
-//= require jquery.ui.all
+//= require jquery-ui
 //= require twitter/bootstrap
 //= #require bootstrap-button
 //= #require bootstrap-wysihtml5
