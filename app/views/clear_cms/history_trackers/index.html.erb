@@ -1,0 +1,55 @@
+<h1>Change History For <%= link_to @content.title, edit_content_path(@content) %></h1>
+
+Undo Last Change | Redo Last Change
+
+<% @trackers.each do |tracker| %>
+
+  <div class="row-fluid">
+    <div class="span16">
+      Date: <%= tracker.created_at %>
+      By: <%= tracker.modifier %>
+      <br>Also: <%= tracker.inspect %>
+      <br>
+      <br>
+
+      <%= form_tag clear_cms.history_tracker_path(tracker), method: :patch do %>
+        <%= hidden_field_tag(:change, 'undo') %>
+        <%= submit_tag('Undo') %>
+      <% end %>
+
+      <%= form_tag clear_cms.history_tracker_path(tracker), method: :patch do %>
+        <%= hidden_field_tag(:change, 'redo') %>
+        <%= submit_tag('Redo') %>
+      <% end %>
+
+    </div>
+  </div>
+
+  <div class="row-fluid">
+
+    <div class="span6">
+      <div class="well">
+        <ul>
+          <b>Original:</b>
+          <% tracker.original.each do |key, value| %>
+           <li><%= key %>: <%= value %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <div class="span6">
+      <div class="well">
+        <ul>
+          <b>Changed:</b>
+          <% tracker.modified.each do |key, value| %>
+           <li><%= key %>: <%= value %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+
+  </div>
+
+<% end %>

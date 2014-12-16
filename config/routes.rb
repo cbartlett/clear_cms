@@ -2,7 +2,7 @@ ClearCMS::Engine.routes.draw do
 
   root :to=>"users#dashboard"
 
-  devise_for :users, 
+  devise_for :users,
   	:class_name => "ClearCMS::User",
   	:path => '',
   	:path_prefix => nil,
@@ -12,23 +12,31 @@ ClearCMS::Engine.routes.draw do
   devise_scope :users do
     get '/'         => 'sessions#new'
     #delete 'signout'  => 'sessions#destroy', as: :destroy_user_session
-  end 	
+    get '/histories' => 'histories#index'
+  end
 
 	get "email" => "contents#email"
 
-	resources :sites do 
-	  resources :contents
+	resources :sites do
+	  resources :contents do
+      resources :history_trackers
+    end
 	  resources :assets
 	end
 
-	resources :contents do 
-	  collection do 
+	resources :contents do
+	  collection do
 	    post 'import'
 	  end
+    resources :history_trackers
 	end
 
-	resources :assets, :only=>[:show]    
+	resources :assets, :only=>[:show]
 	resources :users
+  resources :history_trackers, :only=>[:update]
+
+
+
 
 
 end
