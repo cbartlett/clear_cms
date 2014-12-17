@@ -123,7 +123,7 @@ module ClearCMS
     scope :tagged, ->(tag){ tag_regex=Regexp.new("^(#{tag})$",Regexp::IGNORECASE); where(tags: tag_regex) }
 
     # telling Mongoid::History how you want to track changes
-    track_history :track_create => true, :track_destroy => true#, :modifier_field => :user
+    track_history :track_create => true, :track_destroy => true
 
     include Sunspot::Mongoid
 

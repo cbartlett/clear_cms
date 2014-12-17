@@ -14,7 +14,7 @@ class ClearCMS::LinkedContent
 
   default_scope ->{asc(:order)}
 
-  track_history :scope => :clear_cms_content, :track_create => true, :track_destroy => true
+  track_history :track_create => true, :track_destroy => true, :scope => :clear_cms_content
 
   validates_presence_of :linked_content_id
 

@@ -6,7 +6,7 @@ module ClearCMS
 
     def index
       @user = current_user
-      @content=Content.find(params[:content_id])
+      @content = Content.find(params[:content_id])
       @trackers = @content.history_tracks.sort_by(&:created_at).reverse!
     end
 
