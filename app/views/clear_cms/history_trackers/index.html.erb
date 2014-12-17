@@ -1,14 +1,11 @@
-<h1>Change History For <%= link_to @content.title, edit_content_path(@content) %></h1>
-
-
-
-
-
-
+<h3>Change History For <%= @content._type.titleize %>:</h3>
+<h3><%= link_to @content.title, edit_content_path(@content) %></h3>
 
 
 
 <% @trackers.each do |tracker| %>
+
+  <hr>
 
   <div class="row-fluid">
     <div class="span16">
@@ -22,7 +19,7 @@
   <div class="row-fluid">
 
     <div class="span6">
-      <div class="well" style="text-overflow: wrap;">
+      <div class="well" style="overflow: scroll;">
         <ul>
           <b>Previous</b>
           <% tracker.original.each do |key, value| %>
@@ -55,7 +52,6 @@
         </div>
       </div>
     </div>
-
 
   </div>
 
