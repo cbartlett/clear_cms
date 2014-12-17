@@ -7,17 +7,13 @@
 
   <div class="row-fluid">
     <div class="span16">
-      <div class=''>
-        <p>
-          <b><%= tracker.action.titleize %> <%= tracker.association_chain.last[:name].titleize %> on <%= tracker.created_at.to_formatted_s(:long)%> </b>
-        </p>
-        <p>By: <%= tracker.modifier == nil ? 'Untracaked User' : tracker.modifier %></p>
+      <p><b><%= tracker.action.titleize %> <%= tracker.association_chain.last[:name].titleize %> on <%= tracker.created_at.to_formatted_s(:long)  %></b></p>
+      <p>By: <%= tracker.modifier == nil ? 'Untracaked User' : tracker.modifier %></p>
 
-          <%= form_tag clear_cms.history_tracker_path(tracker), method: :patch, class: '' do %>
-            <%= submit_tag('Undo', class: 'btn-warning') %>
-            <%= submit_tag('Redo', class: 'btn-warning') %>
-          <% end %>
-      </div>
+      <%= form_tag clear_cms.history_tracker_path(tracker), method: :patch do %>
+        <%= submit_tag('Undo', class: 'btn-warning') %>
+        <%= submit_tag('Redo', class: 'btn-warning') %>
+      <% end %>
     </div>
   </div>
 

@@ -67,8 +67,9 @@ module ClearCMS
       @clear_cms_content=Content.find(params[:id])
 
       #@clear_cms_content.assign_attributes(params[:content])
+      @user = current_user
+      @clear_cms_content.content_logs.build(:user=>@user, :entry=>"edited")
 
-      @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"edited")
 
       #@clear_cms_content=@clear_cms_content.becomes(params[:content]['_type'].constantize)
       #@clear_cms_content.flag_children_persisted #TODO: this is due to a bug in mongoid where it is duplicating > 2nd tier children
@@ -82,7 +83,8 @@ module ClearCMS
       # since it's instantiated as that by Mongoid BEWARE****
 
       #if @clear_cms_content.save
-      if @clear_cms_content.update_attributes(params[:content].permit!)
+
+      if @clear_cms_content.update_attributes(content_params)
         redirect_to({:action=>:edit}, notice: 'Content was successfully updated.')
       else
         flash.now[:notice]='Error saving content!'
@@ -163,6 +165,14 @@ module ClearCMS
       c.save
 
       render :text => 'success', :status => 200 # a status of 404 would reject the mail
+    end
+
+    private
+
+    def content_params
+      params_with_modifier = params.require(:content).permit!
+      # params_with_modifier[:modifier] = user
+      # return params_with_modifier
     end
 
   end

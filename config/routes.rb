@@ -18,9 +18,7 @@ ClearCMS::Engine.routes.draw do
 	get "email" => "contents#email"
 
 	resources :sites do
-	  resources :contents do
-      resources :history_trackers
-    end
+	  resources :contents
 	  resources :assets
 	end
 
@@ -34,9 +32,5 @@ ClearCMS::Engine.routes.draw do
 	resources :assets, :only=>[:show]
 	resources :users
   resources :history_trackers, :only=>[:update]
-
-
-
-
 
 end
