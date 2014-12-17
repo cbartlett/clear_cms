@@ -1,36 +1,30 @@
 <h1>Change History For <%= link_to @content.title, edit_content_path(@content) %></h1>
 
-Undo Last Change | Redo Last Change
+
+
+
+
+
+
+
 
 <% @trackers.each do |tracker| %>
 
   <div class="row-fluid">
     <div class="span16">
-      Date: <%= tracker.created_at %>
-      By: <%= tracker.modifier %>
-      <br>Also: <%= tracker.inspect %>
-      <br>
-      <br>
-
-      <%= form_tag clear_cms.history_tracker_path(tracker), method: :patch do %>
-        <%= hidden_field_tag(:change, 'undo') %>
-        <%= submit_tag('Undo') %>
-      <% end %>
-
-      <%= form_tag clear_cms.history_tracker_path(tracker), method: :patch do %>
-        <%= hidden_field_tag(:change, 'redo') %>
-        <%= submit_tag('Redo') %>
-      <% end %>
-
+      <div class="well">
+        <b><%= tracker.created_at.to_formatted_s(:short)%> - <%= tracker.action.titleize %> <%= tracker.association_chain.last[:name].titleize %></b>
+        <br>By: <%= tracker.modifier %>
+      </div>
     </div>
   </div>
 
   <div class="row-fluid">
 
     <div class="span6">
-      <div class="well">
+      <div class="well" style="text-overflow: wrap;">
         <ul>
-          <b>Original:</b>
+          <b>Previous</b>
           <% tracker.original.each do |key, value| %>
            <li><%= key %>: <%= value %></li>
           <% end %>
@@ -41,11 +35,24 @@ Undo Last Change | Redo Last Change
     <div class="span6">
       <div class="well">
         <ul>
-          <b>Changed:</b>
+          <b>Changed</b>
           <% tracker.modified.each do |key, value| %>
            <li><%= key %>: <%= value %></li>
           <% end %>
         </ul>
+        <div>
+
+          <%= form_tag clear_cms.history_tracker_path(tracker), method: :patch do %>
+            <%= hidden_field_tag(:change, 'undo') %>
+            <%= submit_tag('Undo') %>
+          <% end %>
+
+          <%= form_tag clear_cms.history_tracker_path(tracker), method: :patch do %>
+            <%= hidden_field_tag(:change, 'redo') %>
+            <%= submit_tag('Redo') %>
+          <% end %>
+
+        </div>
       </div>
     </div>
 

@@ -6,6 +6,7 @@ module ClearCMS
     skip_before_filter :verify_authenticity_token, :only=>[:email]
 
     def index
+      @user = current_user
       @content=Content.find(params[:content_id])
       @trackers = @content.history_tracks.sort_by(&:created_at).reverse!
     end
@@ -19,10 +20,11 @@ module ClearCMS
     end
 
     def update
+      @user = current_user
       @tracker = ClearCMS::HistoryTracker.find(params[:id])
-      @cms_content = ClearCMS::Content.find(@tracker.association_chain.last[:id])
-      @tracker.undo_or_redo(params[:change])
-      redirect_to clear_cms.content_history_trackers_path(@cms_content)
+      # @cms_content = ClearCMS::Content.find(@tracker.association_chain.last[:id])
+      @tracker.undo_or_redo(params[:change], @user)
+      redirect_to :back
     end
 
   end

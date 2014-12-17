@@ -8,21 +8,21 @@ class ClearCMS::LinkedContent
   embedded_in :content, class_name: 'ClearCMS::Content', inverse_of: :linked_contents
 
   #has_one :linked_content, class_name: 'ClearCMS::Content'
-  
+
   field :linked_content_id
   field :order, type: Integer
-  
+
   default_scope ->{asc(:order)}
 
-  track_history :track_create => true, :track_destroy => true
+  track_history :scope => :content, :track_create => true, :track_destroy => true
 
   validates_presence_of :linked_content_id
-  
+
   def linked_content
     ClearCMS::Content.find(linked_content_id)
   end
 
-private 
+private
 
   def linked_content_exists
     unless ClearCMS::Content.where(id: linked_content_id).exists?

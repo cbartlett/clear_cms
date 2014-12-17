@@ -2,11 +2,13 @@ module ClearCMS
   class HistoryTracker
     include Mongoid::History::Tracker
 
-    def undo_or_redo(change)
+    belongs_to :modifier, class_name: 'ClearCMS::User'
+
+    def undo_or_redo(change, user)
       if change.downcase == 'undo'
-        self.undo! #current_user
+        self.undo! #user
       elsif change.downcase == 'redo'
-        self.redo! #current_user
+        self.redo! #user
       else
         flash.now[:notice]='Error Undoing or Redoing'
       end

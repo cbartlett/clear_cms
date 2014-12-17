@@ -262,7 +262,7 @@ var linkedFiltersType = {
     </div>
 
     <div class="well">
-      <h4>History</h4>
+      <h4><%= link_to 'History', content_history_trackers_path(@clear_cms_content) %></h4>
       <p><b>CREATED AT</b><br><small><i><%= @clear_cms_content.created_at %></i></small></p>
       <p><b>UPDATED AT</b><br><small><i><%= @clear_cms_content.updated_at %></i></small></p>
       <p><b>SOURCE</b><br><small><i><%#= @clear_cms_content.source %></i></small></p>

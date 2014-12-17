@@ -1,17 +1,17 @@
 class ClearCMS::ContentAsset
   include Mongoid::Document
   include Mongoid::History::Trackable
-  
+
   #before_save :output_contents
   #before_create :append_site_to_path
-  
-  #after_initialize :generate_path   
+
+  #after_initialize :generate_path
 
   embedded_in :content_block, class_name: 'ClearCMS::ContentBlock'
   #embedded_in :content_assetable, polymorphic: true
 
   mount_uploader :mounted_file, ClearCMS::Uploaders::ContentAssetUploader, :mount_on => :file
-  
+
   field :path
   field :caption
   field :order, type: Integer #using order of first to show as default image
@@ -21,15 +21,15 @@ class ClearCMS::ContentAsset
   field :file
   field :width
   field :height
-  
+
   field :source_id
   field :tags, type: Array
 
   default_scope ->{asc(:order)}
-  
+
   scope :gallery_assets, ->{self.in(:tags=>"gallery")}
 
-  track_history :track_create => true, :track_destroy => true
+  track_history :track_create => true, :track_destroy => true, :scope => :clear_cms_content
 
 #   def remote_file_url(url)
 #     self.file.store_dir=File.dirname(url)
@@ -43,47 +43,47 @@ class ClearCMS::ContentAsset
 #   end
 
   def tags=(tag_list)
-    self[:tags] = (tag_list.kind_of?(String) ? tag_list.gsub(/[^a-zA-Z,\-_\ ]/,'').split(',').collect {|s| s.strip} : tag_list)     
+    self[:tags] = (tag_list.kind_of?(String) ? tag_list.gsub(/[^a-zA-Z,\-_\ ]/,'').split(',').collect {|s| s.strip} : tag_list)
   end
-  
-  
-  def path 
+
+
+  def path
     self[:path].blank? ? nil : self[:path]
   end
-  
+
   def path=(path)
-    self.content_block && self.content_block.content && site=self.content_block.content.site      
+    self.content_block && self.content_block.content && site=self.content_block.content.site
     if site
       self[:path]=path.start_with?(site.slug) ? path : File.join(site.slug,path)
-    else        
+    else
       self[:path]=path
     end
-    self[:path]    
+    self[:path]
   end
-  
-  
+
+
 #   def remote_file_url=(url)
 #     #binding.pry
 #     #path=File.dirname(URI.parse(url).path)[1..-1]
 #     super(url)
 #   end
 
-private 
+private
 
 #   def generate_path
 #     logger.debug self.path=Time.now.strftime('%Y/%m/%d')
 #   end
-  
+
 #   def output_contents
 #     logger.info self.inspect
 #   end
-#   
+#
 #   def append_site_to_path
 #     self.content_block && self.content_block.content && site=self.content_block.content.site
 #     if site
 #       #logger.info "string #{site.slug}, #{path}"
-#       path=File.join(site.slug,(path||'content_assets'))      
+#       path=File.join(site.slug,(path||'content_assets'))
 #     end
 #   end
-  
+
 end
