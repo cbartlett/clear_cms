@@ -23,7 +23,7 @@ module ClearCMS
       @user = current_user
       @tracker = ClearCMS::HistoryTracker.find(params[:id])
       # @cms_content = ClearCMS::Content.find(@tracker.association_chain.last[:id])
-      @tracker.undo_or_redo(params[:change], @user)
+      @tracker.undo_or_redo(params[:commit], @user)
       redirect_to :back
     end
 

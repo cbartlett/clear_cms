@@ -9,9 +9,16 @@
 
   <div class="row-fluid">
     <div class="span16">
-      <div class="well">
-        <b><%= tracker.created_at.to_formatted_s(:short)%> - <%= tracker.action.titleize %> <%= tracker.association_chain.last[:name].titleize %></b>
-        <br>By: <%= tracker.modifier %>
+      <div class=''>
+        <p>
+          <b><%= tracker.action.titleize %>d <%= tracker.association_chain.last[:name].titleize %> on <%= tracker.created_at.to_formatted_s(:long)%> </b>
+        </p>
+        <p>By: <%= tracker.modifier == nil ? 'Untracaked User' : tracker.modifier %></p>
+
+          <%= form_tag clear_cms.history_tracker_path(tracker), method: :patch, class: '' do %>
+            <%= submit_tag('Undo', class: 'btn-warning') %>
+            <%= submit_tag('Redo', class: 'btn-warning') %>
+          <% end %>
       </div>
     </div>
   </div>
@@ -30,7 +37,7 @@
     </div>
 
     <div class="span6">
-      <div class="well">
+      <div class="well" style="overflow: scroll;">
         <ul>
           <b>Changed</b>
           <% tracker.modified.each do |key, value| %>
@@ -38,21 +45,10 @@
           <% end %>
         </ul>
         <div>
-
-          <%= form_tag clear_cms.history_tracker_path(tracker), method: :patch do %>
-            <%= hidden_field_tag(:change, 'undo') %>
-            <%= submit_tag('Undo') %>
-          <% end %>
-
-          <%= form_tag clear_cms.history_tracker_path(tracker), method: :patch do %>
-            <%= hidden_field_tag(:change, 'redo') %>
-            <%= submit_tag('Redo') %>
-          <% end %>
-
         </div>
       </div>
     </div>
-
   </div>
+
 
 <% end %>
