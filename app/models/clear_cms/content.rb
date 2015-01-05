@@ -71,6 +71,7 @@ module ClearCMS
     belongs_to :creator, class_name: 'ClearCMS::User', :inverse_of => :created_contents
     belongs_to :author, class_name: 'ClearCMS::User', :inverse_of => :authored_contents
     belongs_to :assignee, class_name: 'ClearCMS::User', :inverse_of => :assigned_contents
+    # belongs_to :modifier, class_name: 'ClearCMS::User'
 
   #   has_many :translations, class_name: 'Content'
   #   belongs_to :original_translation, class_name: 'Content'
@@ -121,8 +122,7 @@ module ClearCMS
     scope :recently_published, ->(limit){ published.limit(limit) }
     scope :tagged, ->(tag){ tag_regex=Regexp.new("^(#{tag})$",Regexp::IGNORECASE); where(tags: tag_regex) }
 
-    # telling Mongoid::History how you want to track changes
-    track_history :track_create => true, :track_destroy => true#, :modifier_field => :user
+    track_history :track_create => true, :track_destroy => true, :modifier_field => :modifier, :modifier_field_inverse_of => :nil
 
     include Sunspot::Mongoid
 

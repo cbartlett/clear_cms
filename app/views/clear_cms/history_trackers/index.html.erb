@@ -12,6 +12,7 @@
       <div class="well">
         <b><%= tracker.created_at.to_formatted_s(:short)%> - <%= tracker.action.titleize %> <%= tracker.association_chain.last[:name].titleize %></b>
         <br>By: <%= tracker.modifier %>
+        <br><%= tracker.inspect %>
       </div>
     </div>
   </div>
