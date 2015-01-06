@@ -1,0 +1,58 @@
+<h3>Change History For <%= @content._type.titleize %>:</h3>
+<h3><%= link_to @content.title, edit_content_path(@content) %></h3>
+
+
+
+<% @trackers.each do |tracker| %>
+
+  <hr>
+
+  <div class="row-fluid">
+    <div class="span16">
+      <div class="well">
+        <b><%= tracker.created_at.to_formatted_s(:long)%> - <%= tracker.action.titleize %> <%= tracker.association_chain.last[:name].titleize %></b>
+        <br>By: <%= tracker.modifier.full_name if tracker.modifier %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row-fluid">
+
+    <div class="span6">
+      <div class="well" style="overflow: scroll;">
+        <ul>
+          <b>Previous</b>
+          <% tracker.original.each do |key, value| %>
+           <li><%= key %>: <%= value %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <div class="span6">
+      <div class="well">
+        <ul>
+          <b>Changed</b>
+          <% tracker.modified.each do |key, value| %>
+           <li><%= key %>: <%= value %></li>
+          <% end %>
+        </ul>
+        <div>
+
+          <%= form_tag clear_cms.history_tracker_path(tracker), method: :patch do %>
+            <%= hidden_field_tag(:change, 'undo') %>
+            <%= submit_tag('Undo') %>
+          <% end %>
+
+          <%= form_tag clear_cms.history_tracker_path(tracker), method: :patch do %>
+            <%= hidden_field_tag(:change, 'redo') %>
+            <%= submit_tag('Redo') %>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<% end %>
