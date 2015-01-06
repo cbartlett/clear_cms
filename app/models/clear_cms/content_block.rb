@@ -20,7 +20,7 @@ class ClearCMS::ContentBlock
 
   default_scope ->{asc(:order)}
 
-  track_history :track_create => true, :track_destroy => true, scope: :clear_cms_content
+  track_history :track_create => true, :track_destroy => true, scope: :clear_cms_content, :modifier_field => :modifier, :modifier_field_inverse_of => :nil
 
   def body
     self[:body].html_safe unless self[:body].blank?

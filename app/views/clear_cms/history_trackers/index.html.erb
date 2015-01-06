@@ -10,8 +10,8 @@
   <div class="row-fluid">
     <div class="span16">
       <div class="well">
-        <b><%= tracker.created_at.to_formatted_s(:short)%> - <%= tracker.action.titleize %> <%= tracker.association_chain.last[:name].titleize %></b>
-        <br>By: <%= tracker.modifier %>
+        <b><%= tracker.created_at.to_formatted_s(:long)%> - <%= tracker.action.titleize %> <%= tracker.association_chain.last[:name].titleize %></b>
+        <br>By: <%= tracker.modifier.full_name if tracker.modifier %>
         <br><%= tracker.inspect %>
       </div>
     </div>

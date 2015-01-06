@@ -29,7 +29,7 @@ class ClearCMS::ContentAsset
 
   scope :gallery_assets, ->{self.in(:tags=>"gallery")}
 
-  track_history :track_create => true, :track_destroy => true, :scope => :clear_cms_content
+  track_history :track_create => true, :track_destroy => true, :scope => :clear_cms_content, :modifier_field => :modifier, :modifier_field_inverse_of => :nil
 
 #   def remote_file_url(url)
 #     self.file.store_dir=File.dirname(url)
