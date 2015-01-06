@@ -1,7 +1,7 @@
 module ClearCMS
   class HistoryTrackersController < ClearCMS::ApplicationController
 
-    # authorize_resource
+    authorize_resource
     before_filter :authenticate_user!
 
     def index

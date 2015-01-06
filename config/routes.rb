@@ -21,19 +21,15 @@ ClearCMS::Engine.routes.draw do
 	  resources :assets
 	end
 
-	resources :contents do
-	  collection do
-	    post 'import'
-	  end
+  resources :contents do
+    collection do
+      post 'import'
+    end
     resources :history_trackers
-	end
+  end
 
-	resources :assets, :only=>[:show]
-	resources :users
+  resources :assets, :only=>[:show]
+  resources :users
   resources :history_trackers, :only=>[:update]
-
-
-
-
 
 end
