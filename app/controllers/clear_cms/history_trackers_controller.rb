@@ -1,13 +1,13 @@
 module ClearCMS
   class HistoryTrackersController < ClearCMS::ApplicationController
 
-    authorize_resource
+    # authorize_resource
     before_filter :authenticate_user!
 
     def index
       @user = current_user
       @content = Content.find(params[:content_id])
-      @trackers = @content.history_tracks.sort_by(&:created_at).reverse!
+      @trackers = @content.history_tracks.order_by(:created_at => 'desc')
     end
 
     def update
