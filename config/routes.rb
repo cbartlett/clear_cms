@@ -12,15 +12,12 @@ ClearCMS::Engine.routes.draw do
   devise_scope :users do
     get '/'         => 'sessions#new'
     #delete 'signout'  => 'sessions#destroy', as: :destroy_user_session
-    get '/histories' => 'histories#index'
   end
 
 	get "email" => "contents#email"
 
 	resources :sites do
-	  resources :contents do
-      resources :history_trackers
-    end
+	  resources :contents
 	  resources :assets
 	end
 
