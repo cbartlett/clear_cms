@@ -11,6 +11,7 @@
       <p>By: <%= tracker.modifier == nil ? 'Untracaked User' : link_to(tracker.modifier.full_name, tracker.modifier) %></p>
       <p>By: <%= tracker.inspect %></p>
 
+
       <%= form_tag clear_cms.history_tracker_path(tracker), method: :patch do %>
         <%= submit_tag('Undo', class: 'btn-warning') %>
         <%= submit_tag('Redo', class: 'btn-warning') %>
