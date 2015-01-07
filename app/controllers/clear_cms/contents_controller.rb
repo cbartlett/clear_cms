@@ -82,6 +82,7 @@ module ClearCMS
       # since it's instantiated as that by Mongoid BEWARE****
       
       #if @clear_cms_content.save
+
       if @clear_cms_content.update_attributes(params[:content].permit!)
         redirect_to({:action=>:edit}, notice: 'Content was successfully updated.')
       else

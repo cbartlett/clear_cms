@@ -8,6 +8,13 @@
 -->
 <% end %>
 
+<script>
+  delete clear_cms_content.content_logs;
+</script>
+<button onclick="$.ajax({type: 'PUT', url: '<%= clear_cms.content_path(@clear_cms_content) %>', data: {content: clear_cms_content}, dataType: 'json'});">
+  Submit JS Content
+</button>
+
 <%#TBD: based on site config, set this object up %>
 <script>
 var linkedFiltersType = {
