@@ -117,7 +117,7 @@ module ClearCMS
     validates_presence_of :title,:subtitle,:author,:basename,:tags,:categories,:site
     validates_uniqueness_of :basename, :scope=>:site_id
 
-    scope :published, ->{ self.where(:state=>'Finished', :status.in => [nil,2,4], :publish_at.lte => Time.now).or({:expire_at=>nil}, {:expire_at.gt=>Time.now}).desc(:publish_at) }
+    scope :published, ->{ self.lte(:publish_at => Time.now).not.lte(:expire_at => Time.now).or({:state=>'Finished'}, {:status.in => [2,4]}).desc(:publish_at) }
     scope :recently_published, ->(limit){ published.limit(limit) }
     scope :tagged, ->(tag){ tag_regex=Regexp.new("^(#{tag})$",Regexp::IGNORECASE); where(tags: tag_regex) }
 
