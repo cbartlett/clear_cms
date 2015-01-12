@@ -2,24 +2,26 @@ class ClearCMS::Ability
   include CanCan::Ability
 
   def initialize(user)
-    can :manage, :all 
+    can :manage, :all
 
     can :manage, :all if user.system_permission == 'administrator'
-    
+
     can :update, ClearCMS::User, :id => user.id
-  
+
     can :read, ClearCMS::Content if user.system_permission == 'editor'
-    
+
     can :manage, ClearCMS::Asset #if user.system_permission == 'editor' #ability to upload images using async widget
-    
-    can :update, ClearCMS::Content, :assignee_id => user.id 
-    
+
+    can :update, ClearCMS::Content, :assignee_id => user.id
+
+    can :manage, ClearCMS::HistoryTracker if user.system_permission == 'editor'
+
     #can :manage, :all if user[:email]=='josh@coolhunting.com'
     #can :manage, :all if user[:email]=='joel@coolhunting.com'
     #can :manage, :all if user[:email]=='kristin.breivik@gmail.com'
-    
-    
-    
+
+
+
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)
