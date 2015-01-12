@@ -116,6 +116,8 @@ module ClearCMS
 
     validates_presence_of :title,:subtitle,:author,:basename,:tags,:categories,:site
     validates_uniqueness_of :basename, :scope=>:site_id
+    validates :content_blocks, presence: true
+    validate :raw_content_block_exists
 
     scope :published, ->{ self.lte(:publish_at => Time.now).not.lte(:expire_at => Time.now).or({:state=>'Finished'}, {:status.in => [2,4]}).desc(:publish_at) }
     scope :recently_published, ->(limit){ published.limit(limit) }
@@ -277,13 +279,16 @@ module ClearCMS
       end
     end
 
-
     def content_is_linked?
       ClearCMS::Content.or({'linked_contents.linked_content_id'=>self.id.to_s},{'linked_contents.linked_content_id'=>self.id}).count > 0 ? true : false
     end
 
-
 private
+    def raw_content_block_exists
+      unless content_blocks.where(type: 'raw').any?
+        errors.add(:base, "Raw block is required")
+      end
+    end
 
     def update_search_index
       if self.published?
