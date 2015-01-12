@@ -2,4 +2,5 @@
 # initializer for mongoid-history
 # assuming HistoryTracker is your tracker class
 Mongoid::History.tracker_class_name = 'ClearCMS::HistoryTracker'
-#Mongoid::History.modifier_class_name = 'ClearCMS::User'
+Mongoid::History.modifier_class_name = 'ClearCMS::User'
+Mongoid::History.current_user_method = :current_user
