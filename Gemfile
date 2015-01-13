@@ -1,5 +1,7 @@
 source "http://rubygems.org"
 
+ruby '2.2.0'
+
 # Declare your gem's dependencies in clear_cms.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.

@@ -25,16 +25,17 @@
 //= require bootstrap-datetimepicker
 //= require clear_cms/contents
 //= require handlebars
-//= require ember
-//= require ember-data
-//= require clear_cms
+//= require production/ember
+//= require production/ember-data
 
+// for more details see: http://emberjs.com/guides/application/
+window.ClearCms = Ember.Application.create();
+
+//= require clear_cms/clear_cms_ember
 //= require_self
-
 
 // remap jQuery to $
 (function($){})(window.jQuery);
 
 
-// for more details see: http://emberjs.com/guides/application/
-window.ClearCMSApp = Ember.Application.create()
+
