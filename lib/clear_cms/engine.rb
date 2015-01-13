@@ -27,6 +27,7 @@ require 'sidekiq'
 #require 'kiqstand'
 require 'compass-rails'
 require 'mongoid-history'
+require 'mongoid_userstamp'
 
 
 module ClearCMS

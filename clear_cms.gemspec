@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency "mongoid" #, "~>4.0.0", :git=>'git://github.com/mongoid/mongoid.git'
   #s.add_dependency "kiqstand" #handles connections for sidekiq
   s.add_dependency 'mongoid-history'
+  s.add_dependency 'mongoid_userstamp' # needed for History Tracking
 
 
   #Authentication and Roles
