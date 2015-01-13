@@ -24,6 +24,11 @@
 //= require moment
 //= require bootstrap-datetimepicker
 //= require clear_cms/contents
+//= require handlebars
+//= require ember
+//= require ember-data
+//= require clear_cms
+
 //= require_self
 
 
@@ -31,3 +36,5 @@
 (function($){})(window.jQuery);
 
 
+// for more details see: http://emberjs.com/guides/application/
+window.ClearCMSApp = Ember.Application.create()
