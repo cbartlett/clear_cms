@@ -8,7 +8,7 @@
   <div class="row-fluid">
     <div class="span16">
       <p><b><%= tracker.action.titleize %> <%= tracker.association_chain.last[:name].titleize %> on <%= tracker.created_at.to_formatted_s(:long)  %></b></p>
-      <p>By: <%= tracker.modifier == nil ? 'Untracaked User' : link_to(tracker.modifier.full_name, tracker.modifier) %></p>
+      <p>By: <%= tracker.modifier == nil ? 'Untracked User' : link_to(tracker.modifier.full_name, tracker.modifier) %></p>
 
       <%# disabling all undo/redo for now %>
       <%# unless tracker.association_chain.last[:name] == "content_assets" # disabling undo/redo on content_assets because it's buggy as shit %>
