@@ -25,8 +25,8 @@
 //= require bootstrap-datetimepicker
 //= require clear_cms/contents
 //= require handlebars
-//= require production/ember
-//= require production/ember-data
+//= require ember
+//= require ember-data
 
 // for more details see: http://emberjs.com/guides/application/
 window.ClearCms = Ember.Application.create();

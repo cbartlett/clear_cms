@@ -28,6 +28,7 @@ require 'sidekiq'
 require 'compass-rails'
 require 'mongoid-history'
 require 'mongoid_userstamp'
+require 'ember-rails'
 
 
 module ClearCMS
