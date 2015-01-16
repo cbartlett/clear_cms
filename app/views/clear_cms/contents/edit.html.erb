@@ -2,11 +2,9 @@
   Edit Content
 <% end %>
 
-
 <script>
-  var clear_cms_content = <%= raw @clear_cms_content.to_json %>
+  window.raw_cms_content=<%= raw @clear_cms_content.to_json %>;
 </script>
-
 <!-- <%= link_to 'Back', clear_cms.site_contents_path(@clear_cms_content.site) %> -->
 
 <%# RubyProf.start %>
