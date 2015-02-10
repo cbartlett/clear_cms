@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~>4.1.4"
+  s.add_dependency "rails", "~>4.2.0"
 
   #Redis caches/needed for sidekiq
   s.add_dependency "redis-rails"
@@ -49,7 +49,7 @@ Gem::Specification.new do |s|
 
   #Form Builder
   s.add_dependency 'formtastic' #, "~> 2.1.0"
-  s.add_dependency 'formtastic-plus-bootstrap' #, :git => 'https://github.com/niedfelj/formtastic-bootstrap.git', :branch => 'bootstrap2-rails3-2-formtastic-2-2' #, :require=>'formtastic-bootstrap'
+  s.add_dependency 'formtastic-bootstrap' #, :git => 'https://github.com/niedfelj/formtastic-bootstrap.git', :branch => 'bootstrap2-rails3-2-formtastic-2-2' #, :require=>'formtastic-bootstrap'
   s.add_dependency 'nested_form' #, :git => 'git://github.com/niedfelj/nested_form.git', :branch=> 'formtastic_bootstrap'
 
   #Result pagination
@@ -64,15 +64,15 @@ Gem::Specification.new do |s|
   #s.add_dependency 'jquery-rails'
   s.add_dependency 'jquery-ui-rails'
   s.add_dependency 'jquery-fileupload-rails'
-  s.add_dependency 'twitter-bootstrap-rails', '2.2.8'
+  s.add_dependency 'twitter-bootstrap-rails' #, '2.2.8'
   s.add_dependency 'sass-rails' #, '~> 3.2.3'
   s.add_dependency 'coffee-rails' #, '~> 3.2.1'
   s.add_dependency 'therubyracer' #, '0.10.2'
   s.add_dependency 'less-rails'
   s.add_dependency 'markitup-rails'
-  s.add_dependency 'tagmanager-rails', '3.0.0.1'
+  s.add_dependency 'tagmanager-rails' #, '3.0.0.1'
   s.add_dependency 'ember-rails'
-  s.add_dependency 'ember-source', '~> 1.9.0'
+  s.add_dependency 'ember-source' #, '~> 1.9.0'
 
 
   #Utilities
