@@ -1,9 +1,9 @@
 module ClearCMS
   class Site
     include Mongoid::Document
-    include Mongoid::Versioning
+    #include Mongoid::Versioning
     # keep at most 5 versions of a record
-    max_versions 5
+    #max_versions 5
     
     after_destroy :remove_permissions
     

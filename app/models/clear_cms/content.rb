@@ -1,10 +1,12 @@
 module ClearCMS
   class Content
     include Mongoid::Document
-    include Mongoid::Versioning
+    #include Mongoid::Versioning
     # keep at most 5 versions of a record
-    max_versions 20
+    #max_versions 20
     include Mongoid::Timestamps
+
+    include Mongoid::History::Trackable
 
     #@@form_fields = {}
     cattr_accessor :form_fields do
@@ -91,6 +93,7 @@ module ClearCMS
 
     field :publish_at, type: DateTime
     field :deadline_at, type: DateTime
+    field :expire_at, type: DateTime
 
     index({updated_at: -1})
     index({created_at: -1})
@@ -114,9 +117,11 @@ module ClearCMS
     validates_presence_of :title,:subtitle,:author,:basename,:tags,:categories,:site
     validates_uniqueness_of :basename, :scope=>:site_id
 
-    scope :published, lambda{ all.or({:state.in => ['Finished']},{:status.in => [2,4]}).and({:publish_at.lte => Time.now}).desc(:publish_at) }
+    scope :published, ->{ self.lte(:publish_at => Time.now).not.lte(:expire_at => Time.now).or({:state=>'Finished'}, {:status.in => [2,4]}).desc(:publish_at) }
     scope :recently_published, ->(limit){ published.limit(limit) }
     scope :tagged, ->(tag){ tag_regex=Regexp.new("^(#{tag})$",Regexp::IGNORECASE); where(tags: tag_regex) }
+
+    track_history :track_create => true, :track_destroy => true, :modifier_field => :modifier, :modifier_field_inverse_of => :nil
 
     include Sunspot::Mongoid
 

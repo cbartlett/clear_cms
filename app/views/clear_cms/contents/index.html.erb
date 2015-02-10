@@ -48,8 +48,8 @@
       <%= link_to 'Review', clear_cms.site_content_path(c.site,c) %> |
     <% end %>
       <% if c.published? %>
-       <%= link_to 'View', c.friendly_path, :target=>'_blank'  %>     
-      <% else %><%# TODO: should make this use standard url_for and named routes so we can support other query params in the future %> 
+       <%= link_to 'View', c.friendly_path, :target=>'_blank'  %>
+      <% else %><%# TODO: should make this use standard url_for and named routes so we can support other query params in the future %>
       <%= link_to 'Preview', c.friendly_path+'?preview=true', :target=>'_blank'  %>
       <% end %>
     </td>

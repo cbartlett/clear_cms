@@ -97,6 +97,7 @@ ClearCMS.Form = (function() {
             delimeters: [44],
             blinkBGColor_1: 'yellow',
             blinkBGColor_2: '#f5f5f5',
+            replace: true,
             prefilled: startvals
           })
           .removeAttr('required')
@@ -363,7 +364,7 @@ ClearCMS.Linking = (function() {
     which = $block.data('lookup-success-tmpl');
     data = {
       //'fiters[type]': $block.data('lookup-filter-type'),
-      content_id: ui.item.all._id,
+      content_id: ui.item.all._id.$oid,
       title: ui.item.all.title,
       media_src: img_src,
       order: _lastOrderIndex++
@@ -429,7 +430,7 @@ ClearCMS.Linking = (function() {
               var results = $.map(data, function(content) {
                 return {
                   label: content.title,
-                  value: content._id,
+                  value: content._id.$oid,
                   all: content
                 };
               });
@@ -516,8 +517,8 @@ ClearCMS.ImageQueue = (function() {
 
   return {
     addAsset: function(asset,upload_data){
-      assetList[asset._id]={asset: asset, upload_data: upload_data};
-      window.setTimeout(function(){ ClearCMS.ImageQueue.checkProcessing(asset._id); },2000);
+      assetList[asset._id.$oid]={asset: asset, upload_data: upload_data};
+      window.setTimeout(function(){ ClearCMS.ImageQueue.checkProcessing(asset._id.$oid); },2000);
       // TDDO: update this:
       ClearCMS.Form.setUnsavedWarning();
       //window.warnBeforeUnload=true;
@@ -530,17 +531,17 @@ ClearCMS.ImageQueue = (function() {
       $.ajax('/clear_cms/assets/'+asset_id,{
         success: function(data) {
           if(data.processed_at) {
-            if(assetList[data._id].upload_data.context) {
-              assetList[data._id].upload_data.context.remove();
+            if(assetList[data._id.$oid].upload_data.context) {
+              assetList[data._id.$oid].upload_data.context.remove();
             }
 
             $.extend(data,{order: _lastOrderIndex++});
             $('#asset-sortable').append(tmpl('template-asset-form',data));
-            delete assetList[data._id];
+            delete assetList[data._id.$oid];
             window.uploadsCount--;
             ClearCMS.Interface.setStatus('uploads',window.uploadsCount);
           } else {
-            window.setTimeout(function(){ ClearCMS.ImageQueue.checkProcessing(data._id); },2000);
+            window.setTimeout(function(){ ClearCMS.ImageQueue.checkProcessing(data._id.$oid); },2000);
           }
         }
       });

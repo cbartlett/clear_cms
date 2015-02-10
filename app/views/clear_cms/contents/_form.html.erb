@@ -212,6 +212,7 @@ var linkedFiltersType = {
       <%= f.submit 'Save', :class=>'btn btn-primary' %>
   <!--     <%= f.submit (@clear_cms_content.published? ? 'View >>' : "Preview >>"), :class=>'btn' %>
    -->    <%= f.input :publish_at, :input_html => { :class => 'datetime_picker' } %>
+      <%= f.input :expire_at, :input_html => { :class => 'datetime_picker' } %>
       <%= f.input :state, :as=>:select, :collection=>Hash[ClearCMS::Content::STATES.map {|state| [state.humanize, state]}] %>
       <br>
       <div class="well well-small clearfix">
@@ -261,7 +262,7 @@ var linkedFiltersType = {
     </div>
 
     <div class="well">
-      <h4>History</h4>
+      <h4><%= link_to 'History', content_history_trackers_url(@clear_cms_content._id) %></h4>
       <p><b>CREATED AT</b><br><small><i><%= @clear_cms_content.created_at %></i></small></p>
       <p><b>UPDATED AT</b><br><small><i><%= @clear_cms_content.updated_at %></i></small></p>
       <p><b>SOURCE</b><br><small><i><%#= @clear_cms_content.source %></i></small></p>

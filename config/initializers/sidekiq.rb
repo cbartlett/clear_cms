@@ -1,6 +1,6 @@
 Sidekiq.configure_server do |config|
   config.server_middleware do |chain|
-    chain.add Kiqstand::Middleware
+    #chain.add Kiqstand::Middleware
   end
 
   config.redis = { :url => ClearCMS.config.sidekiq_redis_url }
