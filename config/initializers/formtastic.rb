@@ -1,4 +1,4 @@
-#Formtastic::Helpers::FormHelper.builder = FormtasticBootstrap::FormBuilder
+Formtastic::Helpers::FormHelper.builder = FormtasticBootstrap::FormBuilder
 
 # encoding: utf-8
 
