@@ -88,28 +88,30 @@
                 </div>
 
                 <div class="btn-group pull-left">
-                  <a class="btn  dropdown-toggle btn-inverse" data-toggle="dropdown" href="#">
+                  <a class="btn dropdown-toggle btn-inverse" data-toggle="dropdown" href="#">
                     Manage
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
                     <% if can? :read, ClearCMS::Content %>
-                      <li class="dropdown-submenu">
-                        <%= link_to t('clear_cms.contents'), clear_cms.site_contents_path(current_site), :tabindex=>-1 %>
-                        <ul class="dropdown-menu">
-                          <% ClearCMS::Content.sorted_content_types.each do |type| %>
-                            <li><%= link_to type.pluralize, clear_cms.site_contents_path(current_site, 'filter[types]'=>type) %></li>
-                          <% end %>
-                        </ul>
-                      </li>
+                      
+                      <li role="presentation" class="dropdown-header">Manage Content</li>
+                      <li><%= link_to t('clear_cms.all_contents'), clear_cms.site_contents_path(current_site), :tabindex=>-1 %></li>
+                      <% ClearCMS::Content.sorted_content_types.each do |type| %>
+                        <li><%= link_to type.pluralize, clear_cms.site_contents_path(current_site, 'filter[types]'=>type) %></li>
+                      <% end %>
                     <% end %>
 <!--                      <% if can? :manage, ClearCMS::Site %>
                       <li><%= link_to t('clear_cms.pages'), clear_cms.site_contents_path(current_site, {'filter[types]'=>'Page'}) %></li>
                     <% end %>    -->
                     <% if can? :manage, ClearCMS::User %>
+                      <li role="presentation" class="divider"></li>
+                      <li role="presentation" class="dropdown-header">Manage Users</li>
                       <li><%= link_to t('clear_cms.users'), clear_cms.users_path %></li>
                     <% end %>
                     <% if can? :manage, ClearCMS::Site %>
+                      <li role="presentation" class="divider"></li>
+                      <li role="presentation" class="dropdown-header">Manage Sites</li>
                       <li><%= link_to t('clear_cms.sites'), clear_cms.sites_path %></li>
                     <% end %>
                   </ul>
