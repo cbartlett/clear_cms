@@ -4,10 +4,10 @@
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *= require ./bootstrap_and_overrides.css
  *= require jquery-ui
- *= #require formtastic-bootstrap
- *= require bootstrap-without-forms
- *= require formtastic-plus-bootstrap
- *= require formtastic-plus-bootstrap/responsive
+ *= require formtastic-bootstrap
+ *= #require bootstrap-without-forms
+ *= #require formtastic-plus-bootstrap
+ *= #require formtastic-plus-bootstrap/responsive
  *= #require bootstrap-wysihtml5
  *= require jquery.fileupload-ui
  *= require jquery.textcount
