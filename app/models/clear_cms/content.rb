@@ -230,7 +230,7 @@ module ClearCMS
     end
 
     def categories=(category_list)
-      self[:categories] = (category_list.kind_of?(String) ? category_list.gsub(/[^a-zA-Z0-9,\-_\ ]/,'').split(',').collect {|s| s.strip; s.downcase} : category_list)
+      self[:categories] = (category_list.kind_of?(String) ? category_list.gsub(/[^a-zA-Z0-9,\-_\ &]/,'').split(',').collect {|s| s.strip; s.downcase} : category_list)
     end
 
 
