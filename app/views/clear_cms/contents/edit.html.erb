@@ -7,6 +7,19 @@
 </script>
 <!-- <%= link_to 'Back', clear_cms.site_contents_path(@clear_cms_content.site) %> -->
 
+  <script type="text/x-handlebars" data-template-name="contents">
+
+    <section>
+      {{title}}
+    </section>
+
+    <footer id="info">
+      <p>Double-click to edit a todo</p>
+    </footer>
+
+  </script>
+
+
 <%# RubyProf.start %>
 <%= render 'form' %>
 <%# result=RubyProf.stop %>
