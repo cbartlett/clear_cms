@@ -72,8 +72,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'less-rails'
   s.add_dependency 'markitup-rails'
   s.add_dependency 'tagmanager-rails' #, '3.0.0.1'
-  s.add_dependency 'ember-rails'
-  s.add_dependency 'ember-source' #, '~> 1.9.0'
+  s.add_dependency 'ember-rails', '>= 0.16.2'
+  s.add_dependency 'ember-source', '~> 1.9.0'
 
 
   #Utilities
