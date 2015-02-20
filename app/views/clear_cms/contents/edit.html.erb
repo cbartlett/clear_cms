@@ -11,6 +11,7 @@
   <script type="text/x-handlebars" data-template-name="content">
     <h1> HELLO </h1>
     <h1>{{title}}</h1>
+    {{input value=title}}
     {{#each content_block in model.content_blocks}}
     	<p>{{content_block.body}}</p>
     {{/each}}
