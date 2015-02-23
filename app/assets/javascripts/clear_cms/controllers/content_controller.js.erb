@@ -1,5 +1,9 @@
 ClearCms.contentController = Ember.Controller.extend({
   // the initial value of the `search` property
+
+  // i guess this won't work with precompiled assets and we'll need to hit an API in production???
+  _types: <%= ClearCMS::Content.content_types.collect(&:to_s) %>,
+
   search: '',
 
   model: function() {

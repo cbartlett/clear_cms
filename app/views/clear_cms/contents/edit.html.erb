@@ -8,20 +8,80 @@
 <!-- <%= link_to 'Back', clear_cms.site_contents_path(@clear_cms_content.site) %> -->
 
 
+    <%# f.inputs "General", :class=>"inputs general" do %>
+
+
+        <%# f.input :site_id, :as=>:hidden, :value=>current_site.id %>
+        <%# f.input :_type, :as=>:select, :collection=>ClearCMS::Content.content_types.collect(&:to_s), :include_blank=>false, :input_html=>{:class=>'protected linkedFiltersTypeMonitor'} %>
+        <%# f.input :title, :input_html=>{:class=>'input-xxlarge'} %>
+        <%# f.input :subtitle, :input_html=>{:class=>'input-xxlarge'} %>
+        <%# f.input :basename, :hint=>'Must not contain spaces or special chars', :input_html=>{:class=>'protected'} %>
+        <%# f.input :author, :collection=>(ClearCMS::User.active + [@clear_cms_content.author]).compact.uniq %>
+        <%# f.input :tags, :input_html=>{:class=>'input-xlarge'}%>
+        <%# f.input :categories, :input_html=>{:class=>'input-xlarge', 'autocomplete'=>'off', 'data-provide'=>"typeahead", 'data-source'=>@clear_cms_content.site.categories.collect {|c| c['_id'] }.to_json} %>
+<!--     </div> -->
+
+      <% ClearCMS::Content.form_fields.each do |field,options| %>
+        <%# if models.include?(@clear_cms_content.class.to_s) %>
+          <%# f.input field, options[:formtastic_options].merge(:wrapper_html=>{'data-types'=>options[:models].to_json}) %>
+        <%# end %>
+      <% end %>
+
+
   <script type="text/x-handlebars" data-template-name="content">
-    <h1> HELLO </h1>
-    <h1>{{title}}</h1>
-    {{#each content_block in model.content_blocks}}
-    	<p>{{content_block.body}}</p>
-    {{/each}}
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-9">
+        <form class="form-horizontal well">
+          <h1> Ember.js stuff </h1>
+          <h1>{{title}}</h1>
+          <h1>{{_type}}</h1>
+          <h1>{{_types}}</h1>
+
+          <h3>Content Block(s)</h3>
+
+            {{#each content_block in model.content_blocks}}
+              <h3>{{content_block.type}}</h3>
+              {{textarea value=content_block.body cols="80" rows="6"}}
+
+              <h4>Uploaded Images</h4>
+              <hr>
+              {{#each content_asset in content_block.content_assets}}
+
+                <div>
+
+                  {{content_asset.file}}
+                  <button id="" class="btn btn-info" {{action ""}}>
+                    Edit
+                  </button>
+                  <button id="" class="btn" {{action ""}}>
+                    Delete
+                  </button>
+                  <br>
+                  <div>
+                    <img {{bind-attr src="content_asset.mounted_file.grid.url"}}>
+                  </div>
+                </div>
+                {{ log content_asset}}
+              {{/each}}
+            {{/each}}
 
 
-    <footer id="info">
-      <p>Double-click to edit a todo</p>
-    </footer>
+          Remerch this content: {{input type="checkbox" name="remerch_selected" checked=remerch_selected}}
 
+          <footer id="info">
+            <p>this is the footer</p>
+          </footer>
+          </form>
+        </div>
+      </div>
+  </div>
   </script>
 
+
+  <script type="text/x-handlebars" data-template-name="contentAsset">
+    {{mounted_file.thumb.url}}
+  </script>
 
 <%# RubyProf.start %>
 <%= render 'form' %>
