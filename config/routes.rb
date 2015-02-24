@@ -31,5 +31,6 @@ ClearCMS::Engine.routes.draw do
   resources :assets, :only=>[:show]
   resources :users
   resources :history_trackers, :only=>[:update]
+  resources :form_fields, :only=>[:index]
 
 end
