@@ -1,5 +1,5 @@
 
-ClearCms.Content = Ember.Object.extend({
+ClearCms.User = Ember.Object.extend({
   // init: function() {
   //   console.log('content says hello');
   // },

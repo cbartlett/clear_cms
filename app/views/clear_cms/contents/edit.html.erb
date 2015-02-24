@@ -6,6 +6,7 @@
   window.raw_cms_content=<%= raw @clear_cms_content.to_json %>;
 </script>
 
+<%= ClearCMS::User.active.compact.uniq %>,
 <%= ClearCMS::Content.content_types.collect(&:to_s) %>
 <!-- <%= link_to 'Back', clear_cms.site_contents_path(@clear_cms_content.site) %> -->
     <%# f.inputs "General", :class=>"inputs general" do %>
@@ -36,10 +37,26 @@
           <h1> Ember.js stuff </h1>
           <h3>{{title}}</h3>
 
-          {{view "select" content=content_types value=_type}}
+          <h3>General</h3>
+          <ul>
+            <li>{{view "select" content=content_types value=_type }}</li>
+            <li>{{view "select" content=author }}</li>
+            <li>{{view "select"
+       content=authors
+       optionValuePath="authors._id"
+       optionLabelPath="authors.full_name"
+       value=author.id}}</li>
+          </ul>
+
+
+
+
+
+
+          full_name and id
 
           <h1>{{_type}}</h1>
-          >
+
           {{textarea value=content_types}}
 
 
