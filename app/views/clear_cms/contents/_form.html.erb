@@ -62,14 +62,22 @@ var linkedFiltersType = {
         <%= f.input :categories, :input_html=>{:class=>'input-xlarge', 'autocomplete'=>'off', 'data-provide'=>"typeahead", 'data-source'=>@clear_cms_content.site.categories.collect {|c| c['_id'] }.to_json} %>
 <!--     </div> -->
 
+
+
       <% ClearCMS::Content.form_fields.each do |field,options| %>
         <%# if models.include?(@clear_cms_content.class.to_s) %>
           <%= f.input field, options[:formtastic_options].merge(:wrapper_html=>{'data-types'=>options[:models].to_json}) %>
+          <h1>here's some formtastic stuff</h1>
+          <h3><%= options[:models].to_json %></h3>
+          <h3><%= options[:formtastic_options]%></h3>
         <%# end %>
       <% end %>
 
 
     <% end %>
+
+    <h1>here's the form fields</h1>
+    <h3><%= ClearCMS::Content.form_fields.inspect %></h3>
 
 
 <!--
