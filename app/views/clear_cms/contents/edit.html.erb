@@ -5,9 +5,9 @@
 <script>
   window.raw_cms_content=<%= raw @clear_cms_content.to_json %>;
 </script>
+
+<%= ClearCMS::Content.content_types.collect(&:to_s) %>
 <!-- <%= link_to 'Back', clear_cms.site_contents_path(@clear_cms_content.site) %> -->
-
-
     <%# f.inputs "General", :class=>"inputs general" do %>
 
 
@@ -34,9 +34,15 @@
       <div class="col-sm-9 col-md-9">
         <form class="form-horizontal well">
           <h1> Ember.js stuff </h1>
-          <h1>{{title}}</h1>
+          <h3>{{title}}</h3>
+
+          {{view "select" content=content_types value=_type}}
+
           <h1>{{_type}}</h1>
-          <h1>{{_types}}</h1>
+          >
+          {{textarea value=content_types}}
+
+
 
           <h3>Content Block(s)</h3>
 
