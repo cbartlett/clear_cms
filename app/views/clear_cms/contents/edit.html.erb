@@ -53,7 +53,7 @@
           <h3>Content Block(s)</h3>
 
             {{#each content_block in model.content_blocks}}
-              {{partial "_contentBlock"}}
+              {{render "_contentBlock" content_block}}
             {{/each}}
 
 
