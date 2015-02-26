@@ -1,4 +1,4 @@
-ClearCms.contentController = Ember.Controller.extend({
+ClearCms.ContentController = Ember.Controller.extend({
   // the initial value of the `search` property
   search: '',
 

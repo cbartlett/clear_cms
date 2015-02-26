@@ -32,4 +32,6 @@ ClearCMS::Engine.routes.draw do
   resources :users
   resources :history_trackers, :only=>[:update]
 
+  get '/ember' => 'contents#ember', :as=>:ember_app
+
 end

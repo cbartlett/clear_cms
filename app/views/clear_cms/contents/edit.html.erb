@@ -2,27 +2,7 @@
   Edit Content
 <% end %>
 
-<script>
-  window.raw_cms_content=<%= raw @clear_cms_content.to_json %>;
-</script>
 <!-- <%= link_to 'Back', clear_cms.site_contents_path(@clear_cms_content.site) %> -->
-
-
-  <script type="text/x-handlebars" data-template-name="content">
-    <h1> HELLO </h1>
-    <h1>{{title}}</h1>
-    {{input value=title}}
-    {{#each content_block in model.content_blocks}}
-    	<p>{{content_block.body}}</p>
-    {{/each}}
-
-
-    <footer id="info">
-      <p>Double-click to edit a todo</p>
-    </footer>
-
-  </script>
-
 
 <%# RubyProf.start %>
 <%= render 'form' %>

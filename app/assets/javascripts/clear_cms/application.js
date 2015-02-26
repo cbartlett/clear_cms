@@ -32,7 +32,7 @@
 
 
 // for more details see: http://emberjs.com/guides/application/
-window.ClearCms = Ember.Application.create();
+window.ClearCms = Ember.Application.create({LOG_TRANSITIONS: true});
 
 
 // remap jQuery to $

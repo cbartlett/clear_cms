@@ -42,6 +42,7 @@
     <% end %>
     <td><b><%= c.title %></b><br>
     <% if can? :edit, c %>
+      <%= link_to 'Ember Edit', clear_cms.ember_app_path(:anchor=>"/contents/#{c.id}/edit") %> |
       <%= link_to 'Edit', clear_cms.edit_site_content_path(c.site,c)  %> |
     <% end %>
     <% if can? :review, c %>
