@@ -9,8 +9,7 @@ ClearCms.Content = DS.Model.extend({
 
 ClearCms.ContentBlock = DS.Model.extend({
   primaryKey: '_id',
-  type: DS.attr('string'),
-  _type: DS.attr('string'),
+  content: DS.belongsTo('content'),
   body: DS.attr('string'),
   content_assets: DS.hasMany('content_assets'),
 });
