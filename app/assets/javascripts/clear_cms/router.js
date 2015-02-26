@@ -4,13 +4,13 @@ ClearCms.Router.map(function() {
     // this.resource('content_block'){;
 });
 
-ClearCMS.ContentsRoute = Ember.Route.extend({
+ClearCms.ContentsRoute = Ember.Route.extend({
   model: function() {
     return this.store.find('content');
   }
 });
 
-ClearCMS.ContentRoute = Ember.Route.extend({
+ClearCms.ContentRoute = Ember.Route.extend({
   model: function(params) {
     return this.store.find('content', params.content_id);
   }

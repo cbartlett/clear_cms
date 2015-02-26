@@ -361,11 +361,11 @@ module ClearCMS
       object._id.to_s
     end
 
-    def content_blocks
-      object.content_blocks.map do |content_block|
-        ContentBlockSerializer.new(content_block, scope: scope, root: false)
-      end
-    end
+    # def content_blocks
+    #   object.content_blocks.map do |content_block|
+    #     ContentBlockSerializer.new(content_block, scope: scope, root: false)
+    #   end
+    # end
 
   end
 
