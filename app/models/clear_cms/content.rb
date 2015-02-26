@@ -335,6 +335,16 @@ private
 
 end
 
+module ClearCMS
+  class ContentSerializer < ActiveModel::Serializer
+    attributes :id, :title, :basename, :content_blocks, :_type
+
+    def id
+      object._id.to_s
+    end
+
+  end
+end
 #Testing this to see if we need to do it to get the classes to register for building forms in development where they are not eager loaded/and or while making changes to CMS code
 #require_dependency File.join([Rails.application.root,'app/models/city'])
 

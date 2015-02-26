@@ -2,10 +2,6 @@
   Edit Content
 <% end %>
 
-<script>
-  window.raw_cms_content=<%= raw @clear_cms_content.to_json %>;
-</script>
-
 <%= ClearCMS::User.active.compact.uniq %>,
 <%= ClearCMS::Content.content_types.collect(&:to_s) %>
 <!-- <%= link_to 'Back', clear_cms.site_contents_path(@clear_cms_content.site) %> -->
@@ -36,7 +32,8 @@
         <form class="form-horizontal well">
           <h1> Ember.js stuff </h1>
           <h3>{{title}}</h3>
-
+          {{content.id}}
+          {{content.basename}}
           <h3>General</h3>
           <ul>
             <li>{{view "select" content=content_types value=_type }}</li>

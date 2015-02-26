@@ -1,6 +1,22 @@
 
-ClearCms.Content = Ember.Object.extend({
-  content_types: <%= ClearCMS::Content.content_types.collect(&:to_s) %>,
+ClearCms.Content = DS.Model.extend({
+  primaryKey: '_id',
+  basename: DS.attr('string'),
+  content_blocks: DS.hasMany('content_blocks'),
+  title: DS.attr('string'),
+  _type: DS.attr('string')
 });
 
-content = ClearCms.Content.create(window.raw_cms_content);
+ClearCms.ContentBlock = DS.Model.extend({
+  primaryKey: '_id',
+  type: DS.attr('string'),
+  _type: DS.attr('string'),
+  body: DS.attr('string'),
+  content_assets: DS.hasMany('content_assets'),
+});
+
+ClearCms.ContentAsset = DS.Model.extend({
+  primaryKey: '_id',
+  file: DS.attr('string'),
+  path: DS.attr('string'),
+});
