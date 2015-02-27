@@ -41,9 +41,9 @@ module ClearCMS
     def show
       @content=Content.find(params[:id])
 
-     respond_to do |format|
-        format.html # new.html.erb
-        format.json { render json: @content, serializer: ContentSerializer }
+      respond_to do |format|
+        format.html
+        format.json { render json: @content, serializer: ClearCMS::ContentSerializer }
       end
     end
 
