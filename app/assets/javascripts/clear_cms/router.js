@@ -1,28 +1,18 @@
-
 ClearCms.Router.map(function() {
-  this.resource('content', { path: '/contents/:content_id' })
-  // this.resource('contents', function() {
-  //   this.resource('content', {path: '/'}, function() {
-  //     this.route('edit', {path: '/:content_id/edit'});
-  //     this.route('show', {path: '/:content_id'});
-  //   });
-  // });
+  this.route('support');
+  this.resource('contents', function() {
+    this.resource('content', {path: '/:content_id'}, function() {
+      this.route('edit');
+      this.route('show');
+      this.route('raw');
+    });
+  });
 });
 
-ClearCms.ContentRoute = Ember.Route.extend({
-  model: function(params) {
-    return this.store.find('content', params.content_id);
-  }
-});
-
-ClearCms.ContentsEditRoute = Ember.Route.extend({
-  model: function(params) {
-    return this.store.find('content', params.content_id);
-  }
-});
-
-ClearCms.ContentsRoute = Ember.Route.extend({
 
 
-
-});
+// ClearCms.ContentsEditRoute = Ember.Route.extend({
+//   model: function(params) {
+//     return this.store.find('content', params.content_id);
+//   }
+// });
