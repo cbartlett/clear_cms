@@ -33,7 +33,10 @@
 
 // for more details see: http://emberjs.com/guides/application/
 window.ClearCms = Ember.Application.create({
-  rootElement: '#ember-app'
+  rootElement: '#ember-app',
+  ready: function() {
+    console.log("Ember.TEMPLATES: ", Ember.TEMPLATES);
+  }
 });
 
 

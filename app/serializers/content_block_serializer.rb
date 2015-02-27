@@ -1,16 +1,19 @@
-module ClearCMS
-  class ContentBlockSerializer < ActiveModel::Serializer
-    attributes :_id
-    # attribute :type, :key => :content_type
+# this is currently not getting used unless you redefine the content_blocks method in the content serializer
 
-    def _id
-      object._id.to_s
-    end
 
-    # def content_block_type
-    #   # needed because Ember reserves 'type' property
-    #   object.type.to_s
-    # end
+# module ClearCMS
+#   class ContentBlockSerializer < ActiveModel::Serializer
+#     attributes :_id
+#     # attribute :type, :key => :content_type
 
-  end
-end
+#     def _id
+#       object._id.to_s
+#     end
+
+#     # def content_block_type
+#     #   # needed because Ember reserves 'type' property
+#     #   object.type.to_s
+#     # end
+
+#   end
+# end
