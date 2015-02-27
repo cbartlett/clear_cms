@@ -32,7 +32,9 @@
 
 
 // for more details see: http://emberjs.com/guides/application/
-window.ClearCms = Ember.Application.create();
+window.ClearCms = Ember.Application.create({
+  rootElement: '#ember-app'
+});
 
 
 // remap jQuery to $
