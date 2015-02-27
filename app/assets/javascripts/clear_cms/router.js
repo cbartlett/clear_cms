@@ -1,30 +1,36 @@
 
 ClearCms.Router.map(function() {
+  this.route('support');
   this.resource('contents', function() {
-    this.resource('content', {path: '/'}, function() { 
-      this.route('edit', {path: '/:content_id/edit'});
-      this.route('show', {path: '/:content_id'});
+    this.resource('content', {path: '/:content_id'}, function() { 
+      this.route('edit');
+      this.route('show');
+      this.route('raw');
     });
   });
 });
 
+// ClearCms.ContentEditRoute = Ember.Route.extend({
+//   // setupController: function(controller) {
+//   //   // Set the IndexController's `title`
+//   //   //controller.set('title', 'controller title');
+//   //   //console.log('in setup controller');
+//   //   controller.set('model', {first_name: 'Lastneem', title: 'hello'});
+//   // },
+//   // model: function(params) {
+//   //   console.log('in model in controler');
+//   //   //return {first_name: 'hello'} 
+//   //   return this.store.find('content', params.content_id);
+//   // }
+// });
 
-ClearCms.ContentEditRoute = Ember.Route.extend({
-  setupController: function(controller) {
-    // Set the IndexController's `title`
-    //controller.set('title', 'controller title');
-    //console.log('in setup controller');
-    controller.set('model', {first_name: 'Lastneem', title: 'hello'});
-  },
-  model: function(params) {
-    console.log('in model in controler');
-    //return {first_name: 'hello'} 
-    return {title: 'router model title'};
-  }
-});
+// ClearCms.ContentShowRoute = Ember.Route.extend({
+//   // model: function(params) {
+//   //   return this.store.find('content', params.content_id);
+//   // }
+// });
 
-ClearCms.ContentsRoute = Ember.Route.extend({
+// ClearCms.ContentsRoute = Ember.Route.extend({
 
 
-
-});
+// });

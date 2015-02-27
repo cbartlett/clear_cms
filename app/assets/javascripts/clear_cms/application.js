@@ -30,9 +30,21 @@
 //= require_self
 //= require clear_cms/clear_cms_ember
 
+Ember.LOG_BINDINGS = true;
 
+window.ClearCms = Ember.Application.create({
+
+  LOG_TRANSITIONS: true,
+  // log when Ember generates a controller or a route from a generic class
+  LOG_ACTIVE_GENERATION: true,
+  // log when Ember looks up a template or a view
+  LOG_VIEW_LOOKUPS: true,
+  // render the application in jQuery("#ember-crud-example")
+  rootElement: "#ember-container"
 // for more details see: http://emberjs.com/guides/application/
-window.ClearCms = Ember.Application.create({LOG_TRANSITIONS: true});
+});
+
+ClearCms.ApplicationAdapter = DS.FixtureAdapter.extend();
 
 
 // remap jQuery to $
