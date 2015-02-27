@@ -1,3 +1,19 @@
 <h3>CONTENT WRAPPER</h3>
 
 {{outlet}}
+
+id: {{id}}<br>
+basename: {{basename}}
+
+  {{#each contentBlock in content_blocks}}
+    <h3>{{contentBlock.type}}</h3>
+    {{textarea value=contentBlock.body cols="80" rows="6"}}
+
+    <h4>Uploaded Images</h4>
+    <hr>
+
+    {{#each content_asset in contentBlock.content_assets}}
+      {{partial "_contentAsset"}}
+    {{/each}}
+
+  {{/each}}
