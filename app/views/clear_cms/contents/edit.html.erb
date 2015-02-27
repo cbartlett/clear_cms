@@ -49,8 +49,8 @@
 
           <h3>Content Block(s)</h3>
 
-            {{#each content_block in model.content_blocks}}
-              {{render "_contentBlock" content_block}}
+            {{#each contentBlock in model.content_blocks}}
+              {{render "_contentBlock" contentBlock}}
             {{/each}}
 
 
@@ -66,13 +66,13 @@
   </script>
 
   <script type="text/x-handlebars" data-template-name="_contentBlock">
-    <h3>{{content_block.type}}</h3>
-    {{textarea value=content_block.body cols="80" rows="6"}}
+    <h3>{{contentBlock.type}}</h3>
+    {{textarea value=contentBlock.body cols="80" rows="6"}}
 
     <h4>Uploaded Images</h4>
     <hr>
 
-    {{#each content_asset in content_block.content_assets}}
+    {{#each content_asset in contentBlock.content_assets}}
       {{partial "_contentAsset"}}
     {{/each}}
   </script>
