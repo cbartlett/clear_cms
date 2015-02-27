@@ -32,13 +32,15 @@
 
 
 // for more details see: http://emberjs.com/guides/application/
+
 window.ClearCms = Ember.Application.create({
+  LOG_TRANSITIONS: true,
   rootElement: '#ember-app',
   ready: function() {
+    // show what templates got compiled
     console.log("Ember.TEMPLATES: ", Ember.TEMPLATES);
   }
 });
-
 
 // remap jQuery to $
 (function($){})(window.jQuery);

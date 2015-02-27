@@ -2,44 +2,8 @@
   Edit Content
 <% end %>
 
-
-
   <div id="ember-app">
   </div>
-
-  <script type="text/x-handlebars" data-template-name="_contentBlock">
-    <h3>{{contentBlock.type}}</h3>
-    {{textarea value=contentBlock.body cols="80" rows="6"}}
-
-    <h4>Uploaded Images</h4>
-    <hr>
-
-    {{#each content_asset in contentBlock.content_assets}}
-      {{partial "_contentAsset"}}
-    {{/each}}
-  </script>
-
-
-  <script type="text/x-handlebars" data-template-name="_contentAsset">
-    {{content_asset.mounted_file.thumb.url}}
-    <div>
-      {{file}}
-      <button id="" class="btn btn-info" {{action ""}}>
-        Edit
-      </button>
-      <button id="" class="btn" {{action ""}}>
-        Delete
-      </button>
-      <br>
-      <div>
-        <img {{bind-attr src="content_asset.mounted_file.grid.url"}}>
-      </div>
-    </div>
-    {{ log content_asset}}
-  </script>
-
-
-
 
 <!-- <%= link_to 'Back', clear_cms.site_contents_path(@clear_cms_content.site) %> -->
 

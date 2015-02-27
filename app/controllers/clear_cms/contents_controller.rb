@@ -8,6 +8,9 @@ module ClearCMS
     load_and_authorize_resource :class=>'ClearCMS::Content', :except=>[:email]
 
 
+    def ember
+
+    end
 
     def index
 
@@ -46,6 +49,7 @@ module ClearCMS
         format.json { render json: @content, serializer: ClearCMS::ContentSerializer }
       end
     end
+
 
     def new
       @clear_cms_content = current_site.contents.build
