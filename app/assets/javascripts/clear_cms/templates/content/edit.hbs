@@ -1,0 +1,21 @@
+<h3>CONTENT</h3>
+{{#link-to 'content.edit'}}Edit Content{{/link-to}}
+<h1>Title: {{title}}</h1>
+<h1>First name: {{first_name}}</h1>
+<h1>Full name: {{full_name}}</h1>
+
+<h2>{{controller.first_name}}</h2>
+
+<button {{action 'toggleDetails'}}>Toggle Details</button>
+
+{{#if showDetails}}
+  <h1>Showing Details</h1>
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+{{else}}
+  <h1>Not Showing Details</h1>
+{{/if}}

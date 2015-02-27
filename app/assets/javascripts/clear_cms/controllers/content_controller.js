@@ -1,15 +1,13 @@
-ClearCms.ContentController = Ember.Controller.extend({
-  // the initial value of the `search` property
-  search: '',
-
-  model: function() {
-  	alert('hi');
-  },
-  actions: {
-    query: function() {
-      // the current value of the text field
-      var query = this.get('search');
-      this.transitionToRoute('search', { query: query });
-    }
-  }
-});
+// ClearCms.ContentController = Ember.ObjectController.extend({
+//   showDetails: false,
+//   actions: {
+//     toggleDetails: function() {
+//       var current = this.get('showDetails');
+//       if(current) {
+//         this.set('showDetails',false);
+//       } else {
+//         this.set('showDetails',true);
+//       }
+//     }
+//   }
+// });
