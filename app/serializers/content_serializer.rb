@@ -1,9 +1,13 @@
 module ClearCMS
   class ContentSerializer < ActiveModel::Serializer
-    attributes :id, :title, :basename, :_type, :content_blocks
+    attributes :_id, :title, :basename, :_type, :content_blocks
     # has_many :content_blocks, serializer: ClearCMS::ContentBlockSerializer
 
-    def id
+    # def id
+    #   object._id.to_s
+    # end
+
+    def _id
       object._id.to_s
     end
 
