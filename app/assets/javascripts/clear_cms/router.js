@@ -9,17 +9,9 @@ ClearCms.Router.map(function() {
 });
 
 
-ClearCms.ContentEditRoute = Ember.Route.extend({
-  setupController: function(controller) {
-    // Set the IndexController's `title`
-    //controller.set('title', 'controller title');
-    //console.log('in setup controller');
-    controller.set('model', {first_name: 'Lastneem', title: 'hello'});
-  },
+ClearCms.ContentsEditRoute = Ember.Route.extend({
   model: function(params) {
-    console.log('in model in controler');
-    //return {first_name: 'hello'}
-    return {title: 'router model title'};
+    return this.store.find('content', params.content_id);
   }
 });
 
@@ -28,3 +20,5 @@ ClearCms.ContentsRoute = Ember.Route.extend({
 
 
 });
+
+
