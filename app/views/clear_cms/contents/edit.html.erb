@@ -25,45 +25,7 @@
       <% end %>
 
 
-  <script type="text/x-handlebars" data-template-name="content">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-9 col-md-9">
-        <form class="form-horizontal well">
-          <h1> Ember.js stuff </h1>
-          <h3>{{title}}</h3>
-          {{content.id}}
-          {{content.basename}}
-          <h3>General</h3>
-          <ul>
-            <li>{{view "select" content=content_types value=_type }}</li>
-            <li>{{view "select" content=author }}</li>
-          </ul>
 
-
-          full_name and id
-
-          <h1>{{_type}}</h1>
-
-          {{textarea value=content_types}}
-
-          <h3>Content Block(s)</h3>
-
-            {{#each contentBlock in model.content_blocks}}
-              {{render "_contentBlock" contentBlock}}
-            {{/each}}
-
-
-          Remerch this content: {{input type="checkbox" name="remerch_selected" checked=remerch_selected}}
-
-          <footer id="info">
-            <p>this is the footer</p>
-          </footer>
-          </form>
-        </div>
-      </div>
-  </div>
-  </script>
 
   <script type="text/x-handlebars" data-template-name="_contentBlock">
     <h3>{{contentBlock.type}}</h3>
