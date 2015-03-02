@@ -44,8 +44,16 @@ window.ClearCms = Ember.Application.create({
 // for more details see: http://emberjs.com/guides/application/
 });
 
-ClearCms.ApplicationAdapter = DS.FixtureAdapter.extend();
 
+
+// window.ClearCms = Ember.Application.create({
+//   LOG_TRANSITIONS: true,
+//   rootElement: '#ember-app',
+//   ready: function() {
+//     // show what templates got compiled
+//     console.log("Ember.TEMPLATES: ", Ember.TEMPLATES);
+//   }
+// });
 
 // remap jQuery to $
 (function($){})(window.jQuery);

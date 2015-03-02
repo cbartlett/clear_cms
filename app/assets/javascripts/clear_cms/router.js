@@ -1,4 +1,3 @@
-
 ClearCms.Router.map(function() {
   this.route('support');
   this.resource('contents', function() {
@@ -24,6 +23,7 @@ ClearCms.Router.map(function() {
 //   // }
 // });
 
+
 // ClearCms.ContentShowRoute = Ember.Route.extend({
 //   // model: function(params) {
 //   //   return this.store.find('content', params.content_id);
@@ -32,5 +32,11 @@ ClearCms.Router.map(function() {
 
 // ClearCms.ContentsRoute = Ember.Route.extend({
 
+
+
+// ClearCms.ContentsEditRoute = Ember.Route.extend({
+//   model: function(params) {
+//     return this.store.find('content', params.content_id);
+//   }
 
 // });

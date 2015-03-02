@@ -5,3 +5,10 @@
 {{link-to 'Edit Content 1' 'content.edit' 1}}
 
 {{outlet}}
+
+id: {{id}}<br>
+basename: {{basename}}
+
+{{#each contentBlock in content_blocks}}
+  {{partial "_contentBlock"}}
+{{/each}}
