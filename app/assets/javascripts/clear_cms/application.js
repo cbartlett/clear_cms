@@ -40,20 +40,15 @@ window.ClearCms = Ember.Application.create({
   // log when Ember looks up a template or a view
   LOG_VIEW_LOOKUPS: true,
   // render the application in jQuery("#ember-crud-example")
-  rootElement: "#ember-container"
+  rootElement: "#ember-container",
 // for more details see: http://emberjs.com/guides/application/
+
+  ready: function() {
+      // show what templates got compiled
+      console.log("Ember.TEMPLATES: ", Ember.TEMPLATES);
+    }
 });
 
-
-
-// window.ClearCms = Ember.Application.create({
-//   LOG_TRANSITIONS: true,
-//   rootElement: '#ember-app',
-//   ready: function() {
-//     // show what templates got compiled
-//     console.log("Ember.TEMPLATES: ", Ember.TEMPLATES);
-//   }
-// });
 
 // remap jQuery to $
 (function($){})(window.jQuery);
