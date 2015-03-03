@@ -8,6 +8,10 @@ ClearCms.ContentEditController = Ember.ObjectController.extend({
       } else {
         this.set('showDetails',true);
       }
+    },
+    save: function() {
+      var content=this.get('model');
+      content.save();
     }
   }
 });
