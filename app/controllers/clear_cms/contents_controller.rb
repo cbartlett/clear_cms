@@ -44,10 +44,7 @@ module ClearCMS
     def show
       @content=Content.find(params[:id])
 
-      respond_to do |format|
-        format.html
-        format.json { render json: @content, serializer: ClearCMS::ContentSerializer }
-      end
+      respond_with @content 
     end
 
 
@@ -59,10 +56,7 @@ module ClearCMS
       #@clear_cms_content.linked_contents.build
       @clear_cms_content.content_blocks.build(:type=>'raw')
 
-      respond_to do |format|
-        format.html # new.html.erb
-        format.json { render json: @clear_cms_content }
-      end
+      respond_with @clear_cms_content 
     end
 
     def edit
@@ -92,18 +86,10 @@ module ClearCMS
 
       #if @clear_cms_content.save
 
-      if @clear_cms_content.update_attributes(params[:content].permit!)
-        respond_to do |format|
-          format.html { redirect_to({:action=>:edit}, notice: 'Content was successfully updated.') }
-          format.json { render json: @clear_cms_content }
-        end
-      else
-        respond_to do |format|
-          format.html { flash.now[:notice]='Error saving content!'
-                        render :action=>:edit }
-          format.json { render json: { errors: @clear_cms_content.errors}, status: :unprocessable_entity }
-        end
-      end
+      @clear_cms_content.update_attributes(params[:content].permit!)
+    
+      respond_with @clear_cms_content
+    
     end
 
 
@@ -112,20 +98,9 @@ module ClearCMS
       #@clear_cms_content = Content.new(params[:content])
       @clear_cms_content.content_logs.build(:user=>current_user, :entry=>"created")
 
-      respond_to do |format|
-        if @clear_cms_content.save
-          format.html {
-            redirect_to(clear_cms.edit_site_content_path(@clear_cms_content.site_id,@clear_cms_content.id), notice: 'Content was successfully created.')
-          }
-          format.json { render json: @clear_cms_content, status: :created, location: clear_cms.content_path(@clear_cms_content)}
-        else
-          format.html {
-              flash.now[:notice]='Error creating content!'
-              render action: "new"
-            }
-          format.json { render json: @clear_cms_content.errors, status: :unprocessable_entity }
-        end
-      end
+      @clear_cms_content.save
+
+      respond_with @clear_cms_content 
     end
 
 

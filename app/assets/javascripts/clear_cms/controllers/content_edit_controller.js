@@ -11,7 +11,14 @@ ClearCms.ContentEditController = Ember.ObjectController.extend({
     },
     save: function() {
       var content=this.get('model');
-      content.save();
+      content.save().then(
+        function(response) { //success callback
+          alert('successfully saved');
+        },
+        function(response) { //error callback
+          alert(response);
+        }
+      );
     }
   }
 });

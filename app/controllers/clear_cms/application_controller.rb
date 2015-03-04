@@ -10,6 +10,8 @@ module ClearCMS
     layout 'clear_cms/application'
     
     helper_method :current_site
+
+    respond_to :html, :json
     #helper 'clear_cms/upload'
     
     #before_filter :check_permissions
