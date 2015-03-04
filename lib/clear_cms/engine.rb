@@ -30,6 +30,7 @@ require 'compass-rails'
 require 'mongoid-history'
 require 'mongoid_userstamp'
 require 'ember-rails'
+require 'responders'
 
 
 module ClearCMS

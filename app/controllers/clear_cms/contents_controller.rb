@@ -93,10 +93,16 @@ module ClearCMS
       #if @clear_cms_content.save
 
       if @clear_cms_content.update_attributes(params[:content].permit!)
-        redirect_to({:action=>:edit}, notice: 'Content was successfully updated.')
+        respond_to do |format|
+          format.html { redirect_to({:action=>:edit}, notice: 'Content was successfully updated.') }
+          format.json { render json: @clear_cms_content }
+        end
       else
-        flash.now[:notice]='Error saving content!'
-        render :action=>:edit
+        respond_to do |format|
+          format.html { flash.now[:notice]='Error saving content!'
+                        render :action=>:edit }
+          format.json { render json: { errors: @clear_cms_content.errors}, status: :unprocessable_entity }
+        end
       end
     end
 
