@@ -1,5 +1,10 @@
 ClearCms.Router.map(function() {
   this.route('support');
+  this.resource('sites', function() {
+    this.resource('site', {path: '/:site_id'}, function() {
+      this.route('edit');
+    });
+  });
   this.resource('users', function() {
     this.resource('user', {path: '/:user_id'}, function() {
       this.route('edit');
