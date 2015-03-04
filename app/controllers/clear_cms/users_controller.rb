@@ -80,7 +80,7 @@ module ClearCMS
       respond_to do |format|
         if @clear_cms_user.update_attributes(params[:user].permit!)
           format.html { redirect_to clear_cms.edit_user_path(@clear_cms_user), notice: 'User was successfully updated.' }
-          format.json { head :ok }
+          format.json { render json: @clear_cms_user }
         else
           format.html { render action: "edit" }
           format.json { render json: @clear_cms_user.errors, status: :unprocessable_entity }

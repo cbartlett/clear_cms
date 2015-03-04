@@ -94,8 +94,8 @@ ClearCms.ContentSerializer = DS.ActiveModelSerializer.extend(DS.EmbeddedRecordsM
      Overrided method
     */
     normalizePayload: function(type, payload) {
-        var typeKey = type.typeKey,
-            typeKeyPlural = typeKey.pluralize();
+        var typeKey = type.typeKey;
+        var typeKeyPlural = Ember.String.pluralize(typeKey);
 
         payload = this._super(type, payload);
 
