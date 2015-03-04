@@ -11,7 +11,14 @@ ClearCms.UserEditController = Ember.ObjectController.extend({
     },
     save: function() {
       var user=this.get('model');
-      user.save();
+      user.save().then(
+        function(response) { //success callback
+          alert('successfully saved');
+        },
+        function(response) { //error callback
+          alert(response);
+        }
+      ); 
     }
   }
 });
