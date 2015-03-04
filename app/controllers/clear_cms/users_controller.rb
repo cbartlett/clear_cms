@@ -16,7 +16,7 @@ module ClearCMS
     # GET /clear_cms/users.json
     def index
       #@clear_cms_users = ClearCMS::User.includes(:authored_contents)
-      @clear_cms_users = ClearCMS::User #(:updated_at)
+      @clear_cms_users = ClearCMS::User.limit(10) #(:updated_at)
 
       respond_to do |format|
         format.html # index.html.erb
