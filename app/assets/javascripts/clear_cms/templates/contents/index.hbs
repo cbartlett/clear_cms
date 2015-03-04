@@ -1,0 +1,4 @@
+<h1>Content Index</h1>
+{{#each content in controller.model}}
+  <h3>{{content.title}}</h3> {{link-to 'Edit' 'content.edit' content}}
+{{/each}}
