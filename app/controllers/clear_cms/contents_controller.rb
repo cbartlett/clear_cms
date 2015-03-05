@@ -44,7 +44,8 @@ module ClearCMS
     def show
       @content=Content.find(params[:id])
 
-      respond_with @content 
+      respond_with @content.becomes(Content), root: 'content'
+      #respond_with @content 
     end
 
 
@@ -155,6 +156,16 @@ module ClearCMS
 
       render :text => 'success', :status => 200 # a status of 404 would reject the mail
     end
+
+
+    private
+
+      # def default_serializer_options
+      #   { 
+      #     # namespace: 'content',
+      #     # serializer: ContentSerializer
+      #   }
+      # end
 
   end
 end
