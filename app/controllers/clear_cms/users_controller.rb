@@ -77,15 +77,8 @@ module ClearCMS
     def update
       @clear_cms_user = ClearCMS::User.find(params[:id])
 
-      respond_to do |format|
-        if @clear_cms_user.update_attributes(params[:user].permit!)
-          format.html { redirect_to clear_cms.edit_user_path(@clear_cms_user), notice: 'User was successfully updated.' }
-          format.json { render json: @clear_cms_user }
-        else
-          format.html { render action: "edit" }
-          format.json { render json: @clear_cms_user.errors, status: :unprocessable_entity }
-        end
-      end
+      @clear_cms_user.update_attributes(params[:user].permit!)
+      respond_with @clear_cms_user 
     end
 
     # DELETE /clear_cms/users/1

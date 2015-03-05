@@ -35,17 +35,15 @@ module ClearCMS
         @clear_cms_contents=current_site.contents.includes(:site).desc(:publish_at).page(params[:page])
       end
 
-      respond_to do |format|
-        format.html
-        format.json { render json: @clear_cms_contents }
-      end
+      respond_with @clear_cms_contents, each_serializer: ClearCMS::ContentSerializer
     end
 
     def show
       @content=Content.find(params[:id])
 
-      respond_with @content.becomes(Content), root: 'content'
+      #respond_with @content.becomes(Content), root: 'content'
       #respond_with @content 
+      respond_with @content, serializer: ClearCMS::ContentSerializer
     end
 
 
