@@ -1,6 +1,6 @@
 class ClearCMS::ContentBlock
   include Mongoid::Document
-  #include Mongoid::Timestamps
+  include Mongoid::Timestamps
 
   include Mongoid::History::Trackable
 

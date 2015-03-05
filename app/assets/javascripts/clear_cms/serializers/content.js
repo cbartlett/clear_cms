@@ -115,7 +115,7 @@ ClearCms.ContentSerializer = DS.ActiveModelSerializer.extend(DS.EmbeddedRecordsM
     },
 
   attrs: {
-    content_blocks: { embedded: 'always' },
+    content_blocks: { embedded: 'always', key: 'content_blocks_attributes' },
   },
   primaryKey: '_id'
 });

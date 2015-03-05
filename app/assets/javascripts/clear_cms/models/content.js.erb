@@ -5,7 +5,10 @@ ClearCms.Content = DS.Model.extend({
   content_blocks: DS.hasMany('content_block', {embedded: 'always'}),
   //author: DS.hasOne('user'),
   title: DS.attr('string'),
-  _type: DS.attr('string')
+  _type: DS.attr('string'),
 
+  <% ClearCMS::Content.form_fields.each do |field_name, field_options| %>
+    <%= field_name %>: DS.attr('string'),
+  <% end %>
 
 });
