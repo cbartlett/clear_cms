@@ -5,8 +5,9 @@ module ClearCMS
     # keep at most 5 versions of a record
     #max_versions 20
     include Mongoid::Timestamps
-
     include Mongoid::History::Trackable
+
+    include_root_in_json=true
 
     #@@form_fields = {}
     cattr_accessor :form_fields do

@@ -5,6 +5,8 @@ module ClearCMS
     # keep at most 5 versions of a record
     #max_versions 5
     
+    include_root_in_json=true
+
     after_destroy :remove_permissions
     
     

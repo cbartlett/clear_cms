@@ -6,7 +6,6 @@ ClearCms.Content = DS.Model.extend({
   //author: DS.hasOne('user'),
   title: DS.attr('string'),
   _type: DS.attr('string'),
-
   <% ClearCMS::Content.form_fields.each do |field_name, field_options| %>
     <%= field_name %>: DS.attr('string'),
   <% end %>

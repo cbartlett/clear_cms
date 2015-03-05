@@ -1,5 +1,7 @@
 module ClearCMS
   class UserSerializer < ActiveModel::Serializer
-    attributes :_id, :full_name
+    attributes *User.fields.collect {|k,v| k}
+
+        
   end
 end

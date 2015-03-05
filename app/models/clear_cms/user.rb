@@ -8,6 +8,8 @@ module ClearCMS
     #include Mongoid::Versioning
     #max_versions 10
 
+    include_root_in_json=true
+    
     ROLES=%w(reader alumni contributor intern writer editor managing_editor administrator)
 
   # Include default devise modules. Others available are:
@@ -101,11 +103,12 @@ module ClearCMS
     scope :active, ->{where(active: true)}
 
     def default_site
-      ClearCMS::Site.where(:domain=>'coolhunting.com').first
+      #ClearCMS::Site.where(:domain=>'coolhunting.com').first
+        ClearCMS::Site.first
     end
 
     def default_site_id
-      ClearCMS::Site.where(:domain=>'coolhunting.com').first.id
+      default_site.id
     end
 
     def available_sites

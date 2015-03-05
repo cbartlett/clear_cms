@@ -37,12 +37,14 @@ module ClearCMS
   class Engine < ::Rails::Engine
     isolate_namespace ClearCMS
 
- 	def self.activate
+ 	  def self.activate
 	    Dir.glob(File.join(Rails.application.root, "app/**/*_decorator*.rb")) do |c|
 
 	      Rails.configuration.cache_classes ? require(c) : load(c)
 	    end
   	end
+
+    #config.autoload_paths += Dir["#{config.root}/app/serializers/**/"]
 
     config.to_prepare &method(:activate).to_proc
 
