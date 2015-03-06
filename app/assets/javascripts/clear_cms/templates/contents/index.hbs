@@ -23,23 +23,25 @@
 -->
   </tr>
   
-  {{#each content in controller.model}}
-  <tr>
-    <td>STATE TBD</td>
-    <td><b>{{ content.title }}</b><br>
-      {{link-to 'Edit' 'content.edit' content}}
-    </td>
-    <td>
-      CATEGORIES TBD
-    </td>
-    <td>{{ content._type }}</td>
-    <td>ASSIGNEE TBD</td>
-    <td>AUTHOR TBD</td>
-    <td>{{ content.publish_at }}</td>
-    <td>{{ content.created_at }}</td>
-    <td>NOTES TBD</td>
+  <tbody>
+    {{#each content in controller.model}}
+    <tr>
+      <td>STATE TBD</td>
+      <td><b>{{ content.title }}</b><br>
+        {{link-to 'Edit' 'content.edit' content}}
+      </td>
+      <td>
+        CATEGORIES TBD
+      </td>
+      <td>{{ content._type }}</td>
+      <td>ASSIGNEE TBD</td>
+      <td>AUTHOR TBD</td>
+      <td>{{ content.publish_at }}</td>
+      <td>{{ content.created_at }}</td>
+      <td>NOTES TBD</td>
 
-  </tr>
-  {{/each}}
+    </tr>
+    {{/each}}
+  </tbody>
 </table>
 

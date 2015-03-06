@@ -9,13 +9,16 @@
     <th></th>
   </tr>
 
-{{#each user in controller.model}}
-  <tr class="<%= clear_cms_user.active? ? 'active_user' : 'inactive_user' %>">
-    <td>{{user.full_name}}</td>
-    <td>{{user.email}}</td>
-    <td></td>
-    <td>TBD</td>
-    <td>{{link-to 'Edit' 'user.edit' user }}</td>
-  </tr>
-{{/each}}
+  <tbody>
+  {{#each user in controller.model}}
+    <tr>
+      <td>{{user.full_name}}</td>
+      <td>{{user.email}}</td>
+      <td></td>
+      <td>TBD</td>
+      <td>{{link-to 'Edit' 'user.edit' user }}</td>
+    </tr>
+
+  {{/each}}
+  </tbody>
 </table>
