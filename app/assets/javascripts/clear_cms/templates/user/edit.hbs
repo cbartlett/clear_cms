@@ -1,4 +1,15 @@
 {{link-to 'Show User' 'user.show'}}
-<h1>User: {{input value=full_name}}</h1>
-<h1>Description: {{textarea value=description}}</h1>
-<button {{action 'save'}}>Save</button>
+
+<form>
+  <div class="form-group">
+    <label for="userFullName">Full Name</label>
+    {{input value=full_name id="userFullName" class='form-control'}}
+  </div>
+  <div class="form-group">
+    <label for="userEmail">Email</label>
+    {{input value=email id="userEmail" class='form-control'}}
+  </div>
+  <button {{action 'save'}} class="btn btn-default">Save</button>
+</form>
+
+

@@ -1,4 +1,45 @@
 <h1>Content Index</h1>
-{{#each content in controller.model}}
-  <h3>{{content.title}}</h3> {{link-to 'Edit' 'content.edit' content}}
-{{/each}}
+
+  <h3>{{content.title}}</h3> 
+
+
+
+<table class="table table-striped">
+  <tr>
+    <th>State</th>
+    <th>Entry</th>
+    <th>Category</th>
+    <th>Type</th>
+    <th>Assignee</th>
+    <th>Author</th>
+    <th>Publish At</th>
+    <th>Created At</th>
+    <th>Note</th>
+<!--
+    <th>Source</th>
+    <th>Status</th>
+    <th>Import</th>
+    <th>Actions</th>
+-->
+  </tr>
+  
+  {{#each content in controller.model}}
+  <tr>
+    <td>STATE TBD</td>
+    <td><b>{{ content.title }}</b><br>
+      {{link-to 'Edit' 'content.edit' content}}
+    </td>
+    <td>
+      CATEGORIES TBD
+    </td>
+    <td>{{ content._type }}</td>
+    <td>ASSIGNEE TBD</td>
+    <td>AUTHOR TBD</td>
+    <td>{{ content.publish_at }}</td>
+    <td>{{ content.created_at }}</td>
+    <td>NOTES TBD</td>
+
+  </tr>
+  {{/each}}
+</table>
+

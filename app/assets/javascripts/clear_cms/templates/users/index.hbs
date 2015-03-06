@@ -1,5 +1,21 @@
 <h1>User Index</h1>
 
+<table class="table table-striped">
+  <tr>
+    <th>Full Name</th>
+    <th>Email</th>
+    <th>Default Site</th>
+    <th>Authored #</th>
+    <th></th>
+  </tr>
+
 {{#each user in controller.model}}
-  <h3>{{user.full_name}}</h3> {{link-to 'Edit' 'user.edit' user}} <hr>
+  <tr class="<%= clear_cms_user.active? ? 'active_user' : 'inactive_user' %>">
+    <td>{{user.full_name}}</td>
+    <td>{{user.email}}</td>
+    <td></td>
+    <td>TBD</td>
+    <td>{{link-to 'Edit' 'user.edit' user }}</td>
+  </tr>
 {{/each}}
+</table>

@@ -1,7 +1,14 @@
 <h3>CONTENT</h3>
 {{#link-to 'content.show'}}Show Content{{/link-to}}
-<h1>Title: {{title}}</h1>
-{{textarea value=title}}
-<button {{action 'save'}}>Save</button>
-<hr>
 
+<form>
+  <div class="form-group">
+    <label for="contentTitle">Title</label>
+    {{input value=title id="contentTitle" class='form-control'}}
+  </div>
+  <div class="form-group">
+    <label for="contentSubtitle">Subtitle</label>
+    {{input value=subtitle id="contentSubtitle" class='form-control'}}
+  </div>
+  <button {{action 'save'}} class="btn btn-default">Save</button>
+</form>
