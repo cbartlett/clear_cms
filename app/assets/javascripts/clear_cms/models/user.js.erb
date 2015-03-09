@@ -1,5 +1,5 @@
 ClearCms.User = DS.Model.extend({
-  primaryKey: '_id',
+  //primaryKey: '_id',
   <% ClearCMS::User.fields.each do |field_name, field_options| %>
   <% if field_name!='_id' %>
     <%= field_name %>: DS.attr('string'),

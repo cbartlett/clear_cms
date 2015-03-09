@@ -1,4 +1,3 @@
-ClearCms.UserSerializer = DS.ActiveModelSerializer.extend(DS.EmbeddedRecordsMixin, {
-  primaryKey: '_id'
+ClearCms.UserSerializer = ClearCms.ApplicationSerializer.extend({
 
 });
