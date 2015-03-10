@@ -7,6 +7,7 @@ class ClearCMS::ContentAsset
   #before_create :append_site_to_path
 
   #after_initialize :generate_path
+  PLACEMENTS=['Featured','Primary','Secondary']
 
   embedded_in :content_block, class_name: 'ClearCMS::ContentBlock'
   #embedded_in :content_assetable, polymorphic: true
@@ -19,6 +20,7 @@ class ClearCMS::ContentAsset
   field :title
   field :description
   field :credit
+  field :placement
   field :file
   field :width
   field :height
