@@ -8,7 +8,7 @@ ClearCms.ContentSerializer = ClearCms.ApplicationSerializer.extend({
 	json.content_blocks_attributes = json.content_blocks; 
 	delete json.content_blocks; 
 
-	forEach(json.content_blocks_attributes, function(item) {
+	json.content_blocks_attributes.forEach(function(item) {
 		item.content_assets_attributes = item.content_assets;
 		delete item.content_assets; 
 	});
