@@ -7,7 +7,7 @@ class ClearCMS::ContentAsset
   #before_create :append_site_to_path
 
   #after_initialize :generate_path
-  PLACEMENTS=['Featured','Primary','Secondary']
+  PLACEMENTS=['Feature','Primary','Secondary']
 
   embedded_in :content_block, class_name: 'ClearCMS::ContentBlock'
   #embedded_in :content_assetable, polymorphic: true
