@@ -3,5 +3,6 @@ ClearCms.ApplicationSerializer = DS.ActiveModelSerializer.extend(DS.EmbeddedReco
   attrs: {
     created_at: {serialize: false},
     updated_at: {serialize: false},
+    readonly_attributes: {serialize: false},
   },
 });

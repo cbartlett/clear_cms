@@ -2,6 +2,7 @@ module ClearCMS
   class ContentSerializer < ActiveModel::Serializer
     attributes *Content.fields.collect {|k,v| k}
     attributes :_type
-    attributes :content_blocks
+    has_many :content_blocks, serializer: ContentBlockSerializer
+
   end
 end

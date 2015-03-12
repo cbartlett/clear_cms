@@ -10,5 +10,5 @@ ClearCms.ContentAsset = DS.Model.extend({
   order: DS.attr('number'),
   width: DS.attr('number'),
   height: DS.attr('number'),
-  mounted_file: DS.attr(),
+  readonly_attributes: DS.attr(),
 });

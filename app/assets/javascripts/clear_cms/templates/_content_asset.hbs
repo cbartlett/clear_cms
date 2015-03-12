@@ -1,4 +1,4 @@
-{{content_asset.mounted_file.thumb.url}}
+{{content_asset.readonly_attributes.mounted_file.thumb.url}}
   <div>
     {{file}}
     <button id="" class="btn btn-info" {{action ""}}>
@@ -9,7 +9,7 @@
     </button>
     <br>
     <div>
-      <img {{bind-attr src="content_asset.mounted_file.grid.url"}}>
+      <img {{bind-attr src="content_asset.readonly_attributes.mounted_file.grid.url"}}>
     </div>
   </div>
 {{ log content_asset}}
