@@ -1,18 +1,2 @@
 <h3>CONTENT WRAPPER</h3>
-
 {{outlet}}
-
-id: {{id}}<br>
-basename: {{basename}}
-<hr>
-<button {{action 'toggleDetails'}}>Toggle Details</button>
-
-{{#if showDetails}}
-  {{#each contentBlock in content_blocks}}
-    {{partial "_contentBlock"}}
-  {{/each}}
-{{else}}
-  <h1>Not Showing Details</h1>
-{{/if}}
-
-
