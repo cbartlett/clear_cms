@@ -180,6 +180,10 @@ var linkedFiltersType = {
                   </div>
                   <div class="col-sm-5 col-md-5">
                   <%= caf.input :tags %>
+                  <div class="well">
+                  Placement
+                  <%= caf.input :placement, :as=>:check_boxes, :collection=>ClearCMS::ContentAsset::PLACEMENTS %>
+                  </div>
                   <%#= caf.input :tags, :input_html=>{:class=>'input-xxlarge'}%>
                   <%= caf.input :order, :as=>:hidden %>
                   <%= caf.check_box '_destroy' %> Delete
@@ -427,6 +431,18 @@ var linkedFiltersType = {
                 <li class="string input optional stringish" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_tags_input"><label class=" label" for="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_tags">Tags</label><input class="input-xxlarge" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_tags" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][tags]" type="text" value="[]">
 
 </li>
+            <div class="well">
+                  Placement
+                  <li class="check_boxes input optional" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_placement_input">
+
+<fieldset class="choices"><legend class="label"><label>Placement</label></legend><input id="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}]_placement_none" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][placement][]" type="hidden" value="">
+  <% ClearCMS::ContentAsset::PLACEMENTS.each do |placement| %>
+<ol class="choices-group"><li class="choice"><label for="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_placement_<%= placement %>"><input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_placement_<%= placement %>" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][placement][]" type="checkbox" value="<%= placement %>"><%= placement %></label></li>    
+  <% end %>
+  </ol></fieldset></li>
+                  </div>
+
+
                 <li class="hidden input optional stringish" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_order_input"><input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_order" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][order]" type="hidden" value="{%=o.order%}">
 
 </li>
