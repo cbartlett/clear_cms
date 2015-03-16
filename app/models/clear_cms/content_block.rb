@@ -4,6 +4,8 @@ class ClearCMS::ContentBlock
 
   include Mongoid::History::Trackable
 
+  include Mongoid::EmberData
+
   TYPES=%w(raw more sidebar)
 
   embedded_in :content, class_name: 'ClearCMS::Content'

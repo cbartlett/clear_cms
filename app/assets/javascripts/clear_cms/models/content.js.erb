@@ -1,15 +1,4 @@
 ClearCms.Content = DS.Model.extend({
-
+  //touch 3
   <%= ClearCMS::Content.render_ember_model %>
-  //primaryKey: '_id',
-  basename: DS.attr('string'),
-  content_blocks: DS.hasMany('content_block'),
-  //author: DS.hasOne('user'),
-  title: DS.attr('string'),
-  subtitle: DS.attr('string'),
-  _type: DS.attr('string'),
-  <% ClearCMS::Content.form_fields.each do |field_name, field_options| %>
-    <%= field_name %>: DS.attr('string'),
-  <% end %>
-
 });

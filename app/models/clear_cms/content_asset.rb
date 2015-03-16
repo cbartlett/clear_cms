@@ -3,6 +3,8 @@ class ClearCMS::ContentAsset
   include Mongoid::Timestamps
   include Mongoid::History::Trackable
 
+  include Mongoid::EmberData
+
   #before_save :output_contents
   #before_create :append_site_to_path
 

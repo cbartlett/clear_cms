@@ -1,6 +1,7 @@
 class ClearCMS::LinkedContent
   include Mongoid::Document
   include Mongoid::History::Trackable
+  include Mongoid::EmberData
 
   #include Mongoid::Timestamps
   validate :linked_content_exists

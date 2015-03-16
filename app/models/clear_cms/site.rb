@@ -1,6 +1,8 @@
 module ClearCMS
   class Site
     include Mongoid::Document
+
+    include Mongoid::EmberData
     #include Mongoid::Versioning
     # keep at most 5 versions of a record
     #max_versions 5

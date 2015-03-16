@@ -2,6 +2,7 @@ module ClearCMS
   class Permission
     include Mongoid::Document
     include Mongoid::Timestamps
+    include Mongoid::EmberData
     
     embedded_in :user, class_name: 'ClearCMS::User'
     belongs_to :site, class_name: 'ClearCMS::Site'

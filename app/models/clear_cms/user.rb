@@ -93,7 +93,7 @@ module ClearCMS
     field :unlock_token,    :type => String # Only if unlock strategy is :email or :both
     field :locked_at,       :type => Time
 
-    mount_uploader :avatar, ClearCMS::Uploaders::ContentAssetUploader
+    mount_uploader :mounted_avatar, ClearCMS::Uploaders::ContentAssetUploader, :mount_on=>:avatar
 
 
     # Token authenticatable
