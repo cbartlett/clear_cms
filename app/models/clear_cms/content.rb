@@ -6,6 +6,7 @@ module ClearCMS
     #max_versions 20
     include Mongoid::Timestamps
     include Mongoid::History::Trackable
+    include Mongoid::EmberData
 
     include_root_in_json=true
 

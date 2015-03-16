@@ -5,6 +5,8 @@ module ClearCMS
     include Mongoid::Document
     include Mongoid::Timestamps
     include Mongoid::Userstamp::User
+    
+    include Mongoid::EmberData
     #include Mongoid::Versioning
     #max_versions 10
 

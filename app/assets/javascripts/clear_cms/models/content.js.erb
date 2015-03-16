@@ -1,5 +1,6 @@
 ClearCms.Content = DS.Model.extend({
 
+  <%= ClearCMS::Content.render_ember_model %>
   //primaryKey: '_id',
   basename: DS.attr('string'),
   content_blocks: DS.hasMany('content_block'),

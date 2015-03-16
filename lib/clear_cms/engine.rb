@@ -31,15 +31,17 @@ require 'mongoid-history'
 require 'mongoid_userstamp'
 require 'ember-rails'
 require 'responders'
+require 'mongoid'
 
 
 module ClearCMS
   class Engine < ::Rails::Engine
     isolate_namespace ClearCMS
-
- 	  def self.activate
+    
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
+ 	  
+    def self.activate
 	    Dir.glob(File.join(Rails.application.root, "app/**/*_decorator*.rb")) do |c|
-
 	      Rails.configuration.cache_classes ? require(c) : load(c)
 	    end
   	end
