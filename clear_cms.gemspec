@@ -29,6 +29,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'compass-rails'
 
+  s.add_dependency 'faye-websocket'
+
   #Mongo DB ORM and support
 
   s.add_dependency "mongoid" #, "~>4.0.0", :git=>'git://github.com/mongoid/mongoid.git'

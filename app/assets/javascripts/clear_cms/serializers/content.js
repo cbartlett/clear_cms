@@ -21,4 +21,3 @@ ClearCms.ContentSerializer = ClearCms.ApplicationSerializer.extend({
 	return json;
 	},
 });
-

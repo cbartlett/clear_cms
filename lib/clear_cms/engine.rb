@@ -32,6 +32,8 @@ require 'mongoid_userstamp'
 require 'ember-rails'
 require 'responders'
 require 'mongoid'
+require 'faye/websocket'
+require 'clear_cms/middleware/pub_sub'
 
 
 module ClearCMS
@@ -49,6 +51,12 @@ module ClearCMS
     #config.autoload_paths += Dir["#{config.root}/app/serializers/**/"]
 
     config.to_prepare &method(:activate).to_proc
+
+
+    initializer 'clear_cms.setup_middleware' do |app|
+      app.middleware.use ClearCMS::Middleware::PubSub
+    end
+
 
   end
 end
