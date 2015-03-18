@@ -59,6 +59,7 @@ module ClearCMS
     before_save :set_publish_at
     after_save :schedule_cache_clear
     after_save :notify_assignee
+    after_save :notify_pubsub
 
     embeds_many :content_blocks, class_name: 'ClearCMS::ContentBlock', cascade_callbacks: true
     embeds_many :content_notes, class_name: 'ClearCMS::ContentNote', cascade_callbacks: true, :order=>'updated_at DESC'
@@ -313,6 +314,10 @@ private
       if assignee_id && assignee_id_changed?
         ClearCMS::NotificationMailer.generic_content_notification(assignee, self, "New Content Assigned","You've been assigned to content:").deliver
       end
+    end
+
+    def notify_pubsub
+      PubSub.publish({'model': 'content', '_id': self.id}.to_json)
     end
 
 

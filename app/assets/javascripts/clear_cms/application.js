@@ -30,6 +30,12 @@
 //= require_self
 //= require clear_cms/clear_cms_ember
 
+
+
+// remap jQuery to $
+(function($){})(window.jQuery);
+
+
 Ember.LOG_BINDINGS = true;
 
 window.ClearCms = Ember.Application.create({
@@ -50,16 +56,46 @@ window.ClearCms = Ember.Application.create({
 });
 
 
-// remap jQuery to $
-(function($){})(window.jQuery);
+ClearCms.Messaging = (function() {
+  'use strict';
+
+  var ws;
+
+  function connect() {
+    var scheme   = "ws://";
+    var uri      = scheme + window.document.location.host + "/";
+    ws = new WebSocket(uri);
+  }
+
+  function subscribe() {
+    ws.onmessage = function(message) {
+      console.log("WebSocket Message Received");
+      console.log(message);
+      //console.log(message.data.toString());
+      var store=ClearCms.__container__.lookup('store:main');
+      //var modelName = message.model;
+      var modelName = 'content';
+      var _id = JSON.parse(message.data)['_id'];
+      store.fetchById('content', _id); //.then(function(content) {
+      //   console.log(content.toString());
+      //   store.push(modelName,content);
+      // });
+    };
+  }
+
+  return {
+    initialize: function() {
+      connect();
+      subscribe();
+    }
+  };
+}());
 
 
-var scheme   = "ws://";
-var uri      = scheme + window.document.location.host + "/";
-var ws       = new WebSocket(uri);
 
-ws.onmessage = function(message) {
-  console.log(message);
-  //var data = JSON.parse(message.data);
-  console.log(message.data.toString());
-};
+
+(function($){
+  'use strict';
+  ClearCms.Messaging.initialize();
+})(jQuery);
+

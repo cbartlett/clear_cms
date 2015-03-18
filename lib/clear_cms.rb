@@ -4,6 +4,8 @@ require 'clear_cms/configuration'
 module ClearCMS
   #extend ActiveSupport::Autoload
 
+  #autoload :PubSub
+
   class << self
     attr_accessor :config
 

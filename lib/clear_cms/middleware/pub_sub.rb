@@ -2,24 +2,22 @@ module ClearCMS
   module Middleware
   	class PubSub
       KEEPALIVE_TIME = 15 # in seconds
+      CHANNEL        = "clear_cms_messages"
 
       def initialize(app)
         @app     = app
         @clients = []
 
-        @running=Thread.new do
-        # redis_sub = Redis.new(host: uri.host, port: uri.port, password: uri.password)
-        # redis_sub.subscribe(CHANNEL) do |on|
-        #   on.message do |channel, msg|
-          counter=0
-          loop do
-            msg='{"model": "content", "data": "We have run this loop again."}'
-            @clients.each {|ws| ws.send(msg) }
-            sleep 5
-            counter+=1
+        @redis   = Redis.new(:url => ClearCMS.config.sidekiq_redis_url)
+        Thread.new do
+          redis_sub = Redis.new(:url => ClearCMS.config.sidekiq_redis_url)
+          redis_sub.subscribe(CHANNEL) do |on|
+            on.message do |channel, msg|
+              @clients.each {|ws| ws.send(msg) }
+            end
           end
-        #end
         end
+
       end
 
       def call(env)
@@ -39,7 +37,7 @@ module ClearCMS
 
           ws.on :message do |event|
             p [:message, event.data]
-            @clients.each {|client| client.send(event.data) }
+            @redis.publish(CHANNEL, event.data)
           end
           
           # Return async Rack response
