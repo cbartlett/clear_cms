@@ -1,8 +1,21 @@
 module Mongoid
   module EmberData
     extend ActiveSupport::Concern
-    
-    module ClassMethods
+
+    included do 
+      after_save :notify_pubsub
+    end
+
+private
+    def notify_pubsub
+      unless self.embedded?
+        model = self.kind_of?(::ClearCMS::Content) ? self.class.superclass.name.demodulize.downcase! : self.class.name.demodulize.downcase!
+        ClearCMS::PubSub.publish({'model': model, '_id': self.id}.to_json)
+      end
+    end
+        
+    class_methods do 
+
       def ember_fields
         fields.collect do |key, value|
           {"#{key}": {

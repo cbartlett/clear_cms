@@ -2,9 +2,9 @@ require 'clear_cms/engine'
 require 'clear_cms/configuration'
 
 module ClearCMS
-  #extend ActiveSupport::Autoload
+  extend ActiveSupport::Autoload
 
-  #autoload :PubSub
+  autoload :PubSub
 
   class << self
     attr_accessor :config

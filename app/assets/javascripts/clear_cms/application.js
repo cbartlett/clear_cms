@@ -71,15 +71,12 @@ ClearCms.Messaging = (function() {
     ws.onmessage = function(message) {
       console.log("WebSocket Message Received");
       console.log(message);
-      //console.log(message.data.toString());
-      var store=ClearCms.__container__.lookup('store:main');
-      //var modelName = message.model;
-      var modelName = 'content';
-      var _id = JSON.parse(message.data)['_id'];
-      store.fetchById('content', _id); //.then(function(content) {
-      //   console.log(content.toString());
-      //   store.push(modelName,content);
-      // });
+
+      var store=ClearCms.__container__.lookup('store:main');      
+      var json = JSON.parse(message.data);
+      var model = json.model;
+      var _id = json._id;
+      store.fetchById(model, _id); 
     };
   }
 
