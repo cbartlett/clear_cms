@@ -1,22 +1,22 @@
 
 <%= form_for :dump, :html => { :multipart => true } do |f| %>
- <table>
-   <tr>
-     <td>
-      <label for="dump_file">
-        Select a CSV File :
-      </label>
-     </td>
-   </tr>
-   <tr>
-     <td >
-       <%= f.file_field :file -%>
-     </td>
-   </tr>
-   <tr>
-     <td colspan='2'>
-       <%= submit_tag 'Submit' -%>
-     </td>
-   </tr>
- </table>
-<% end -%>
+<table>
+ <tr>
+   <td>
+    <label for="dump_file">
+      Select a CSV File :
+    </label>
+  </td>
+</tr>
+<tr>
+ <td >
+   <%= f.file_field :file -%>
+ </td>
+</tr>
+<tr>
+ <td colspan='2'>
+   <%= submit_tag 'Submit' -%>
+ </td>
+</tr>
+</table>
+<% end %>
