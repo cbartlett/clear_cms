@@ -132,13 +132,14 @@ module ClearCMS
     end
 
     def csv_import
-      headers = CSV.read(params[:dump][:file].path, headers: true).headers
+      rows = CSV.read(params[:dump][:file].path, headers: true)
+      headers = rows.headers
       attributes_updated = headers & ClearCMS::Content.csv_allowable_attributes
-        CSV.foreach(params[:dump][:file].path, headers: true) do |row|
+        rows.each do |row|
           begin
             product = ClearCMS::Content.find(row["id"])
-          rescue Exception => e
-            redirect_to({:action => "csv_importer"}, notice: "Error importing content. #{e}. Fix errors and try again.") and return
+          rescue Mongoid::Errors::DocumentNotFound => error
+            redirect_to({:action => "csv_importer"}, notice: "Error importing content. #{error} Fix errors and try again.") and return
           else
             if attributes_updated.include?("_type")
               product._type = row["_type"]
@@ -149,11 +150,11 @@ module ClearCMS
             end
 
             if attributes_updated.include?("categories")
-              product.categories = (product.categories + row["categories"].split(', ')).map {|category| category.downcase}.uniq
+              product.categories = (product.categories + row["categories"].split(',')).map {|category| category.strip.downcase}.uniq
             end
 
             if attributes_updated.include?("tags")
-              product.tags = (product.tags + row["tags"].split(', ')).map {|tag| tag.downcase}.uniq
+              product.tags = (product.tags + row["tags"].split(',')).map {|tag| tag.strip.downcase}.uniq
             end
             product.save
           end
