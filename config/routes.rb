@@ -16,6 +16,9 @@ ClearCMS::Engine.routes.draw do
 
 	get "email" => "contents#email"
 
+  get "csv_importer" => 'contents#csv_importer'
+  post "csv_importer" => 'contents#csv_import'
+
 	resources :sites do
 	  resources :contents
 	  resources :assets

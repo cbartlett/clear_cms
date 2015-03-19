@@ -1,6 +1,8 @@
 module ClearCMS
   class ContentsController < ClearCMS::ApplicationController
     require 'mail'
+    require 'csv'
+
     #require 'mongoid'
     before_filter :authenticate_user!, :except=>[:email]
     skip_before_filter :verify_authenticity_token, :only=>[:email]
@@ -126,6 +128,39 @@ module ClearCMS
       redirect_to({:action=>:index}, notice: 'Content imported successfully.')
     end
 
+    def csv_importer
+    end
+
+    def csv_import
+      rows = CSV.read(params[:dump][:file].path, headers: true)
+      headers = rows.headers
+      attributes_updated = headers & ClearCMS::Content.csv_allowable_attributes
+        rows.each do |row|
+          begin
+            product = ClearCMS::Content.find(row["id"])
+          rescue Mongoid::Errors::DocumentNotFound => error
+            redirect_to({:action => "csv_importer"}, notice: "Error importing content. #{error} Fix errors and try again.") and return
+          else
+            if attributes_updated.include?("_type")
+              product._type = row["_type"]
+            end
+
+            if attributes_updated.include?("footnote_number")
+              product.footnote_number = row["footnote_number"]
+            end
+
+            if attributes_updated.include?("categories")
+              product.categories = (product.categories + row["categories"].split(',')).map {|category| category.strip.downcase}.uniq
+            end
+
+            if attributes_updated.include?("tags")
+              product.tags = (product.tags + row["tags"].split(',')).map {|tag| tag.strip.downcase}.uniq
+            end
+            product.save
+          end
+        end
+        redirect_to(root_path(@clear_cms_site), notice: "Content imported successfully. Only #{attributes_updated.join(', ')} fields updated.")
+    end
 
     def destroy
       @clear_cms_content = ClearCMS::Content.find(params[:id])

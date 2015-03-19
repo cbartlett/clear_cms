@@ -285,6 +285,10 @@ module ClearCMS
 
 private
 
+    def self.csv_allowable_attributes
+      return ["tags","categories", "_type", "footnote_number"]
+    end
+
     def update_search_index
       if self.published?
         self.content_blocks.each do |block|
