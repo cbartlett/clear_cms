@@ -156,6 +156,10 @@ module ClearCMS
             if row["tags"] && attributes_updated.include?("tags")
               product.tags = (product.tags + row["tags"].split(',')).map {|tag| tag.strip.downcase}.uniq
             end
+
+            if row["end_time"] && attributes_updated.include?("end_time")
+              product.end_time = row["end_time"]
+            end
             product.save
           end
         end
