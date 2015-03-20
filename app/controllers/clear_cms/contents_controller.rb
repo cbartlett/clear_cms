@@ -141,19 +141,19 @@ module ClearCMS
           rescue Mongoid::Errors::DocumentNotFound => error
             redirect_to({:action => "csv_importer"}, notice: "Error importing content. #{error} Fix errors and try again.") and return
           else
-            if attributes_updated.include?("_type") && !row["_type"].nil?
+            if row["_type"] && attributes_updated.include?("_type")
               product._type = row["_type"]
             end
 
-            if attributes_updated.include?("footnote_number") && !row["footnote_number"].nil?
+            if row["footnote_number"] && attributes_updated.include?("footnote_number")
               product.footnote_number = row["footnote_number"]
             end
 
-            if attributes_updated.include?("categories") && !row["categories"].nil?
+            if row["categories"] && attributes_updated.include?("categories")
               product.categories = (product.categories + row["categories"].split(',')).map {|category| category.strip.downcase}.uniq
             end
 
-            if attributes_updated.include?("tags") && !row["tags"].nil?
+            if row["tags"] && attributes_updated.include?("tags")
               product.tags = (product.tags + row["tags"].split(',')).map {|tag| tag.strip.downcase}.uniq
             end
             product.save
