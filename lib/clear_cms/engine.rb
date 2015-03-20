@@ -42,6 +42,8 @@ module ClearCMS
     
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
  	  
+    config.assets.paths << File.join("#{config.root}", 'app', 'assets', 'bower_components')
+
     def self.activate
 	    Dir.glob(File.join(Rails.application.root, "app/**/*_decorator*.rb")) do |c|
 	      Rails.configuration.cache_classes ? require(c) : load(c)
