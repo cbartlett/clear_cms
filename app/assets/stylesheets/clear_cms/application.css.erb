@@ -24,6 +24,17 @@
 
 /*@import "compass/typography/lists/bullets"*/
 
+div.custom-fields > div.form-group {
+  display: none;
+}
+
+<% ClearCMS::Content.content_types.each do |c| %>
+div.custom-fields.<%= c %> > div.form-group.<%= c %> {
+  display: block;
+}
+<% end  %>
+
+
 #ember-container {
   border-color: orange;
 }

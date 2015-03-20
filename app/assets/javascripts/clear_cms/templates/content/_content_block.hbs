@@ -1,6 +1,7 @@
-<div role="tabpanel" class="tab-pane" {{bind-attr id="contentBlock.id"}}>
+<div role="tabpanel" class="tab-pane active" {{bind-attr id="contentBlock.id"}}>
 
   <h3>{{contentBlock.type}}</h3>
+  {{view "select" content=contentBlock.types value=contentBlock.type}}
   {{textarea value=contentBlock.body cols="80" rows="6"}}
 
   <h4>Uploaded Images</h4>

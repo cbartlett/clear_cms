@@ -9,6 +9,9 @@ ClearCms.ContentEditController = Ember.ObjectController.extend({
         this.set('showDetails',true);
       }
     },
+    addContentBlock: function() {
+      this.get('model').get('content_blocks').createRecord({type: 'raw'});
+    },
     save: function() {
       var content=this.get('model');
       content.save().then(

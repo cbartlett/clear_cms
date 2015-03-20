@@ -62,7 +62,7 @@ ClearCms.Messaging = (function() {
   var ws;
 
   function connect() {
-    var scheme   = "ws://";
+    var scheme   = "https:"===window.document.location.protocol?"wss://":"ws://";
     var uri      = scheme + window.document.location.host + "/";
     ws = new WebSocket(uri);
   }

@@ -1,3 +1,6 @@
 ClearCms.ContentBlock = DS.Model.extend({
   <%= ClearCMS::ContentBlock.render_ember_model %>
+  types: <%= ClearCMS::Content.new.content_block_types.to_s %>
 });
+
+//version 5

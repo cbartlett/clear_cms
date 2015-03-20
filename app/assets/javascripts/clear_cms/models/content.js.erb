@@ -1,4 +1,5 @@
 ClearCms.Content = DS.Model.extend({
   //touch 3
   <%= ClearCMS::Content.render_ember_model %>
+  types: <%= ClearCMS::Content.content_types.collect{|c| c.to_s} %>
 });

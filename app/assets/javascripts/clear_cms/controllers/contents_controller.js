@@ -1,12 +1,14 @@
-// ClearCms.ContentsController = Ember.Controller.extend({
-//   // the initial value of the `search` property
-//   search: '',
-//   // title: 'controller class title',
-//   actions: {
-//     query: function() {
-//       // the current value of the text field
-//       var query = this.get('search');
-//       this.transitionToRoute('search', { query: query });
-//     }
-//   }
-// });
+ClearCms.ContentsController = Ember.Controller.extend({
+  queryParams: 'page',
+  page: 1,
+  filteredArticles: function() {
+    var page = this.get('page');
+    var contents = this.get('model');
+
+    if (page) {
+      return contents.filterBy('page', page);
+    } else {
+      return contents;
+    }
+  }.property('page', 'model'),
+});

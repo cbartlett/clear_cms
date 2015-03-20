@@ -2,12 +2,20 @@
 {{#link-to 'content.show'}}Show Content{{/link-to}}
 
 <form>
-  <% ClearCMS::Content.fields.each do |key, value| %>
+
   <div class="form-group">
-    <label for="content<%= key.upcase %>"><%= key.upcase %></label>
-    {{input value=<%= key %> id="content<%= key.upcase %>" class='form-control'}}
+    {{view "select" content=types value=_type class="form-control"}}
   </div>
+
+  <div {{bind-attr class=":custom-fields _type"}}>
+  <% ClearCMS::Content.form_fields.each do |field,options| %>
+    <div class="form-group <%= options[:models].join(' ') %>">
+      <label for="content-<%= field %>"><%= field.upcase %></label>
+      {{input value=<%= field %> id="content-<%= field %>" class='form-control'}}
+    </div>
   <% end %>
+  </div>
+
   <button {{action 'save'}} class="btn btn-default">Save</button>
 </form>
 
@@ -15,6 +23,8 @@
 <button {{action 'toggleDetails'}}>Toggle Details</button>
 
 {{#if showDetails}}
+<button {{action 'addContentBlock'}}>Add Block</button>
+
  <div role="tabpanel">
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist" id="cblist">
