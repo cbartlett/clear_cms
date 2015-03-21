@@ -30,9 +30,9 @@
 //= require_self
 //= require clear_cms/clear_cms_ember
 //= require ember-template-compiler
-//= require ember-utils/dist/globals/main
-//= require ember-components/dist/globals/main
-
+//= #require ember-utils/dist/globals/main
+//= #require ember-components/dist/globals/main
+//= require bootstrap_for_ember
 
 
 // remap jQuery to $
