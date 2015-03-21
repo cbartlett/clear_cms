@@ -29,8 +29,10 @@
 //= require ember-data
 //= require_self
 //= require clear_cms/clear_cms_ember
-//= require ember-idx-tabs
-//= require bootstrap
+//= require ember-template-compiler
+//= require ember-utils/dist/globals/main
+//= require ember-components/dist/globals/main
+
 
 
 // remap jQuery to $
