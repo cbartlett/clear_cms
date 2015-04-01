@@ -165,10 +165,6 @@ module ClearCMS
               product.linked_item_limit = row["linked_item_limit"]
             end
 
-            if row["publish_at"] && attributes_updated.include?("publish_at")
-              product.publish_at = row["publish_at"]
-            end
-
             product.save
           end
         end
