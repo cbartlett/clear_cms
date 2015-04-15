@@ -165,6 +165,10 @@ module ClearCMS
               product.linked_item_limit = row["linked_item_limit"]
             end
 
+            if row["categories_to_remove"] && attributes_updated.include?("categories_to_remove")
+              product.categories = (product.categories.map {|category| category.strip.downcase} - row["categories_to_remove"].split(',').map {|c_remove| c_remove.strip.downcase}).uniq
+            end
+
             product.save
           end
         end
