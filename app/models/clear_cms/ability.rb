@@ -2,6 +2,8 @@ class ClearCMS::Ability
   include CanCan::Ability
 
   def initialize(user)
+    user ||= ClearCMS::User.new
+
     can :manage, :all
 
     can :manage, :all if user.system_permission == 'administrator'
