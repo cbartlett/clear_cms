@@ -4,19 +4,26 @@ class ClearCMS::Ability
   def initialize(user)
     user ||= ClearCMS::User.new
 
-    can :manage, :all
+    if user.system_permission == 'alumni'
 
-    can :manage, :all if user.system_permission == 'administrator'
+      can :update, ClearCMS::User, :id => user.id
 
-    can :update, ClearCMS::User, :id => user.id
+    else
 
-    can :read, ClearCMS::Content if user.system_permission == 'editor'
+      can :manage, :all
 
-    can :manage, ClearCMS::Asset #if user.system_permission == 'editor' #ability to upload images using async widget
+      can :manage, :all if user.system_permission == 'administrator'
 
-    can :update, ClearCMS::Content, :assignee_id => user.id
+      can :update, ClearCMS::User, :id => user.id
 
-    can :manage, ClearCMS::HistoryTracker if user.system_permission == 'editor'
+      can :read, ClearCMS::Content if user.system_permission == 'editor'
+
+      can :manage, ClearCMS::Asset #if user.system_permission == 'editor' #ability to upload images using async widget
+
+      can :update, ClearCMS::Content, :assignee_id => user.id
+
+      can :manage, ClearCMS::HistoryTracker if user.system_permission == 'editor'
+    end
 
     #can :manage, :all if user[:email]=='josh@coolhunting.com'
     #can :manage, :all if user[:email]=='joel@coolhunting.com'
