@@ -6,7 +6,7 @@ class ClearCMS::Ability
 
     if user.system_permission == 'alumni'
 
-      can :update, ClearCMS::User, :id => user.id
+      can :edit, ClearCMS::User, :id => user.id
 
     else
 
