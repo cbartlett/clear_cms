@@ -484,7 +484,7 @@ ClearCMS.Image = (function() {
           file=$(modal).find('input[name=file]').val(),
           srchost = $('<a>').prop('href', src).prop('hostname'),
       /* var alt=src; */
-          alt='';
+          alt=file;
 
       //var title=
       //var caption=
