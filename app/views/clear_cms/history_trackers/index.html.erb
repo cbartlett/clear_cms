@@ -5,7 +5,7 @@
 
   <hr>
 
-  <div class="row-fluid">
+  <div class="row">
     <div class="span16">
       <p><b><%= tracker.action.titleize %> <%= tracker.association_chain.last[:name].titleize %> on <%= tracker.created_at.to_formatted_s(:long)  %></b></p>
       <p>By: <%= tracker.modifier == nil ? 'Untracked User' : link_to(tracker.modifier.full_name, tracker.modifier) %></p>
@@ -20,7 +20,7 @@
     </div>
   </div>
 
-  <div class="row-fluid">
+  <div class="row">
     <div class="span6" style="overflow: scroll;">
       <p><b>Previous</b></p>
       <pre><% tracker.original.each do |key, value| %>

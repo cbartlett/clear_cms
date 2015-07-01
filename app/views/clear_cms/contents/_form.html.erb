@@ -17,8 +17,7 @@ var linkedFiltersType = {
 };
 </script>
 
-<div class="row">
-  <div class="col-sm-9 col-md-9">
+  <div class="col-md-9">
   <% if @clear_cms_content.persisted? %>
     <% if @clear_cms_content.published? %>
       <%= link_to 'View >>', @clear_cms_content.friendly_path, :class=>'pull-right btn btn-default', :target=>'_blank' %>
@@ -49,13 +48,11 @@ var linkedFiltersType = {
 
 <!--     <div class="well well-small"> -->
     <%= f.inputs "General", :class=>"inputs general" do %>
-
-
         <%= f.input :site_id, :as=>:hidden, :value=>current_site.id %>
-        <%= f.input :_type, :as=>:select, :collection=>ClearCMS::Content.content_types.collect(&:to_s), :include_blank=>false, :input_html=>{:class=>'protected linkedFiltersTypeMonitor'} %>
+        <%= f.input :_type, :as=>:select, :collection=>ClearCMS::Content.content_types.collect(&:to_s), :include_blank=>false, :input_html=>{:class=>'protected linkedFiltersTypeMonitor glyphicon glyphicon-lock'} %>
         <%= f.input :title, :input_html=>{:class=>'input-xxlarge'} %>
         <%= f.input :subtitle, :input_html=>{:class=>'input-xxlarge'} %>
-        <%= f.input :basename, :hint=>'Must not contain spaces or special chars', :input_html=>{:class=>'protected'} %>
+        <%= f.input :basename, :hint=>'Must not contain spaces or special chars', :input_html=>{:class=>'protected glyphicon glyphicon-lock'} %>
         <%= f.input :author, :collection=>(ClearCMS::User.active + [@clear_cms_content.author]).compact.uniq %>
         <%= f.input :tags, :input_html=>{:class=>'input-xlarge'}%>
         <%= f.input :categories, :input_html=>{:class=>'input-xlarge', 'autocomplete'=>'off', 'data-provide'=>"typeahead", 'data-source'=>@clear_cms_content.site.categories.collect {|c| c['_id'] }.to_json} %>
@@ -67,17 +64,7 @@ var linkedFiltersType = {
         <%# end %>
       <% end %>
 
-
     <% end %>
-
-
-<!--
-    <div>
-    <h3>Assets</h3>
-
-
-    </div>
--->
 
     <h3>Linked Contents</h3>
 
@@ -118,7 +105,7 @@ var linkedFiltersType = {
     <div class="tabbable" id="contentBlocksContainer">
       <ul class="nav nav-tabs" id="myTab">
         <% @clear_cms_content.content_blocks.each_with_index do |cb,i| %>
-          <li<%= i==0 ? ' class=active' : '' %>><a href="#content_block_<%= cb.type.present? ? cb.type : cb.object_id %>_<%= i %>" data-toggle="tab"><%= i==0 ? '<i class="icon-picture"></i> '.html_safe : '' %><%= cb.type.present? ? cb.type : cb.object_id %></a></li>
+          <li<%= i==0 ? ' class=active' : '' %> role="presentation"><a href="#content_block_<%= cb.type.present? ? cb.type : cb.object_id %>_<%= i %>" data-toggle="tab"><%= i==0 ? '<i class="glyphicon-picture"></i> '.html_safe : '' %><%= cb.type.present? ? cb.type : cb.object_id %></a></li>
         <% end %>
       </ul>
       <div class="tab-content">
@@ -127,7 +114,6 @@ var linkedFiltersType = {
 
         <div class="tab-pane <%= i==0 ? 'active' : '' %>" id="content_block_<%= cb.type.present? ? cb.type : cb.object_id %>_<%= i %>">
         <%= f.semantic_fields_for :content_blocks, cb do |cbf| %>
-
 
         <div class="well">
 
@@ -166,17 +152,12 @@ var linkedFiltersType = {
                   <%= caf.input :path, :as=>:hidden, :input_html=>{:class=>'path'} %>
                   <%= caf.input :file, :as=>:hidden, :input_html=>{:class=>'file'} %>
 
-                  <div class="col-sm-9 col-md-9">
+                  <div class="col-md-9">
                   <%= caf.input :title %>
                   <%= caf.input :description, :as=>:text, :input_html=>{:rows=>1} %>
                   <%= caf.input :credit %>
-                  </div>
-                  <div class="col-sm-5 col-md-5">
                   <%= caf.input :tags %>
-                  <div class="well">
-                  Placement
                   <%= caf.input :placement, :as=>:check_boxes, :collection=>ClearCMS::ContentAsset::PLACEMENTS %>
-                  </div>
                   <%#= caf.input :tags, :input_html=>{:class=>'input-xxlarge'}%>
                   <%= caf.input :order, :as=>:hidden %>
                   <%= caf.check_box '_destroy' %> Delete
@@ -185,15 +166,12 @@ var linkedFiltersType = {
                   <%= caf.input :caption %>
                   <%= caf.input :order %>
   -->
-
-
                 </div>
               </div>
             <% end %>
             </div>
 
            <!--  <p><%= cbf.link_to_add "Add an Asset", :content_assets, :class=>'btn btn-xlarge' %></p> -->
-
 
           <% end %>
         </div>
@@ -204,14 +182,8 @@ var linkedFiltersType = {
     </div> <!--/.tabbable -->
   </div>
 
-
-
-  <div class="col-sm-3 col-md-3 content-form-sidebar">
-
+  <div class="col-sm-3 col-md-4 content-form-sidebar">
     <div class="well">
-
-
-
       <!-- <%= f.input :status, :as=>:select, :collection=>ClearCMS::Content::STATUSES %>  -->
       <%= f.submit 'Save', :class=>'btn btn-primary' %>
   <!--     <%= f.submit (@clear_cms_content.published? ? 'View >>' : "Preview >>"), :class=>'btn' %>
@@ -278,7 +250,7 @@ var linkedFiltersType = {
   </div>
 
 <div data-spy="affix-bottom" id="content-controls" class="row">
-  <div class="col-sm-9 col-md-9 well">
+  <div class="col-md-9 well">
     <%= f.submit 'Save', :class=>'btn btn-primary pull-right' %>
   </div>
 </div>
@@ -286,14 +258,14 @@ var linkedFiltersType = {
   <% end %> <!-- end content form -->
 
 <div class="row">
-  <div class="col-sm-9 col-md-9 well">
+  <div class="col-md-9 well">
     <!-- The file upload form used as target for the file upload widget -->
     <%= s3_uploader_form post: "#{clear_cms.site_assets_path(params[:site_id] || @clear_cms_content.site_id )}", as: "asset[image_url]", bucket: ClearCMS.config.s3_upload_bucket do %>
       <%= file_field_tag :file, multiple: true %>
     <% end %>
-
   </div>
 </div>
+
 
 
 
@@ -314,7 +286,7 @@ var linkedFiltersType = {
     <div class="modal-footer">
       <a class="btn btn-primary modal-insert btn-disabled" onclick="ClearCMS.Image.insert(this);">
           <span>Insert</span>
-          <i class="icon-arrow-right icon-white"></i>
+          <i class="glyphicon-arrow-right glyphicon-white"></i>
       </a>
 <!--
         <a class="btn modal-download" target="_blank">
@@ -335,7 +307,7 @@ var linkedFiltersType = {
         </a>
 -->
     </div>
-</div>
+
 
 <!-- modal-gallery is the modal dialog used for the image gallery -->
 <div id="modal-gallery" class="modal modal-gallery hide fade" data-filter=":odd" tabindex="-1">
@@ -367,6 +339,7 @@ var linkedFiltersType = {
             <i class="icon-arrow-right icon-white"></i>
         </a>
 -->
+</div>
     </div>
 </div>
 
@@ -391,7 +364,7 @@ var linkedFiltersType = {
 <!-- The template to insert a note -->
 <script id="template-note-form" type="text/x-tmpl">
   {% var random_id=Math.floor(Math.random() * 10000000); %}
-  <div class="text input optional" id="content_content_notes_attributes_{%=random_id%}_entry_input"><label class=" label" for="content_content_notes_attributes_{%=random_id%}_entry">Description</label><textarea id="content_content_notes_attributes_{%=random_id%}_entry" name="content[content_notes][{%=random_id%}][entry]" rows="8" cols="40" style="width:100%"></textarea>
+  <div class="text input optional" id="content_content_notes_attributes_{%=random_id%}_entry_input"><label class=" label-default" for="content_content_notes_attributes_{%=random_id%}_entry">Description</label><textarea id="content_content_notes_attributes_{%=random_id%}_entry" name="content[content_notes][{%=random_id%}][entry]" rows="8" cols="40" style="width:100%"></textarea>
   </div>
 </script>
 
@@ -413,24 +386,24 @@ var linkedFiltersType = {
       <div class="col-sm-5 col-md-5">
       <input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_path" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][path]" type="hidden" value="{%=o.path%}" class="path">
       <input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_file" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][file]" type="hidden" value="{%=filename%}" class="file">
-        <li class="string input optional stringish" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_title_input"><label class=" label" for="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_title">Title</label><input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_title" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][title]" type="text" value="{%=filename%}">
+        <li class="string input optional stringish" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_title_input"><label class=" label-default" for="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_title">Title</label><input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_title" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][title]" type="text" value="{%=filename%}">
         </li>
-        <li class="text input optional" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_description_input"><label class=" label" for="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_description">Description</label><textarea id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_description" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][description]" rows="1"></textarea>
+        <li class="text input optional" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_description_input"><label class=" label-default" for="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_description">Description</label><textarea id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_description" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][description]" rows="1"></textarea>
         </li>
-        <li class="string input optional stringish" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_credit_input"><label class=" label" for="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_credit">Credit</label><input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_credit" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][credit]" type="text" value="">
+        <li class="string input optional stringish" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_credit_input"><label class=" label-default" for="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_credit">Credit</label><input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_credit" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][credit]" type="text" value="">
         </li>
       </div>
       <div class="col-sm-5 col-md-5">
-                <li class="string input optional stringish" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_tags_input"><label class=" label" for="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_tags">Tags</label><input class="input-xxlarge" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_tags" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][tags]" type="text" value="[]">
+                <li class="string input optional stringish" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_tags_input"><label class=" label-default" for="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_tags">Tags</label><input class="input-xxlarge" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_tags" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][tags]" type="text" value="[]">
 
 </li>
             <div class="well">
                   Placement
                   <li class="check_boxes input optional" id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_placement_input">
 
-<fieldset class="choices"><legend class="label"><label>Placement</label></legend><input id="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}]_placement_none" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][placement][]" type="hidden" value="">
+<fieldset class="choices"><legend class="label-default"><label>Placement</label></legend><input id="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}]_placement_none" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][placement][]" type="hidden" value="">
   <% ClearCMS::ContentAsset::PLACEMENTS.each do |placement| %>
-<ol class="choices-group"><li class="choice"><label for="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_placement_<%= placement %>"><input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_placement_<%= placement %>" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][placement][]" type="checkbox" value="<%= placement %>"><%= placement %></label></li>    
+<ol class="choices-group"><li class="choice"><label for="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_placement_<%= placement %>"><input id="content_content_blocks_attributes_0_content_assets_attributes_{%=random_id%}_placement_<%= placement %>" name="content[content_blocks_attributes][0][content_assets_attributes][{%=random_id%}][placement][]" type="checkbox" value="<%= placement %>"><%= placement %></label></li>
   <% end %>
   </ol></fieldset></li>
                   </div>
@@ -509,7 +482,7 @@ var linkedFiltersType = {
 <script id="template-upload" type="text/x-tmpl">
   <div class="upload">
     {%=o.name%}
-    <div class="progress"><div class="bar" style="width: 0%"></div></div>
+    <div class="progress"><div class="progress-bar" style="width: 0%"></div></div>
   </div>
 </script>
 
@@ -521,7 +494,7 @@ var linkedFiltersType = {
             <td></td>
             <td class="name"><span>{%=file.name%}</span></td>
             <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
-            <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
+            <td class="danger" colspan="2"><span class="label label-danger">Error</span> {%=file.error%}</td>
         {% } else { %}
             <td class="preview">{% if (file.thumbnail_url) { %}
                 <a href="{%=file.url%}" title="{%=file.name%}" data-gallery="gallery" download="{%=file.name%}"><img src="{%=file.thumbnail_url%}" width="200"></a>
@@ -538,7 +511,7 @@ var linkedFiltersType = {
 <!--
         <td class="delete">
             <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-                <i class="icon-trash icon-white"></i>
+                <i class="glyphicon-trash glyphicon-white"></i>
                 <span>Delete</span>
             </button>
             <input type="checkbox" name="delete" value="1">

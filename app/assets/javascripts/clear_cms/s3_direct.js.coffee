@@ -31,7 +31,7 @@ jQuery ->
         (data, textStatus, jqXHR) ->
           ClearCMS.ImageQueue.addAsset(data,upload_data)
           upload_data.context.find('.progress').addClass('progress-warning progress-striped active')
-          upload_data.context.find('.bar').html('processing...')
+          upload_data.context.find('.progress-bar').html('processing...')
       )
       #data.context.remove() if data.context # remove progress bar
 

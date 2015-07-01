@@ -48,8 +48,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'mini_magick'
 
   #Form Builder
-  s.add_dependency 'formtastic' #, "~> 2.1.0"
-  #s.add_dependency 'formtastic-plus-bootstrap'
+  s.add_dependency 'formtastic' , "~> 2.3.1"
   s.add_dependency 'formtastic-bootstrap' #, :git => 'https://github.com/niedfelj/formtastic-bootstrap.git', :branch => 'bootstrap2-rails3-2-formtastic-2-2' #, :require=>'formtastic-bootstrap'
   s.add_dependency 'nested_form' #, :git => 'git://github.com/niedfelj/nested_form.git', :branch=> 'formtastic_bootstrap'
 

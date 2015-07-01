@@ -79,11 +79,12 @@ ClearCMS.Form = (function() {
       // set up protected fields
       // NOTE: don't protect things for new new special case
       $('#new_content .protected').removeClass('protected');
-      $('.protected').protectedfield({lockClass:'icon-lock'});
+      $('.protected').protectedfield({lockClass:'glyphicon glyphicon-lock'});
 
       // set up tags completion
       $('#content_tags, #content_categories').map(function() {
         var startvals = null;
+        console.log('in the javascripts');
 
         if ($(this).val() === '[]' || $(this).val() === '') {
           startvals = null;
