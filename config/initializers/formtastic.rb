@@ -1,12 +1,20 @@
-Formtastic::Helpers::FormHelper.builder = FormtasticBootstrap::FormBuilder
+
+# Formtastic::Helpers::FormHelper.builder = FormtasticBootstrap::FormBuilder
+# commenting out this bootstrap builder config because it leaks into the main app's formtastic config.
+# instead we're modifying the default formtastic html with CSS like before
+# but if bootstrap html structure is needed in future, best alternative is to specify:
+# :builder => FormtasticBootstrap::FormBuilder on semantic_form_for &
+# :builder => NestedForm::FormtasticBootstrapBuilder on nested_semantic... forms
+# this would make ClearCMS agnostic of any other app's default Formtastic builders (right now it's using the global config, so a bootstrap3 app would break this)
+
 
 # encoding: utf-8
 
 # --------------------------------------------------------------------------------------------------
-# Please note: If you're subclassing Formtastic::SemanticFormBuilder in a Rails 3 project, 
-# Formtastic uses class_attribute for these configuration attributes instead of the deprecated 
-# class_inheritable_attribute. The behaviour is slightly different with subclasses (especially 
-# around attributes with Hash or Array) values, so make sure you understand what's happening. 
+# Please note: If you're subclassing Formtastic::SemanticFormBuilder in a Rails 3 project,
+# Formtastic uses class_attribute for these configuration attributes instead of the deprecated
+# class_inheritable_attribute. The behaviour is slightly different with subclasses (especially
+# around attributes with Hash or Array) values, so make sure you understand what's happening.
 # See the documentation for class_attribute in ActiveSupport for more information.
 # --------------------------------------------------------------------------------------------------
 
