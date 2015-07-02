@@ -117,7 +117,7 @@ var linkedFiltersType = {
 
           <%= cbf.inputs do %>
             <%= cbf.input :type, :as=>:select, :collection=>@clear_cms_content.content_block_types , :input_html=>{:class=>'protected'}%>
-            <%= cbf.input :body, :as=>:text, :input_html=>{:class=>'input-xxlarge markitup', :data=>{:"tc-ignore-html"=> true}} %>
+            <%= cbf.input :body, :as=>:text, :input_html=>{:class=>'input-xlarge markitup', :data=>{:"tc-ignore-html"=> true}} %>
             <%= cbf.input :order %>
             <% if i!=0 %>
               <%= cbf.check_box '_destroy' %> Delete
