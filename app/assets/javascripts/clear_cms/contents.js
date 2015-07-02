@@ -29,7 +29,6 @@ ClearCMS.ContentTypes = (function() {
       } else {
         $(this).hide();
       }
-
     });
   }
 
@@ -41,7 +40,6 @@ ClearCMS.ContentTypes = (function() {
       if ($typeSelect.length) {
         // STEP 1: Grab Types field and current value
         currentType = $typeSelect.val();
-
         // STEP 2: Set initial
         displayMetaFields(currentType);
         // STEP 3: Watch Chage of type field
@@ -84,7 +82,6 @@ ClearCMS.Form = (function() {
       // set up tags completion
       $('#content_tags, #content_categories').map(function() {
         var startvals = null;
-        console.log('in the javascripts');
 
         if ($(this).val() === '[]' || $(this).val() === '') {
           startvals = null;

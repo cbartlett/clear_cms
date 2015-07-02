@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency "sidekiq"
 
   s.add_dependency 'compass-rails'
+  # s.add_dependency 'bootstrap-sass', '~> 3.3.5'
 
   #Mongo DB ORM and support
 
@@ -64,7 +65,7 @@ Gem::Specification.new do |s|
   #s.add_dependency 'jquery-rails'
   s.add_dependency 'jquery-ui-rails'
   s.add_dependency 'jquery-fileupload-rails'
-  s.add_dependency 'twitter-bootstrap-rails', '2.2.8'
+  s.add_dependency 'twitter-bootstrap-rails' #, '2.2.8'
   s.add_dependency 'sass-rails' #, '~> 3.2.3'
   s.add_dependency 'coffee-rails' #, '~> 3.2.1'
   s.add_dependency 'therubyracer' #, '0.10.2'
