@@ -22,6 +22,7 @@
 //= require jquery.protectedfield.min
 //= require jquery.textcount.min
 //= require moment
+//= require bootstrap-datetimepicker
 //= require clear_cms/contents
 //= require_self
 
