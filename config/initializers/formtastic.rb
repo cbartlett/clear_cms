@@ -7,4 +7,3 @@
 # :builder => NestedForm::FormtasticBootstrapBuilder on nested_semantic forms for everywhere in ClearCMS
 # this would make ClearCMS agnostic of any other app's default Formtastic builders (right now it's using the global config, so another app's implementation could break the forms)
 # only reason for not changing it right now is to avoid refactoring
-

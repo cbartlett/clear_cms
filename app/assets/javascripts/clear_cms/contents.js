@@ -87,7 +87,7 @@ ClearCMS.Form = (function() {
           startvals = null;
           $(this).val('');
         } else {
-          startvals = JSON.parse($(this).val());
+          startvals = $.parseJSON($(this).val());
         }
 
         $(this)
