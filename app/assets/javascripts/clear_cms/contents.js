@@ -208,7 +208,6 @@ ClearCMS.Form = (function() {
 
       // activate special tab creation functionality
       $('#edit_content,#new_content').on('nested:fieldAdded',function(e) {
-        console.log('is this working- content block tabs')
         var $tabBar = $('#myTab'),
             $newFields,
             $tabContainer,
@@ -232,24 +231,20 @@ ClearCMS.Form = (function() {
       // activate special datetimepickers
       // hack to make date field format so datepicker sees it
       $('.datetimepicker').each(function(i){
-        var datetime = moment($(this).val()),
-            datetime_reformatted = '';
+        var datetime_reformatted = '';
 
-        if (datetime) {
-          datetime_reformatted = datetime.format('YYYY-MM-DDTHH:mm:00');
+        if ($(this).val()) {
+          datetime_reformatted =  moment($(this).val()).format('YYYY-MM-DDTHH:mm:00');
         }
-        console.log('datetime picker active');
         $(this).val(datetime_reformatted);
       });
 
-      $('.datetimepicker').each(function(i){
-          $(this).datetimepicker({
+      $('.datetimepicker').datetimepicker({
           format: 'yyyy-mm-ddThh:ii',
           autoclose: true,
           showMeridian: true,
           todayBtn: true,
           pickerPosition: 'bottom-left'
-        });
       });
 
 
@@ -258,11 +253,10 @@ ClearCMS.Form = (function() {
 
         // clean up datepicker data
         $('.datetimepicker').each(function(i){
-          var datetime = moment($(this).val()),
-            datetime_unformatted = '';
+          var datetime_unformatted = '';
 
-          if (datetime) {
-            datetime_unformatted = datetime.format('YYYY-MM-DDTHH:mm:00Z');
+          if ($(this).val()) {
+            datetime_unformatted = moment($(this).val()).format('YYYY-MM-DDTHH:mm:00Z');
           }
           $(this).val(datetime_unformatted);
         });
