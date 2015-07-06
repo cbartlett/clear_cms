@@ -97,7 +97,7 @@ var linkedFiltersType = {
       <div class="tabbable" id="contentBlocksContainer">
         <ul class="nav nav-tabs" id="myTab">
           <% @clear_cms_content.content_blocks.each_with_index do |cb,i| %>
-          <li<%= i==0 ? ' class=active' : '' %> role="presentation"><a href="#content_block_<%= cb.type.present? ? cb.type : cb.object_id %>_<%= i %>" data-toggle="tab"><%= i==0 ? '<i class="glyphicon-picture"></i> '.html_safe : '' %><%= cb.type.present? ? cb.type : cb.object_id %></a></li>
+          <li<%= i==0 ? ' class=active' : '' %> role="presentation"><a href="#content_block_<%= cb.type.present? ? cb.type : cb.object_id %>_<%= i %>" data-toggle="tab"><%= i==0 ? '<span class="glyphicon glyphicon-picture"></span> '.html_safe : '' %><%= cb.type.present? ? cb.type : cb.object_id %></a></li>
           <% end %>
         </ul>
         <div class="tab-content">
