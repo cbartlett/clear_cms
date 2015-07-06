@@ -87,7 +87,7 @@ ClearCMS.Form = (function() {
           startvals = null;
           $(this).val('');
         } else {
-          startvals = $.parseJSON($(this).val());
+          startvals = JSON.parse($(this).val());
         }
 
         $(this)
@@ -196,7 +196,7 @@ ClearCMS.Form = (function() {
       });
 
       // "Disabling text selection is bad. Don't use this." http://api.jqueryui.com/disableSelection/
-      $('.draggabke ul').disableSelection();
+      $('.draggable ul').disableSelection();
 
       // activate markitup widgets
       activateMarkItUp();
