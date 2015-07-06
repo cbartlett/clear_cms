@@ -53,6 +53,7 @@ var linkedFiltersType = {
         <%= f.input :subtitle, :input_html=>{:class=>'input-xxlarge'} %>
         <%= f.input :basename, :hint=>'Must not contain spaces or special chars', :input_html=>{:class=>'protected icon-lock'} %>
         <%= f.input :author, :collection=>(ClearCMS::User.active + [@clear_cms_content.author]).compact.uniq %>
+        <!-- need to overwrite value below because of known formtasic bug flattening the array: https://github.com/justinfrench/formtastic/issues/1144 -->
         <%= f.input :tags, :input_html=>{:class=>'input-xlarge', :value=> @clear_cms_content.tags.present? ? @clear_cms_content.tags.join(', ').to_json : '' }%>
         <%= f.input :categories, :input_html=>{:class=>'input-xlarge', :value=> @clear_cms_content.categories.present? ? @clear_cms_content.categories.join(', ').to_json : '', 'autocomplete'=>'off', 'data-provide'=>"typeahead", 'data-source'=>@clear_cms_content.site.categories.collect {|c| c['_id'] }.to_json} %>
         <% ClearCMS::Content.form_fields.each do |field,options| %>
