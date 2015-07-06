@@ -208,6 +208,7 @@ ClearCMS.Form = (function() {
 
       // activate special tab creation functionality
       $('#edit_content,#new_content').on('nested:fieldAdded',function(e) {
+        console.log('is this working- content block tabs')
         var $tabBar = $('#myTab'),
             $newFields,
             $tabContainer,
@@ -230,22 +231,25 @@ ClearCMS.Form = (function() {
 
       // activate special datetimepickers
       // hack to make date field format so datepicker sees it
-      $('.datetime_picker').each(function(i){
+      $('.datetimepicker').each(function(i){
         var datetime = moment($(this).val()),
             datetime_reformatted = '';
 
         if (datetime) {
           datetime_reformatted = datetime.format('YYYY-MM-DDTHH:mm:00');
         }
+        console.log('datetime picker active');
         $(this).val(datetime_reformatted);
       });
 
-      $('.datetime_picker').datetimepicker({
-        format: 'yyyy-mm-ddThh:ii',
-        autoclose: true,
-        showMeridian: true,
-        todayBtn: true,
-        pickerPosition: 'bottom-left'
+      $('.datetimepicker').each(function(i){
+          $(this).datetimepicker({
+          format: 'yyyy-mm-ddThh:ii',
+          autoclose: true,
+          showMeridian: true,
+          todayBtn: true,
+          pickerPosition: 'bottom-left'
+        });
       });
 
 
@@ -253,7 +257,7 @@ ClearCMS.Form = (function() {
       $('form').on('submit',function(e) {
 
         // clean up datepicker data
-        $('.datetime_picker').each(function(i){
+        $('.datetimepicker').each(function(i){
           var datetime = moment($(this).val()),
             datetime_unformatted = '';
 

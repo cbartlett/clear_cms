@@ -15,7 +15,7 @@
  *= #require clear_cms/markitup
  *= require markitup/skins/simple/style
  *= require markitup/sets/html/style
-  *= require datetimepicker
+ *= require bootstrap-datetimepicker
  *= require_self
  *= require test
  *= #require_tree .
@@ -72,7 +72,6 @@
 .draggable {
   cursor: move;
 }
-
 
 .slimMode .media-object,
 .slimMode .fields {

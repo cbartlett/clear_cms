@@ -153,8 +153,8 @@ var linkedFiltersType = {
     <div class="span4 content-form-sidebar">
       <div class="well">
         <%= f.submit 'Save', :class=>'btn btn-primary' %>
-        <%= f.input :publish_at, :input_html => { :class => 'datetime_picker' } %>
-        <%= f.input :expire_at, :input_html => { :class => 'datetime_picker' } %>
+        <%= f.input :publish_at, :input_html => { :class => 'input-append date datetimepicker' }%>
+        <%= f.input :expire_at, :input_html => { :class => 'input-append date datetimepicker' } %>
         <%= f.input :state, :as=>:select, :collection=>Hash[ClearCMS::Content::STATES.map {|state| [state.humanize, state]}] %>
         <br>
         <%= link_to "Save as #{@clear_cms_content.next_state.humanize.downcase} >>", '#', :class=>'form-action next-state btn btn-warning btn-small', 'data-next-state'=>@clear_cms_content.next_state %>
@@ -166,7 +166,7 @@ var linkedFiltersType = {
       <div class="well">
         <h4>Assignee</h4>
         <%= f.input :assignee, :collection=>(ClearCMS::User.active + [@clear_cms_content.assignee]).compact.uniq %>
-        <%= f.input :deadline_at %>
+        <%= f.input :deadline_at, :input_html => { :class => 'input-append date datetimepicker' } %>
       </div>
 
       <div class="well">

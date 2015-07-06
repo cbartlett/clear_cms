@@ -21,13 +21,6 @@
     <%= f.input :active, :as=>:boolean %>
   <% end %>
 
-<!--
-  <%= f.inputs "Notifications" do %>
-
-
-  <% end %>
--->
-
   <% if can? :manage, :user %>
     <%= f.inputs "Permissions" do %>
       <%= f.semantic_fields_for :permissions do |p| %>
@@ -42,18 +35,6 @@
       <%= f.link_to_add "Add Permissions", :permissions, :class=>'btn btn-xlarge' %>
     <% end %>
   <% end %>
-
-
-
-
-<!--
-  <%= f.inputs "Password" do %>
-    <%= f.input :password %>
-    <%= f.input :password_confirmation %>
-  <% end %>
--->
-
-
 
   <%= f.submit :class=>'btn pull-right' %>
 <% end %>
