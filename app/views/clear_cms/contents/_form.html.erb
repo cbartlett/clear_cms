@@ -220,7 +220,7 @@ var linkedFiltersType = {
     <div class="modal-footer">
       <a class="btn btn-primary modal-insert btn-disabled" onclick="ClearCMS.Image.insert(this);">
           <span>Insert</span>
-          <i class="glyphicon-arrow-right glyphicon-white"></i>
+          <span class="glyphicon glyphicon-arrow-right glyphicon-white"></span>
       </a>
     </div>
 
@@ -405,7 +405,7 @@ var linkedFiltersType = {
 <!--
         <td class="delete">
             <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-                <i class="glyphicon-trash glyphicon-white"></i>
+                <span class="glyphicon glyphicon-trash glyphicon-white"></span>
                 <span>Delete</span>
             </button>
             <input type="checkbox" name="delete" value="1">
