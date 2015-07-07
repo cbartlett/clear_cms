@@ -16,7 +16,7 @@ var linkedFiltersType = {
   Editorial: ['Product']
 };
 </script>
-<div class="row">
+<div class="row-fluid">
   <div class="span8">
     <% if @clear_cms_content.persisted? %>
       <% if @clear_cms_content.published? %>
@@ -107,7 +107,7 @@ var linkedFiltersType = {
             <div class="well">
               <%= cbf.inputs do %>
               <%= cbf.input :type, :as=>:select, :collection=>@clear_cms_content.content_block_types , :input_html=>{:class=>'protected'}%>
-              <%= cbf.input :body, :as=>:text, :input_html=>{:class=>'input-xlarge markitup', :data=>{:"tc-ignore-html"=> true}} %>
+              <%= cbf.input :body, :as=>:text, :input_html=>{:class=>'input-xxlarge markitup', :data=>{:"tc-ignore-html"=> true}} %>
               <%= cbf.input :order %>
               <% if i!=0 %>
               <%= cbf.check_box '_destroy' %> Delete
@@ -193,15 +193,15 @@ var linkedFiltersType = {
     </div> <!-- end span4 -->
   </div>
 
-<div data-spy="affix-bottom" id="content-controls" class="row">
-  <div class="span8 well">
+<div data-spy="affix-bottom" id="content-controls">
+  <div class="well">
     <%= f.submit 'Save', :class=>'btn btn-primary pull-right' %>
   </div>
 </div>
   <% end %> <!-- end content form -->
 
-<div class="row">
-  <div class="span8 well">
+<div>
+  <div class="well">
     <!-- The file upload form used as target for the file upload widget -->
     <%= s3_uploader_form post: "#{clear_cms.site_assets_path(params[:site_id] || @clear_cms_content.site_id )}", as: "asset[image_url]", bucket: ClearCMS.config.s3_upload_bucket do %>
       <%= file_field_tag :file, multiple: true %>

@@ -16,7 +16,7 @@
   <body>
 
     <div class="navbar-nav navbar-fixed-top navbar-default">
-      <div class="container">
+      <div>
           <% if current_user %>
               <% if can? :manage, ClearCMS::Site %>
                 <div class="btn-group pull-left">
@@ -148,15 +148,15 @@
         </div>
       </div>
 
-<div class="container">
-  <div class="row">
+<div>
+  <div>
         <% message = notice || alert %>
           <% if message %>
             <div class="alert alert-dismissable alert-warning" role="alert"><%= message %><a class="close" data-dismiss="alert" href="#">&times;</a></div>
           <% end %>
       </div>
-      <div class="row">
-        <div class="span12">
+      <div>
+        <div>
             <%= yield %>
         </div><!--/span-->
       </div><!--/row-->
