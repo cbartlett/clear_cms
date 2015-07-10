@@ -58,7 +58,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'kaminari-bootstrap'
 
   #Websolr search
-  s.add_dependency 'sunspot_rails'
+  s.add_dependency 'sunspot_rails', '2.1.1'
   #s.add_dependency 'sunspot_solr' #had to add this to the main app
 
   #Asset related gems
