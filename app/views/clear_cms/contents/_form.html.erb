@@ -51,7 +51,7 @@ var linkedFiltersType = {
         <%= f.input :_type, :as=>:select, :collection=>ClearCMS::Content.content_types.collect(&:to_s), :include_blank=>false, :input_html=>{:class=>'protected linkedFiltersTypeMonitor'} %>
         <%= f.input :title, :input_html=>{:class=>'input-xxlarge'} %>
         <%= f.input :subtitle, :input_html=>{:class=>'input-xxlarge'} %>
-        <%= f.input :basename, :hint=>'Must not contain spaces or special chars', :input_html=>{:class=>'protected icon-lock'} %>
+        <%= f.input :basename, :hint=>'Must not contain spaces or special chars', :input_html=>{:class=>'protected'} %>
         <%= f.input :author, :collection=>(ClearCMS::User.active + [@clear_cms_content.author]).compact.uniq %>
         <!-- need to overwrite value below because of known formtasic bug flattening the array: https://github.com/justinfrench/formtastic/issues/1144 -->
         <%= f.input :tags, :input_html=>{:class=>'input-xlarge', :value=> @clear_cms_content.tags.present? ? @clear_cms_content.tags.join(', ').to_json : '' }%>
@@ -97,7 +97,7 @@ var linkedFiltersType = {
       <div class="tabbable" id="contentBlocksContainer">
         <ul class="nav nav-tabs" id="myTab">
           <% @clear_cms_content.content_blocks.each_with_index do |cb,i| %>
-          <li<%= i==0 ? ' class=active' : '' %> role="presentation"><a href="#content_block_<%= cb.type.present? ? cb.type : cb.object_id %>_<%= i %>" data-toggle="tab"><%= i==0 ? '<span class="glyphicon glyphicon-picture"></span> '.html_safe : '' %><%= cb.type.present? ? cb.type : cb.object_id %></a></li>
+          <li<%= i==0 ? ' class=active' : '' %> role="presentation"><a href="#content_block_<%= cb.type.present? ? cb.type : cb.object_id %>_<%= i %>" data-toggle="tab"><%= i==0 ? '<span class="icon-picture"></span> '.html_safe : '' %><%= cb.type.present? ? cb.type : cb.object_id %></a></li>
           <% end %>
         </ul>
         <div class="tab-content">
@@ -220,7 +220,7 @@ var linkedFiltersType = {
     <div class="modal-footer">
       <a class="btn btn-primary modal-insert btn-disabled" onclick="ClearCMS.Image.insert(this);">
           <span>Insert</span>
-          <span class="glyphicon glyphicon-arrow-right glyphicon-white"></span>
+          <span class="icon-arrow-right icon-white"></span>
       </a>
     </div>
 
@@ -405,7 +405,7 @@ var linkedFiltersType = {
 <!--
         <td class="delete">
             <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-                <span class="glyphicon glyphicon-trash glyphicon-white"></span>
+                <span class="icon-trash icon-white"></span>
                 <span>Delete</span>
             </button>
             <input type="checkbox" name="delete" value="1">
