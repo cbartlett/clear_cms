@@ -41,6 +41,14 @@ module ClearCMS
         {"$sort" => {_id: 1}}])
     end
 
+    def tags
+      ClearCMS::Content.collection.aggregate([
+        {"$match" => {"site_id" => self.id}},
+        {"$unwind" => "$tags"},
+        {"$group" => {_id: "$tags", :count => {"$sum" => 1}}},
+        {"$sort" => {_id: 1}}])
+    end
+
 private
 
     def remove_permissions
