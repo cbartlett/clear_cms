@@ -286,7 +286,7 @@ module ClearCMS
 private
 
     def self.csv_allowable_attributes
-      return ["tags","categories", "_type", "footnote_number", "end_time", "linked_item_limit"]
+      return ["tags","categories", "_type", "footnote_number", "chapter_number", "end_time", "linked_item_limit"]
     end
 
     def update_search_index

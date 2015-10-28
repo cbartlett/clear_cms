@@ -149,6 +149,10 @@ module ClearCMS
               product.footnote_number = row["footnote_number"]
             end
 
+            if row["chapter_number"] && attributes_updated.include?("chapter_number")
+              product.chapter_number = row["chapter_number"]
+            end
+
             if row["categories"] && attributes_updated.include?("categories")
               product.categories = (product.categories + row["categories"].split(',')).map {|category| category.strip.downcase}.uniq
             end
