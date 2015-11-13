@@ -37,7 +37,6 @@ module ClearCMS
       fog_directory: 'fog-uploads-directory',
       fog_attributes: {},
       asset_host: 'http://assets.example.com',
-      mailer_sender: 'no-reply@captainlucas.com',
       sidekiq_redis_url: 'redis://localhost:6379'
 
     }
