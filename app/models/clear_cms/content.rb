@@ -25,7 +25,7 @@ module ClearCMS
       self.form_fields[field_name] ||= {:models=>[],:formtastic_options=>{}}
 
       formtastic_options=options.delete(:formtastic_options)||{}
-      #options={}
+      options[:overwrite] = true
 
       case self.name
       when 'ClearCMS::Content'
